@@ -8,12 +8,11 @@ The SQL Server Agent can execute SQL Script or procedures regualary. This agent 
 * You can do SQL Server Agent configuration only as sysadmin
 
 ### Right Configuration of Tasks
-* Set the owner of the Task to a special user (after following step)
-
-* this user you must give in system database "msdb" the roles SQLAgent*, otherwise you can't select
-
-* you must give right in the DataFactory Usermanagement to the user SX\SXMDB$ -> [Domain]\[Machinename] (maybe to be extended with instance),
-this user will be logged as executing user
+* Set the owner of the Task to a special user (after following step)  
+![task_user](images/task_user.png "task_user")  
+* this user you must give in system database "msdb" the roles SQLAgent*, otherwise you can't select  
+![msdb_roles](images/msdb_roles.png "msdb_roles")  
+* you must give right in the DataFactory Usermanagement to the user SX\SXMDB$ -> [Domain]\[Machinename] (maybe to be extended with instance), this user will be logged as executing user
 
 
 
