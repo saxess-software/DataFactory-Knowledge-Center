@@ -71,7 +71,10 @@ BEGIN
 	IF @CompanyCode LIKE 'DF%' 
 		-- This Query Part delivers data from SX DataFactory
 		BEGIN
-			SELECT	 fV.FactoryID AS Mandanten_ID
+			SELECT	 	CASE @CompanyCode 
+						WHEN 'DF_BFW' THEN 'u6ksa11ENp5J05~02sw' -- für BFW
+						WHEN 'DF_PRODI'THEN 'RSksa11ENp5J05~02sw' -- für ProDi
+					END AS Mandanten_ID
 					,fV.FactoryID +'_' + fV.ProductLineID AS Kostenstellen_ID
 					,fV.ProductID AS Kostentraeger_ID --not a usual case, as values are aggregated
 					,fV.ValueSeriesID AS Konten_ID
