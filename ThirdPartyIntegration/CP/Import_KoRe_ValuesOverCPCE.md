@@ -1,8 +1,10 @@
-This procedure extends the standard CPCE Procedure to import KoRe Values.
+This procedure extends the standard CPCE Procedure to import KoRe Values.  
 If a Buchungskreis DF* ist requested, the Query will be redirected to a DataFactory Database.
 
 
 ````SQL
+USE connectivityexpress
+
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[pCP_SelectValuesKoRe]') AND type in (N'P', N'PC'))
 DROP PROCEDURE [dbo].[pCP_SelectValuesKoRe]
 GO
@@ -30,6 +32,7 @@ GO
 -- DataFactory wird behandelt wie ein Buchungskreis, diese Abfrage holt eine Factory aus DF
 -- wird ein Buchungskreis DF* angefragt, wird die Abfrage auf der DataFactory Datenbank ausgeführt.
 -- damit diese Abfragewerte auf die vorhandene Struktur passen, muss die FactoryID in DF der MandantenID in CPCE entsprechen.
+-- hierfür die MandantenID in der Tabelle sx_pf_dMandanten in der CPCE Datenbank anschauen
 -- CP ruft diese Prozedur pro Mandant auf 
 -- =============================================
 CREATE PROCEDURE [dbo].[pCP_SelectValuesKoRe]
@@ -68,14 +71,14 @@ BEGIN
 	IF @CompanyCode LIKE 'DF%' 
 		-- This Query Part delivers data from SX DataFactory
 		BEGIN
-			SELECT	 fV.FactoryID
-					,fV.FactoryID +'_' + fV.ProductLineID
-					,fV.ProductID --not a usual case, as values are aggregated
-					,fV.ValueSeriesID
-					--v.Kundenattribut0 AS ICPartner_ID,
-					--v.Kundenattribut1 AS Segment1_ID,
-					--v.Kundenattribut2 AS Segment2_ID,
-					,fV.TimeID/1000 +100 + Left(Right(fV.TimeID,4),2) -- ist a bit strange, as SXIntegrator has a Period Key with coding of financial year
+			SELECT	 fV.FactoryID AS Mandanten_ID
+					,fV.FactoryID +'_' + fV.ProductLineID AS Kostenstellen_ID
+					,fV.ProductID AS Kostentraeger_ID --not a usual case, as values are aggregated
+					,fV.ValueSeriesID AS Konten_ID
+					,'-' AS ICPartner_ID
+					,'-' AS Segment1_ID
+					,'-' AS Segment2_ID
+					,fV.TimeID/1000 +100 + Left(Right(fV.TimeID,4),2) AS Perioden_Key -- ist a bit strange, as SXIntegrator has a Period Key with coding of financial year
 					,0 AS Soll
 					,0 AS Haben
 					,Sum(CAST(fV.ValueInt AS Money) / dVS.Scale) AS Saldo_Periode
