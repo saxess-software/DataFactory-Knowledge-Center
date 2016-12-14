@@ -1,3 +1,5 @@
+![Dynamic Time](DynamicTime.PNG)
+
 
 A Dynamic TimeID is created on runtime from ValueSeries
 
