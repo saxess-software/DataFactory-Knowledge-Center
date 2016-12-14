@@ -104,6 +104,11 @@ UPDATE sx_pf_rRights
 	SET FactoryID = REPLACE(FactoryID,' ',''),
 		ProductLineID = REPLACE(ProductLineID,' ',''),
 		ProductID = REPLACE(ProductID,' ','')
+		
+UPDATE sx_pf_hListValues
+    SET ValueText = REPLACE(ValueText,' ','')
+	WHERE ListID = 'sxValueFormats'		
+
 ````
  
 
