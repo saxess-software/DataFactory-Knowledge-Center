@@ -22,8 +22,11 @@ This manual is written for Excel 2016, in Excel 2010/2013 the process is similar
 ![Query](images/4a.PNG)
 ### Set Value Columns to Decimal-US
 ![Query](images/4b.PNG)
-
+![Query](images/4c.PNG)
+### Load to Datamodel, not into the sheet
 ![Query](images/5.PNG)
+### Create a PivotTable
 ![Query](images/6.PNG)
+### Select Fields for the PivotTable
 ![Query](images/7.PNG)
 
