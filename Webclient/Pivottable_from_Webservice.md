@@ -10,4 +10,20 @@ This manual is written for Excel 2016, in Excel 2010/2013 the process is similar
 
 ![Query](images/1.PNG)
 
+### Enter your URL and credentials
+
+![Query](images/2.PNG)
+
+### Check the column delimiter
+
+![Query](images/3.PNG)
+
+### Set all ID Columns to Type text
+![Query](images/4a.PNG)
+### Set Value Columns to Decimal-US
+![Query](images/4b.PNG)
+
+![Query](images/5.PNG)
+![Query](images/6.PNG)
+![Query](images/7.PNG)
 
