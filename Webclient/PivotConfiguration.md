@@ -1,3 +1,11 @@
+
+### How to use the pivot view in the Webclient
+
+1. API must be 4.0.57 or higher, with the Procedures GET_FactoryPivots, POST_FactoryPivot
+1. the Pivots must be defined per Factory in Table sx_pf_gFactories (in Standard with use of procedure sx_pf_FactorySummary)
+1. you can use any procedure for Webclient, the procedure must have the two parameters @Username and @FactoryID (and not more)
+
+````SQL
 /* 
 	This script creates two standard pivot table configurations for the webclient 
 	in all factories execpt ZT. 
@@ -12,7 +20,7 @@ DELETE FROM dbo.sx_pf_gFactories WHERE PropertyID IN ('Pivot_1','Pivot_2')
 
 DECLARE MyCursor CURSOR FOR
 
-	-- Abfrage füllt Cursor
+	-- Abfrage fÃ¼llt Cursor
 	SELECT FactoryKey,dF.FactoryID FROM dbo.sx_pf_dFactories dF WHERE dF.FactoryID <> 'ZT'
 
 OPEN MyCursor
@@ -81,4 +89,4 @@ WHILE @@FETCH_STATUS = 0
 	END
 CLOSE MyCursor
 DEALLOCATE MyCursor
-
+````
