@@ -33,3 +33,6 @@ This manual is written for Excel 2016, in Excel 2010/2013 the process is similar
 
 ### Select Fields for the PivotTable
 ![Query](images/8.PNG)
+
+### Refresh the Data any time you like
+![Query](images/9.PNG)
