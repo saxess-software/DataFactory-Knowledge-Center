@@ -2,7 +2,13 @@
 #### Basic Join of DataFactory Tables
 This is the basic way, we join the fact table sx_pf_fValues with the dimensions
 
-Delete the joins you dont need to increase speed and keep statement simple
+Delete the joins you dont need to increase speed and keep statement simple. The View must be wraped in a Procedure, if execution shall be able for usual User accourding to right system.
+
+    IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[sx_pf_DemoJoin]') AND type in (N'P', N'PC'))
+    DROP PROCEDURE [dbo].[sx_pf_DemoJoin]
+    GO
+    
+    CREATE Procedure sx_pf_DemoJoin AS 
 
     SELECT 
        fV.FactoryID
@@ -39,3 +45,10 @@ Delete the joins you dont need to increase speed and keep statement simple
 
     WHERE
        dF.FactoryID != 'ZT'  -- Filter the Templates
+       
+    GO
+
+    GRANT EXECUTE ON OBJECT ::[dbo].[DemoJoin] TO pf_PlanningFactoryUser;
+    GRANT EXECUTE ON OBJECT ::[dbo].[DemoJoin] TO pf_PlanningFactoryService;
+
+    GO
