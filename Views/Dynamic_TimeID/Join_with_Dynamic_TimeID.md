@@ -24,6 +24,7 @@ SELECT
   ,dVS.NameShort AS ValueSeriesName
 
   ,COALESCE(dTD.J*10000+dTD.M*100 + 1,fV.TimeID) AS TimeID --dynamic TimeID trumps usual TimeID
+  ,IIF(COALESCE(dTD.J*10000+dTD.M*100 + 1,fV.TimeID)/10000 > 1800,'Timeline','Static') AS TimeType
 
   ,CAST(fV.ValueInt AS money)/dVS.Scale AS Value
   ,fV.ValueText
