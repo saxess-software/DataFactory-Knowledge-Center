@@ -13,6 +13,8 @@ This manual is written for Excel 2016, in Excel 2010/2013 the process is similar
 ### Enter your URL and credentials
 
 ![Query](images/2.PNG)
+![Query](images/2b.PNG)
+
 
 ### Check the column delimiter
 
