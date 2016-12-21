@@ -17,8 +17,10 @@ This manual is written for Excel 2016, in Excel 2010/2013 the process is similar
 
 
 ### Check the column delimiter
-
 ![Query](images/3.PNG)
+
+### Delete the automaticly create step for Typ Definition
+![Query](images/3b.PNG)
 
 ### Set all ID Columns to Type text and Year Month to type integer
 ![Query](images/4a.PNG)
