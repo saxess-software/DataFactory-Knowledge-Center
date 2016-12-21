@@ -20,9 +20,10 @@ This manual is written for Excel 2016, in Excel 2010/2013 the process is similar
 
 ![Query](images/3.PNG)
 
-### Set all ID Columns to Type text
+### Set all ID Columns to Type text and Year Month to type integer
 ![Query](images/4a.PNG)
-### Set Value Columns to Decimal-US
+
+### Set Value Columns to Decimal-US with country coding !
 ![Query](images/4b.PNG)
 ![Query](images/4c.PNG)
 ### Load to Datamodel, not into the sheet
