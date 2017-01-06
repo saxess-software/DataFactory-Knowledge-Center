@@ -16,26 +16,26 @@ All Clients are free of installation, we can use:
 
 
 ## Cloudversion
-Its the easiest way, you can use DataFactory without an own database, we will provide you with your own database on our cloudserver.
+Its the easiest way, you can use DataFactory without an own database, we will provide you with your own database on our cloudserver for single user or multi user access.
 * no installation necessary
 * you can use DataFactory with Excel (portable client) or the webbrowser from every computer with internt access
 * the first time, you must create an online account at www.plannning-factory.com for authentication
 * even the data are located in our cloud you can access them easy for backup and local usage
 	* you can downlaod your data anytime as CSV file or connect to your database direct with Excel PowerQuery
 	* we can provide you daily with an backup of your database
+	* you can access data over our public API
 
 
-Einzelplatzinstallation
+## Single User Installation
+* Installation of Microsoft SQL Server on a local PC
+* activate TCP/IP for the database
+* copy the portable Excel Client on the machine
 
-* SQL Server 2012 Express oder höher
-* aktiviertes TCP/IP Protokoll auf SQL Server
-* Excel
 
-
-Lokales Netzwerk mit Excel Clients
-* zentraler Server mit SQL Server 2012 Express oder höher
-* aktiviertes TCP/IP Protokoll auf SQL Server
-* Excel auf PCs oder auf Terminalserver
+## Local Network with central Server and Excel Clients
+* SQL Server 2012 installed on a server in the local network
+* activate TCP/IP for the database
+* access DataFactory over the portable Excel Client from local computers or from terminal server
 
 
 Lokales Netzwerk mit Excel und Webclients
