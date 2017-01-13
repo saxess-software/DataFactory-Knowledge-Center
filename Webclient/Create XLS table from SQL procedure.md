@@ -46,7 +46,7 @@ in order to change the connection to your desired SQL procedure.
 ![Bild_7](images/Bild7.png)
 
 ### Change the instruction type and the instruction text
-The syntac of the instruction text needs to be as follows:
+The syntax of the instruction text needs to be as follows:
 
 EXEC *name of your procedure* parameter 1, parameter 2, parameter n
 
