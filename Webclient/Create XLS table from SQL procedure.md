@@ -11,13 +11,13 @@ This manual is written for Excel version 2016. The process is identical for Exce
 
 ### Enter the name of SQL server
 
-and use your local login (you don't need to enter neither your username nor your passwort).
+and login using Windows or User/Password.
 
 ![Bild_2](images/Bild 2.png)
 
 ### Select the database
 
-and chose any data table or data view .
+and chose any (small) table or view as temporary target.
 
 ![Bild_3](images/Bild3.png)
 
