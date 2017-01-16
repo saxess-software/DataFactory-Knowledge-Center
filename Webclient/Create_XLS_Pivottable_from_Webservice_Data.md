@@ -17,7 +17,12 @@ This manual is written for Excel 2016, in Excel 2010/2013 the process is similar
 
 
 ### Check the column delimiter
-![Query](images/3.PNG)
+
+If the query has not been loaded correctly/ has not been loaded at all, please use the "refresh"-button. 
+
+In order to move to the next step, please use the "process"-button.
+
+![Query](images/Bild1.png)
 
 ### Delete the automaticly create step for Typ Definition
 ![Query](images/3b.PNG)
