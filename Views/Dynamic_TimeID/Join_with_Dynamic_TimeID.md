@@ -9,7 +9,7 @@ A Dynamic TimeID is created on runtime from ValueSeries
 /* 
 In this view, the usual TimeID is replaced by a dynamic TimeID for Products having this.
 Dynamic TimeID is detected, if the Template has the ValueSeries
-J and M with Numeric Values
+Y, M, D with Numeric Values
 */
 
 
@@ -23,8 +23,8 @@ SELECT
   ,fV.ValueSeriesID
   ,dVS.NameShort AS ValueSeriesName
 
-  ,COALESCE(dTD.J*10000+dTD.M*100 + 1,fV.TimeID) AS TimeID --dynamic TimeID trumps usual TimeID
-  ,IIF(COALESCE(dTD.J*10000+dTD.M*100 + 1,fV.TimeID)/10000 > 1800,'Timeline','Static') AS TimeType
+  ,COALESCE(dTD.Y*10000+dTD.M*100 + D,fV.TimeID) AS TimeID --dynamic TimeID trumps usual TimeID
+  ,IIF(COALESCE(dTD.Y*10000+dTD.M*100 + D,fV.TimeID)/10000 > 1800,'Timeline','Static') AS TimeType
 
   ,CAST(fV.ValueInt AS money)/dVS.Scale AS Value
   ,fV.ValueText
@@ -55,8 +55,9 @@ FROM
 				SELECT
 					 ProductKey
 					,TimeID
-					,[J]
+					,[Y]
 					,[M]
+					,[D]
 				FROM
 					(
 					SELECT 
@@ -67,10 +68,10 @@ FROM
 
 					FROM sx_pf_fValues
 
-					WHERE ValueSeriesID IN ('J','M')
+					WHERE ValueSeriesID IN ('Y','M','D')
 					) AS Source
 
-				PIVOT(MAX(ValueInt) FOR ValueSeriesID IN ([J],[M])
+				PIVOT(MAX(ValueInt) FOR ValueSeriesID IN ([Y],[M],[D])
 					
 					) AS Pivottable
 
