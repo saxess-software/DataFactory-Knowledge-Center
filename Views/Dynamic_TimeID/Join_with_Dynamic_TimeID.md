@@ -23,8 +23,12 @@ SELECT
   ,fV.ValueSeriesID
   ,dVS.NameShort AS ValueSeriesName
 
-  ,COALESCE(dTD.Y, fV.TimeID/10000) *10000+ COALESCE(dTD.M,(fV.TimeID/100)%100)*100 + COALESCE(dTD.D,fV.TimeID%10000) AS TimeID --dynamic TimeID parts trumps usual TimeID parts
-  ,IIF(COALESCE(dTD.Y,0) + COALESCE(dTD.M,0) + COALESCE(dTD.D,0) =0,'Timeline','DynamicTime') AS TimeType
+  ,COALESCE(dTD.Y, fV.TimeID/10000)		AS [Year]
+  ,COALESCE(dTD.M,(fV.TimeID/100)%100)		AS [Month]
+  ,COALESCE(dTD.D,fV.TimeID%100)		AS [Day]
+  ,DatePart(WK,DATEFROMPARTS(COALESCE(dTD.Y, fV.TimeID/10000),COALESCE(dTD.M,(fV.TimeID/100)%100),COALESCE(dTD.D,fV.TimeID%100))) AS [Week]
+  ,COALESCE(dTD.Y, fV.TimeID/10000) *10000+ COALESCE(dTD.M,(fV.TimeID/100)%100)*100 + COALESCE(dTD.D,fV.TimeID%100) AS TimeID --dynamic TimeID parts trumps usual TimeID parts
+,IIF(COALESCE(dTD.Y,0) + COALESCE(dTD.M,0) + COALESCE(dTD.D,0) =0,'Timeline','DynamicTime') AS TimeType
 
   ,CAST(fV.ValueInt AS money)/dVS.Scale AS Value
   ,fV.ValueText
@@ -81,6 +85,7 @@ FROM
                 fV.TimeID = dTD.TimeID
 WHERE
 	fV.ValueSeriesID NOT IN ('Y','M','D') AND
+	--fV.ValueInt <> 0 AND -- activate if only numeric values needed
 	dF.FactoryID != 'ZT' -- Filter the Templates
   
 ````
