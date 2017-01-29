@@ -20,7 +20,11 @@ Delete the joins you dont need to increase speed and keep statement simple. The 
       ,fV.ValueSeriesID
       ,dVS.NameShort AS ValueSeriesName
       ,TimeID
-      ,CAST(fV.ValueInt AS money)/dVS.Scale AS Value
+      ,TimeID/10000 AS [Year]
+	  ,TimeID/100%100 AS [Month]
+	  ,TimeID%100 AS [Day]
+	  ,CONVERT(Date,CAST(TimeID AS NVARCHAR)) AS [Date]
+      ,CAST(fV.ValueInt AS Money)/dVS.Scale AS Value
       ,fV.ValueText
 
     FROM 
