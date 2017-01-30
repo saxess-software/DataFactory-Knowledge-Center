@@ -48,7 +48,7 @@ Its the easiest way, you can use DataFactory without any database installation, 
 ## Option 3c: enhance security using https for the webclient in the internet
 * create a SHA-2 256 bit certificate
 * check that User "FactoryService" is really only exists for DataFactory (and has NEVER administrator rights)
-* check that the dbowner of the database is administrator or somebody else (but NEVER "FactoryService"
+* check that the dbowner of the database is administrator or somebody else (but NEVER "FactoryService")
 
 ## If we shall develop custom solutions for you on your DataFactory, we need:
 * possibility to create a RDP connection, using VPN oder Remote Desktop Gateway (please no access running in a webbrowser)
