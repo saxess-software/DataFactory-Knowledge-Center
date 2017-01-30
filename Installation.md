@@ -32,8 +32,8 @@ Its the easiest way, you can use DataFactory without any database installation, 
 ## Option 3a: Local Network with central Server and Excel Clients
 * install SQL Server (with Management Studio) on a server in the local network
 * activate TCP/IP for the database
-* define a ActiveGroup which gets access to DataFactory
-* give this AD Group the role "pf_PlanningFactoryUser" in the the DataFactory Database
+* define a ActiveGroup (or add Users) which gets access to DataFactory
+* give this AD Group (or the Users) the role "pf_PlanningFactoryUser" in the the DataFactory Database
 * put the portable Excel Client on a network drive and define a connection using WindowsAuth
 * the portable Excel Client is write protected and can be uses from all users simulataneus
 
