@@ -6,32 +6,29 @@ The name of database objects (tables, views, procedures, triggers, helping scrip
 * what is its use (staging data, calculation, materialization,....) 
 * is is something temporary, self rebuild or something permanent
 
-We must know this fast to:  
-* transport all custom things fast to a new database in case of updates / rollouts
-* create reports about all custom things in the database
 
-For naming things, we can use   
-* the schema 
-* a prefix on object name
-* a suffix on object name
-* the description fields inside an object
+
+For naming things, we use   
+[usage].[type][object]
+in sxdf. / sudf. schema the object has a usage prefix (GET_, POST_, DATAOUTPUT_...)
+
 
 List of typical strings, to name things  
-* c - custom
-* st or stage - staging (temporary saved source data
-* p or sp - stored procedure
+* sp - stored procedure
 * t - table
 * v - view
 * fn - function
-* qry - query
+* mqt - materialized query
+* tr - trigger
 
-Rules (work in progress)  
-* use the schema to exlain the use and type of things
-    * stating_t.* for staging tables
-    * staging_v.* for staging view
-    * calc_v.* for internal calculation view
-    * calc_sp.* for internal calcuation stored procedures
-    * calc_mqt.* for internal calculated tables (materialized query table)
-    * result_v.* for views, which deliver results to customer
-    * result_t.* for tables, which deliver results to customer
-    * result_sp.* for calculations, which deliver results to customer
+Rules
+* use the schema to exlain the use of things
+    * sxdf.* for system objects DataFactory
+    * staging.* for staging
+    * sudf.* for solution
+    * calc.* for internal calculation 
+    * result.* for views, which deliver results to customer
+    * tmp.* for temporary data
+    * import.* for import process
+ 
+
