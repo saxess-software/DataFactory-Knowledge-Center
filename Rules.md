@@ -30,5 +30,6 @@ Rules
     * result.* for views, which deliver results to customer
     * tmp.* for temporary data
     * import.* for import process
+    * param.* for parameter and mapping tables (maybe materialized Products)
  
 
