@@ -88,4 +88,4 @@ Give AppData Write Rights to FactoryService
 Tell the users the URL http://[Servername]\[DataBaseName]  
 ![IIS](images/WebComponents/27.PNG)
 
-Enjoy for 5 minutes.
+Enjoy for 5 minutes - and go on.
