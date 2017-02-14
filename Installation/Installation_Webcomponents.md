@@ -61,7 +61,8 @@ Open config.ini from a Admin Notepad
 Delete SQL based connection string and use Windows Auth  
 ![IIS](images/WebComponents/13.PNG)
 
-Do configuration of connection string to the DataFactory Database    
+Do configuration of connection string to the DataFactory Database  
+WindowsAuth = true/false means here if the Users will be identified by Windows or sxIDServer.
 ![IIS](images/WebComponents/14.PNG)
 
 Set Identity of Application Pool to FactoryService   
@@ -73,7 +74,7 @@ Set Timeout
 Set Always running  
 ![IIS](images/WebComponents/19.PNG)
 
-Restart Website  
+Restart Webserver (not only site) - as Site is "AlwaysRunning"
 ![IIS](images/WebComponents/22.PNG)
 
 You should see this in any browser on localhost  
