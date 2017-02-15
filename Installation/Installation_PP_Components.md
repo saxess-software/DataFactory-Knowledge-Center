@@ -1,4 +1,4 @@
-## Installation Preparemtens
+## Installation Preparemtens (Professional Planner)
 If DataFactory is used togehter with Professional Planner, some limitations are important
 * PP can't access Excel 64 Installations, only Excel 32 Bit
 * PP should be used with SQL Server 2012 SP3
