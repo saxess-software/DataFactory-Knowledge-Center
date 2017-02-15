@@ -86,7 +86,13 @@ You should see your Factory on localhost/[DataBaseName]
 Give AppData Write Rights to FactoryService  
 ![IIS](images/WebComponents/25.PNG)
 
-Tell the users the URL http://[Servername]\[DataBaseName]  
+Tell the users the URL http://[Servername].Domain\[DataBaseName]  This should be FQDN e.g. http://web1.sx.intern/DataFactory
 ![IIS](images/WebComponents/27.PNG)
+
+Other things to think on:  
+* Maybe you must add this URL to the trusted Website for Internet Explorer
+* Firefox don't support WindowsAuth in default - there is always a Pop-Up for credentials
+* IE and Edge support WindowsAuth with Single SignOn
+
 
 Enjoy for 5 minutes - and go on.
