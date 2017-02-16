@@ -31,5 +31,6 @@ Rules
     * tmp.* for temporary data
     * import.* for import process
     * param.* for parameter and mapping tables (maybe materialized Products)
+    * control.* for controlling and monitoring
  
 
