@@ -14,7 +14,7 @@ Add Windows Auth to IIS
 Add ISAPI and ASP.NET 4.5  
 ![ISAPI](images/WebComponents/3.PNG)
 
-### Create a Windows User "FactoryService" - a Standard User, NO Admin Rights
+### Create a DOMAIN User "Domain\FactoryService" - a Standard User, NO Admin Rights anywhere
 ![FactoryService](images/WebComponents/3b.PNG)
 
 Add this user to SQL Server  
