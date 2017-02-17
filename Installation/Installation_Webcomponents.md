@@ -15,6 +15,7 @@ Add ISAPI and ASP.NET 4.5
 ![ISAPI](images/WebComponents/3.PNG)
 
 ### Create a DOMAIN User "Domain\FactoryService" - a Standard User, NO Admin Rights anywhere
+(at the screenshot the domain is missing, we learnt it a bit later the hard way..)
 ![FactoryService](images/WebComponents/3b.PNG)
 
 Add this user to SQL Server  
