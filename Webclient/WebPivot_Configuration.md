@@ -59,7 +59,7 @@ WHILE @@FETCH_STATUS = 0
 			(@FactoryKey, @FactoryID, N'Pivot_5', N'sx_pf_DATAOUTPUT_TextValues', N'Text', N'', N'', N'', 0, 0, 0, N''),
 					
 			-- Sixth Pivot Table
-			(@FactoryKey, @FactoryID, N'Pivot_5', N'sx_pf_DATAOUTPUT_NumericValues', N'Numeric', N'', N'', N'', 0, 0, 0, N'')
+			(@FactoryKey, @FactoryID, N'Pivot_6', N'sx_pf_DATAOUTPUT_NumericValues', N'Numeric', N'', N'', N'', 0, 0, 0, N'')
 
 		FETCH MyCursor INTO  @FactoryKey, @FactoryID
 END
