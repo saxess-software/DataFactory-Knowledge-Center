@@ -1,9 +1,8 @@
 
 ### How to use the pivot view in the Webclient
 
-1. API must be 4.0.57 or higher, with the Procedures GET_FactoryPivots, POST_FactoryPivot
-1. the Pivots must be defined per Factory in Table sx_pf_gFactories (in Standard with use of procedure sx_pf_FactorySummary)
-1. you can use any procedure for Webclient, the procedure must have the two parameters @Username and @FactoryID as leading parameters
+1. This script creates six standard pivot datasources for the Webclient
+1. you can also use any other procedure for the Webclient, this procedure must have the two parameters @Username and @FactoryID as leading parameters
 1. if the used procedure has more parameters (like ProductlineID etc.) this must be declared as optional with standard parameter in the procedure (... @ProductlineID NVARCHAR(255)='')
 
 ````SQL
