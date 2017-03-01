@@ -1,8 +1,9 @@
 
-A Cursor is a command of "Do-for-each-element" 
-It contains two basic steps:
+A Cursor is a command of "Do-for-each-element"  
+It contains two basic steps:  
+
 1. With a SELECT statement you select a number of rows to do something with
-2. With a WHILE LOOP you do something with each of this rows
+1. With a WHILE LOOP you do something with each of this rows
 
 ````SQL
 
