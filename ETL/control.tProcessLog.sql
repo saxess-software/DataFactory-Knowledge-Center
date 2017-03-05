@@ -3,15 +3,15 @@
 Table for storing process informations
 DataFactory 4.0
 Gerd Tautenhahn for saxess-software gmbh
-02/2017
+03/2017
 */
 
 
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[control].[ProcessLog]') AND type in (N'U'))
-DROP TABLE [control].[ProcessLog]
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[control].[tProcessLog]') AND type in (N'U'))
+DROP TABLE [control].[tProcessLog]
 GO
 
-CREATE TABLE control.ProcessLog
+CREATE TABLE control.tProcessLog
 (
     EntryKey BIGINT NOT NULL IDENTITY (1,1),
 	ProcessGroup NVARCHAR(255) NOT NULL,

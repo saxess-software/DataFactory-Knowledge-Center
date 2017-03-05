@@ -5,15 +5,15 @@ Validations can run regualy and can be first writen as 'ToDo' from a LeaderProce
 validation process
 DataFactory 4.0
 Gerd Tautenhahn for saxess-software gmbh
-02/2017
+03/2017
 */
 
 
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[control].[ProcessValidation]') AND type in (N'U'))
-DROP TABLE [control].[ProcessValidation]
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[control].[tProcessValidation]') AND type in (N'U'))
+DROP TABLE [control].[tProcessValidation]
 GO
 
-CREATE TABLE control.ProcessValidation
+CREATE TABLE control.tProcessValidation
 (
     EntryKey BIGINT NOT NULL IDENTITY (1,1), 
 	ValidationDate DATE NOT NULL,				-- Day of Validation

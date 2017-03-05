@@ -10,7 +10,7 @@ The name of database objects (tables, views, procedures, triggers, helping scrip
 
 For naming things, we use   
 [usage].[type][object]
-in sxdf. / sudf. schema the object has a usage prefix (GET_, POST_, DATAOUTPUT_...)
+in sxdf. / sudf. schema the object has a usage prefix (GET_, POST_, DATAOUTPUT_...) if it is public
 
 
 List of typical strings, to name things  
@@ -33,4 +33,8 @@ Rules
     * param.* for parameter and mapping tables (maybe materialized Products)
     * control.* for controlling and monitoring
  
+
+ ### Rules for issues
+ Create small issues, it should be possible to close a issues with one commit
+
 
