@@ -8,4 +8,6 @@ https://www.microsoft.com/de-de/download/details.aspx?id=53167
 ![Pic](images/SQL/Download_2014.PNG)
 
 
+Activate TCP/IP Protokoll in SQL Server Konfiguration Manager after Installation.
+
 
