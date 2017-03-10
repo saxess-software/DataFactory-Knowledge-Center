@@ -6,12 +6,9 @@ The name of database objects (tables, views, procedures, triggers, helping scrip
 * what is its use (staging data, calculation, materialization,....) 
 * is is something temporary, self rebuild or something permanent
 
-
-
 For naming things, we use   
 [usage].[type][object]
-in sxdf. / sudf. schema the object has a usage prefix (GET_, POST_, DATAOUTPUT_...) if it is public
-
+in sxdf. schema the object has a usage prefix (GET_, POST_, DATAOUTPUT_...) if it is public
 
 List of typical strings, to name things  
 * sp - stored procedure
@@ -23,15 +20,14 @@ List of typical strings, to name things
 
 Rules
 * use the schema to exlain the use of things
-    * sxdf.* for system objects DataFactory
-    * staging.* for staging
-    * sudf.* for solution
+    * sxdf.* for system objects DataFactory (tables, views, sp, fn)
+    * staging.* for staging source data in raw format (same dataformat, null values possible) or adjusting this
+    * load.* for data prepared for loading, already in datafactory consistency (correct types, scaled, no null values) 
+    * import.* for import processes, which writes to final destination tables (sxdf.*, param.*)
     * calc.* for internal calculation 
-    * result.* for views, which deliver results to customer
-    * tmp.* for temporary data
-    * import.* for import process
     * param.* for parameter and mapping tables (maybe materialized Products)
-    * control.* for controlling and monitoring
+    * control.* for controlling and monitoring objects
+    * result.* for objects, which deliver results to customer
  
 
  ### Rules for issues
