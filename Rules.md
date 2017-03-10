@@ -28,9 +28,9 @@ Rules
     * param.* for parameter and mapping tables (maybe materialized Products)
     * control.* for controlling and monitoring objects
     * result.* for objects, which deliver results to customer
- 
 
- ### Rules for issues
- Create small issues, it should be possible to close a issues with one commit
+
+### Rules for issues
+Create small issues, it should be possible to close a issues with one commit
 
 
