@@ -22,7 +22,7 @@ Rules
 * use the schema to exlain the use of things
     * sxdf.* for system objects DataFactory (tables, views, sp, fn)
     * staging.* for staging source data in raw format (same dataformat, null values possible) or adjusting this
-    * load.* for data prepared for loading, already in datafactory consistency (correct types, scaled, no null values) 
+    * load.* fixed schema, for data prepared for loading, already in datafactory consistency (correct types, scaled, no null values) 
     * import.* for import processes, which writes to final destination tables (sxdf.*, param.*)
     * calc.* for internal calculation 
     * param.* for parameter and mapping tables (maybe materialized Products)
