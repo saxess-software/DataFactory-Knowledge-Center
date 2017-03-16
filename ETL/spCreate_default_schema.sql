@@ -1,7 +1,7 @@
 /*
 Script to create the DataFactory Default Schemas
 Gerd Tautenhahn for saxess-software gmbh
-02/2017 for DataFactory 4.0
+03/2017 for DataFactory 4.0
 */
 
 
@@ -26,35 +26,13 @@ IF NOT EXISTS (
 	END
 GO
 
-
 IF NOT EXISTS (
 	SELECT  schema_name
 	FROM    information_schema.schemata
-	WHERE   schema_name = 'sudf' ) 
+	WHERE   schema_name = 'load' ) 
  
 	BEGIN
-		EXEC sp_executesql N'CREATE SCHEMA sudf AUTHORIZATION dbo'   
-	END
-GO
-
-
-IF NOT EXISTS (
-	SELECT  schema_name
-	FROM    information_schema.schemata
-	WHERE   schema_name = 'result' ) 
- 
-	BEGIN
-		EXEC sp_executesql N'CREATE SCHEMA result AUTHORIZATION dbo'   
-	END
-GO
-
-IF NOT EXISTS (
-	SELECT  schema_name
-	FROM    information_schema.schemata
-	WHERE   schema_name = 'tmp' ) 
- 
-	BEGIN
-		EXEC sp_executesql N'CREATE SCHEMA tmp AUTHORIZATION dbo'   
+		EXEC sp_executesql N'CREATE SCHEMA load AUTHORIZATION dbo'   
 	END
 GO
 
@@ -71,12 +49,23 @@ GO
 IF NOT EXISTS (
 	SELECT  schema_name
 	FROM    information_schema.schemata
+	WHERE   schema_name = 'calc' ) 
+ 
+	BEGIN
+		EXEC sp_executesql N'CREATE SCHEMA calc AUTHORIZATION dbo'   
+	END
+GO
+
+IF NOT EXISTS (
+	SELECT  schema_name
+	FROM    information_schema.schemata
 	WHERE   schema_name = 'param' ) 
  
 	BEGIN
 		EXEC sp_executesql N'CREATE SCHEMA param AUTHORIZATION dbo'   
 	END
 GO
+
 
 IF NOT EXISTS (
 	SELECT  schema_name
@@ -87,3 +76,19 @@ IF NOT EXISTS (
 		EXEC sp_executesql N'CREATE SCHEMA control AUTHORIZATION dbo'   
 	END
 GO
+
+IF NOT EXISTS (
+	SELECT  schema_name
+	FROM    information_schema.schemata
+	WHERE   schema_name = 'result' ) 
+ 
+	BEGIN
+		EXEC sp_executesql N'CREATE SCHEMA result AUTHORIZATION dbo'   
+	END
+GO
+
+
+
+
+
+
