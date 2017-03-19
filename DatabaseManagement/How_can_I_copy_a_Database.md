@@ -1,7 +1,7 @@
 
 There are different ways to copy a database, you must consider
-* do you have physical access to the database server or to a shared file on it
-* the SQL Server target version, if the target version is lower (e.g. from SQL 2014 to SQL 2012)
+* do you have physical access to the database server or to a shared folder on it
+* the SQL Server target version, if the target version is lower (e.g. from SQL 2014 to SQL 2012) a usual backup will not work
 * if you have Express Edition or Standard Edition of SQL Server
 
 
