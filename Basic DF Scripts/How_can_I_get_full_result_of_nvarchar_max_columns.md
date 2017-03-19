@@ -2,6 +2,7 @@ If you have any query, which returns long varchars, SQL Servermanagement Studio 
 ## 1. Increase the ammount of showed characters in SSMS
 * you can increase up to a maximum of 65k characters
 
+![this](pictures/Max_Char_SSMS.PNG)
 
 
 ## 2. Export the Data
@@ -9,11 +10,13 @@ You can export the data with the export wizard of SSMS, if:
 * you have not SQL Expess - it don't have this function
 * you don't want to export the results of an Stored procedure, which uses internal an #table (not supported from SSMS)
 
+Use a custom query to export this data.
 
-## 3. Store and export of bcp
+## 3. Store in a table and export table with bcp to a file
 It works always
 
 1. Execute this to store the results in a table
+	````SQL
 	IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[tmpout_Export]') AND type in (N'U'))
 	DROP TABLE [dbo].[tmpout_Export]
 	GO
@@ -22,6 +25,9 @@ It works always
 		)
 	INSERT INTO tmpout_Export
 		EXEC sx_pf_EXPORT_Productline 'SQL','AT','1',1
+	````
 
-2. Copy this table Content in a file over a .bat file with this command
+2. Copy this table Content in a file over a .bat file with this command  
 	bcp.exe PlanningFactoryCars.dbo.tmpout_Export out import.sql -T -S localhost -n  -e error.log -c -C65001
+
+![this](pictures/bcp.PNG)
