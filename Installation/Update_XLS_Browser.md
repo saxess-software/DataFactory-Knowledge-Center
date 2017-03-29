@@ -3,15 +3,15 @@
 It very simple - you just copy the ID, Keys and settings folder from the "+" folder of the old version to the new version.
 
 ### Download the new Version
-![pic](images/download.PNG)
+![pic](images/update/download.PNG)
 
 ### Unzip the new Version
-![pic](images/extract.PNG)
+![pic](images/update/extract.PNG)
 
 ### Copy the ID, Keys, Settings folder of the old version
 (use Strg + Mouse to select multiple folders)
-![pic](images/copy.PNG)
+![pic](images/update/copy.PNG)
 
 ### Paste the ID, Keys, Settings folder to the new version, replacing existing content
 (use Strg + Mouse to select multiple folders)
-![pic](images/paste.PNG)
+![pic](images/update/paste.PNG)
