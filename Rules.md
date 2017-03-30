@@ -17,6 +17,7 @@ List of typical strings, to name things
 * fn - function
 * mqt - materialized query
 * tr - trigger
+* scr - script
 
 Rules
 * use the schema to exlain the use of things
