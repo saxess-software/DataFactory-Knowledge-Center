@@ -27,6 +27,6 @@ CREATE TABLE control.tProcessValidation
 	ErrorLevel NVARCHAR(255) NOT NULL,
 	[Message] NVARCHAR(MAX) NOT NULL
 
-	CONSTRAINT PK_control_ProcessValidation PRIMARY KEY CLUSTERED (EntryKey)
+	CONSTRAINT PK_control_tProcessValidation PRIMARY KEY CLUSTERED (EntryKey)
 )
 GO
