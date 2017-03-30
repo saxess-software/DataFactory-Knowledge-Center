@@ -15,7 +15,7 @@ GO
 CREATE TABLE control.tMonitoring
 (
     	EntryKey BIGINT NOT NULL IDENTITY (1,1),
-	Group NVARCHAR(255) NOT NULL,
+	MainGroup NVARCHAR(255) NOT NULL,
 	SubGroup NVARCHAR(255) NOT NULL,
 	Measure NVARCHAR(255) NOT NULL,
 	MonitoringDateTime DATETIME NOT NULL,
