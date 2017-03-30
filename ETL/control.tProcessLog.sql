@@ -22,6 +22,6 @@ CREATE TABLE control.tProcessLog
 	EffectedRows BIGINT NOT NULL,
 	Message NVARCHAR(MAX)
 
-	CONSTRAINT PK_control_ProcessLog PRIMARY KEY CLUSTERED (EntryKey)
+	CONSTRAINT PK_control_tProcessLog PRIMARY KEY CLUSTERED (EntryKey)
 )
 GO
