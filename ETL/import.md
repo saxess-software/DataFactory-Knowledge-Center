@@ -5,3 +5,8 @@ Staging Fields in Datetime
 ```` SQL
 IIF(Year([DatatimeColumn],'',Convert(nvarchar,[DatatimeColumn],104))
 ````
+
+* to filter Dates, keep handling of empty dates in mind
+```` SQL
+AND (austrittsdatum >= DATEFROMPARTS(@Jahr, @Monat,1) OR Year(austrittsdatum) = 1900)
+````
