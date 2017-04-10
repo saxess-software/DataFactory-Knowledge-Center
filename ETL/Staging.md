@@ -15,7 +15,7 @@ There are some advantages, compared to the option to import them direct with a S
     * stage data - check for problems - import only when check passed
 * you can stage "online" and import "offline"
 
-`````SQL
+````SQL
 CREATE TABLE staging.Artikel (
    MandantenID NVARCHAR(255) NOT NULL
   ,ArtikelID NVARCHAR(255) NOT NULL
@@ -32,5 +32,16 @@ CREATE TABLE staging.Artikel (
     WHERE
       Aktiv = TRUE
 ````
+ 
+#### Formats in Staging
+ 
+##### Dates
+Its mostly recommend to stage Dates as Datetime  
+Advantages
+* non valid dates will crash in loading
+* dates are easy to filter and to compare
+ 
+Disadvantages
+* empty fields will get Date 1900-01-01
  
   
