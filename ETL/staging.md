@@ -37,6 +37,7 @@ CREATE TABLE staging.Artikel (
  
 ##### Dates
 Its mostly recommend to stage Dates as Datetime  
+  
 Advantages
 * non valid dates will crash in loading
 * dates are easy to filter and to compare
