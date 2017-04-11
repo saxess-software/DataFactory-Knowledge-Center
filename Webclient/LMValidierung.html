@@ -1,0 +1,322 @@
+
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8"> 
+		<title>Aufbau einer Tabelle</title>
+		<style> 
+		table, th, td {
+		border: 1px solid #040;
+		border-collapse: collapse;
+		font-family: Verdana;
+		font-size: 1em;
+		text-align: center;
+		padding: 5px;
+		} 
+		
+		td.sopra {
+				background-color: #DB1D2B;
+				color: white;
+				text-align: center;
+			
+			}
+		td.borderwhiteleft
+		{
+		border-left: 1px solid white;
+		}
+		td.borderwhitetop
+		{
+		border-top: 1px solid white;
+		}
+		td.borderwhitebottom
+		{
+		border-bottom: 1px solid white;
+		}
+		
+		tr.sum{
+			background-color: lightgrey;
+			font-weight: bold;
+		}
+		
+		
+		</style>
+	</head>
+	<body>
+
+		<table style="width:100%">
+			<tbody>
+				<tr>
+					<td colspan="2" class="borderwhiteleft borderwhitetop borderwhitebottom"></td>
+					<td colspan="3" class="sopra">201701</td>
+					<td colspan="3" class="sopra">201702</td>
+					<td colspan="3" class="sopra">201703</td>
+					<td class="sopra">201704</td>
+				</tr>
+				<tr>
+					<td colspan="2" class="borderwhiteleft borderwhitetop"></td>
+					<td class="sopra">Act</td>
+					<td class="sopra">FC</td>
+					<td class="sopra">Delta Act FC</td>
+					<td class="sopra">Act</td>
+					<td class="sopra">FC</td>
+					<td class="sopra">Delta Act FC</td>
+					<td class="sopra">Act</td>
+					<td class="sopra">FC</td>
+					<td class="sopra">Delta Act FC</td>
+					<td class="sopra"></td>
+				</tr>
+				<tr>
+					<td rowspan="4">Unpaid Leave</td>
+					<td>agauchie</td>
+					<td>0,1</td>
+					<td>0,3</td>
+					<td>-0,2</td>
+					<td>0,1</td>
+					<td>0,3</td>
+					<td>-0,2</td>
+					<td>0,1</td>
+					<td>0,3</td>
+					<td>-0,2</td>
+					<td>0,3</td>
+				</tr>
+				<tr>
+					<td>ajurisic</td>
+					<td>0,2</td>
+					<td>0,2</td>
+					<td>0,1</td>
+					<td>0,2</td>
+					<td>0,2</td>
+					<td>0,1</td>
+					<td>0,2</td>
+					<td>0,2</td>
+					<td>0,1</td>	
+					<td>0,1</td>					
+				</tr>
+				<tr>
+					<td>hlemcke</td>
+					<td>0,2</td>
+					<td>0,2</td>
+					<td>0,1</td>
+					<td>0,2</td>
+					<td>0,2</td>
+					<td>0,1</td>
+					<td>0,2</td>
+					<td>0,2</td>
+					<td>0,1</td>
+					<td>0,1</td>					
+				</tr>
+				<tr>
+					<td>mbluschk</td>
+					<td>0,2</td>
+					<td>0,2</td>
+					<td>0,1</td>
+					<td>0,2</td>
+					<td>0,2</td>
+					<td>0,1</td>
+					<td>0,2</td>
+					<td>0,2</td>
+					<td>0,1</td>
+					<td>0,1</td>					
+				</tr>
+				<tr class="sum">
+					<td colspan="2">Unpaid Leave Gesamt</td>			
+					<td>0,1</td>
+					<td>0,3</td>
+					<td>-0,2</td>
+					<td>0,1</td>
+					<td>0,3</td>
+					<td>-0,2</td>
+					<td>0,1</td>
+					<td>0,3</td>
+					<td>-0,2</td>
+					<td>0,3</td>
+				</tr>
+				<tr>
+					<td rowspan="6">Unsold days</td>
+					<td>Sales</td>
+					<td>0,1</td>
+					<td>0,3</td>
+					<td>-0,2</td>
+					<td>0,1</td>
+					<td>0,3</td>
+					<td>-0,2</td>
+					<td>0,1</td>
+					<td>0,3</td>
+					<td>-0,2</td>
+					<td>0,3</td>
+				</tr>
+				<tr>
+					<td>Struktur</td>
+					<td>0,2</td>
+					<td>0,2</td>
+					<td>0,1</td>
+					<td>0,2</td>
+					<td>0,2</td>
+					<td>0,1</td>
+					<td>0,2</td>
+					<td>0,2</td>
+					<td>0,1</td>	
+					<td>0,1</td>					
+				</tr>
+				<tr>
+					<td>Training</td>
+					<td>0,2</td>
+					<td>0,2</td>
+					<td>0,1</td>
+					<td>0,2</td>
+					<td>0,2</td>
+					<td>0,1</td>
+					<td>0,2</td>
+					<td>0,2</td>
+					<td>0,1</td>
+					<td>0,1</td>					
+				</tr>
+				<tr>
+					<td>Unassigned</td>
+					<td>0,2</td>
+					<td>0,2</td>
+					<td>0,1</td>
+					<td>0,2</td>
+					<td>0,2</td>
+					<td>0,1</td>
+					<td>0,2</td>
+					<td>0,2</td>
+					<td>0,1</td>
+					<td>0,1</td>					
+				</tr>
+				<tr>
+					<td>AZK Abbau (+)</td>
+					<td>0,2</td>
+					<td>0,2</td>
+					<td>0,1</td>
+					<td>0,2</td>
+					<td>0,2</td>
+					<td>0,1</td>
+					<td>0,2</td>
+					<td>0,2</td>
+					<td>0,1</td>
+					<td>0,1</td>					
+				</tr>
+				<tr>
+					<td>AZK Abbau (-)</td>
+					<td>0,2</td>
+					<td>0,2</td>
+					<td>0,1</td>
+					<td>0,2</td>
+					<td>0,2</td>
+					<td>0,1</td>
+					<td>0,2</td>
+					<td>0,2</td>
+					<td>0,1</td>
+					<td>0,1</td>					
+				</tr>
+				<tr class="sum">
+					<td colspan="2">Unsold days Gesamt</td>			
+					<td>0,1</td>
+					<td>0,3</td>
+					<td>-0,2</td>
+					<td>0,1</td>
+					<td>0,3</td>
+					<td>-0,2</td>
+					<td>0,1</td>
+					<td>0,3</td>
+					<td>-0,2</td>
+					<td>0,3</td>
+				</tr>
+				<tr>
+					<td rowspan="4">Productive days</td>
+					<td>agauchie</td>
+					<td>0,1</td>
+					<td>0,3</td>
+					<td>-0,2</td>
+					<td>0,1</td>
+					<td>0,3</td>
+					<td>-0,2</td>
+					<td>0,1</td>
+					<td>0,3</td>
+					<td>-0,2</td>
+					<td>0,3</td>
+				</tr>
+				<tr>
+					<td>ajurisic</td>
+					<td>0,2</td>
+					<td>0,2</td>
+					<td>0,1</td>
+					<td>0,2</td>
+					<td>0,2</td>
+					<td>0,1</td>
+					<td>0,2</td>
+					<td>0,2</td>
+					<td>0,1</td>	
+					<td>0,1</td>					
+				</tr>
+				<tr>
+					<td>hlemcke</td>
+					<td>0,2</td>
+					<td>0,2</td>
+					<td>0,1</td>
+					<td>0,2</td>
+					<td>0,2</td>
+					<td>0,1</td>
+					<td>0,2</td>
+					<td>0,2</td>
+					<td>0,1</td>
+					<td>0,1</td>					
+				</tr>
+				<tr>
+					<td>mbluschk</td>
+					<td>0,2</td>
+					<td>0,2</td>
+					<td>0,1</td>
+					<td>0,2</td>
+					<td>0,2</td>
+					<td>0,1</td>
+					<td>0,2</td>
+					<td>0,2</td>
+					<td>0,1</td>
+					<td>0,1</td>					
+				</tr>
+				<tr class="sum">
+					<td colspan="2">Productive days Gesamt</td>			
+					<td>0,1</td>
+					<td>0,3</td>
+					<td>-0,2</td>
+					<td>0,1</td>
+					<td>0,3</td>
+					<td>-0,2</td>
+					<td>0,1</td>
+					<td>0,3</td>
+					<td>-0,2</td>
+					<td>0,3</td>
+				</tr>
+				<tr class="sum">
+					<td colspan="2">Gesamtergebnis</td>			
+					<td>0,1</td>
+					<td>0,3</td>
+					<td>-0,2</td>
+					<td>0,1</td>
+					<td>0,3</td>
+					<td>-0,2</td>
+					<td>0,1</td>
+					<td>0,3</td>
+					<td>-0,2</td>
+					<td>0,3</td>
+				</tr>
+				<tr class="sum">
+					<td colspan="2">NIT %</td>			
+					<td>0,21</td>
+					<td>0,3</td>
+					<td>-0,2</td>
+					<td>0,1</td>
+					<td>0,3</td>
+					<td>-0,2</td>
+					<td>0,1</td>
+					<td>0,3</td>
+					<td>-0,2</td>
+					<td>0,3</td>
+				</tr>
+			</tbody>
+		</table> 
+
+	</body>
+ </html>
