@@ -4,15 +4,15 @@ Example to create a simple Mapping / Lookuptable from a single DataFactory Produ
 ````SQL
 SELECT 
 	 -- the needed ValueSeries
-	 [1] AS Profitcenter
-	,[UV]
+	 1 AS Profitcenter
+	,UV
 FROM
 	(
 		SELECT 
 			TimeID
 			,ValueSeriesID
 			--the Value, it must one column - so squeeze it if different types
-			,IIF(ValueSeriesID = '1',ValueText,CAST(CAST(ValueInt AS Money)/100 AS NVARCHAR)) AS Value
+			,IIF(IsNumeric = 0,ValueText,CAST(CAST(ValueInt AS Money)/100 AS NVARCHAR)) AS Value
 
 		FROM sx_pf_fValues 
 
