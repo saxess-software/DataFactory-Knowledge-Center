@@ -75,6 +75,9 @@ Set Timeout
 Set Always running  
 ![IIS](images/WebComponents/19.PNG)
 
+Check the bindings - don't use a hard coded IP
+![IIS](images/WebComponents/28.PNG)
+
 Restart Webserver (not only site) - as Site is "AlwaysRunning"
 ![IIS](images/WebComponents/22.PNG)
 
