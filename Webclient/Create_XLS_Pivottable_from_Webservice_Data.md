@@ -2,7 +2,9 @@
 
 ### Precondition, you have:
 * the CSV Download URL for your cluster, it looks like https://saxess2.planning-factory.com/csv-v3/Solution_Immobilien_PROD/Immobilien/
+* which means https://saxess2.planning-factory.com/csv-v3/[Cluster]/[DATAOUTPUT_Type]/[FactoryID]/[ProductlineID]
 * login credentials
+* the Name of the DATAOUTPUT Type you need (e.g. Profit, Balance, Cash) 
 
 This manual is written for Excel 2016, in Excel 2010/2013 the process is similar, but you must have installed the addin PowerQuery on your machine.
 
