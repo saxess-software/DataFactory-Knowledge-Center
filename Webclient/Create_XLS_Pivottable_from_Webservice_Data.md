@@ -14,6 +14,8 @@ This manual is written for Excel 2016, in Excel 2010/2013 the process is similar
 
 ### Enter your URL and credentials
 
+Check your URL in your Webbrowser first - it must work there also.
+
 ![Query](images/2.PNG)
 ![Query](images/2b.PNG)
 
