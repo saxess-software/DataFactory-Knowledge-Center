@@ -1,11 +1,9 @@
 
-
-````SQL
 /*
 Table for storing monitoring informations
 DataFactory 4.0
 Gerd Tautenhahn for saxess-software gmbh
-03/2017
+04/2017
 */
 
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'control.tMonitoring') AND type in (N'U'))
@@ -14,7 +12,7 @@ GO
 
 CREATE TABLE control.tMonitoring
 (
-    	EntryKey BIGINT NOT NULL IDENTITY (1,1),
+    EntryKey BIGINT NOT NULL IDENTITY (1,1),
 	MainGroup NVARCHAR(255) NOT NULL,
 	SubGroup NVARCHAR(255) NOT NULL,
 	Measure NVARCHAR(255) NOT NULL,
@@ -29,7 +27,7 @@ CREATE TABLE control.tMonitoring
 )
 GO
 
---Fill the table with callable sp like this
+/* --Fill the table with callable sp like this
 CREATE PROCEDURE control.sp[Object]count
 
 AS 
@@ -50,4 +48,5 @@ AS
 		WHERE [Conditions]
 	
 		GROUP BY [Conditions]
-````
+
+*/
