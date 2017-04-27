@@ -12,7 +12,7 @@ There are different ways to copy a database, you must consider
 
 # B: Create bacpac export on the Source Server and restore it on the target server
   * bacpac can saved anywhere, not only on the database server - so you can use Management Studio on a different Server
-  * the database must not have hard link to other databases (Server.database.schema.table)
+  * the database must not have hard link to other databases (Server.database.schema.table), that's why delete views and stored procedures having those characteristics
   * The target Server must be same SQL Server Version or higher ?
 
 # C: Tasks -> Copy database
