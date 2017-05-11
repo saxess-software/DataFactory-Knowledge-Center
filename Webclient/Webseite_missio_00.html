@@ -1,0 +1,221 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8"> 
+
+		<title>missio - glauben.leben.geben</title>
+
+		<style> 
+		
+			body {
+				font-family: Arial;
+			}
+		
+			* {box-sizing: border-box;}
+			
+			.row::after {
+				content: "";
+				clear: both;
+				display: table;
+			}
+			
+			.col-1 {
+				width: 20%;
+				background-color: silver;
+			}
+			.col-2 {
+				width: 60%;
+			}
+			.col-3 {
+				width: 20%;
+				background-color: silver;
+			}
+									
+			.col-2-1 {
+				width: 30%;
+			}
+			
+			.col-2-2 {
+				width: 70%;
+			}
+			
+			.col-2-2-1 {
+				width: 40%;				
+			}
+			
+			.col-2-2-2 {
+				width: 60%;	
+			}
+									
+			[class*="col-"] {
+				float: left;
+				padding: 10px;	
+				
+			}
+			
+			.col-2-2-1:before {
+				  content: '';
+				  display: inline-block;
+				  height: 100%;
+				  vertical-align: middle;
+				  margin-right: -0.25em; /* Adjusts for spacing */
+			}
+			
+			.col-2-2-2:before {
+				  content: '';
+				  display: inline-block;
+				  height: 100%;
+				  vertical-align: middle;
+				  margin-right: -0.25em; /* Adjusts for spacing */
+			}
+			
+			.headerclass {
+				border-color: #a4a4a4;
+				border-style: solid;
+				border-width: 8px;
+				width: auto;
+				height: 100px;
+				margin-bottom: 20px;
+			}
+			
+			.headerclass:before {
+				  content: '';
+				  display: inline-block;
+				  height: 100%;
+				  vertical-align: middle;
+				  margin-right: -0.25em; /* Adjusts for spacing */
+			}
+			
+			.headerlinks {				
+				font-size: 60px;
+				color: black;
+				margin: auto;
+				padding: 5px;
+				float: left;
+				display: inline-block;
+				vertical-align: middle;
+			}
+			
+					
+			h2 {
+				margin-left: 20px;
+			}
+			
+			.row-eq-height {
+				  display: -webkit-box;
+				  display: -webkit-flex;
+				  display: -ms-flexbox;
+				  display: flex;
+				}
+						
+			.rowgrey {
+				width: auto;
+				height: 20px;
+				background-color: silver;
+			}
+			
+			.rcorner-sm {
+				border-radius: 10px;				
+				background: red;
+				padding: 5px; 
+				width: 80%;
+				height: auto; 
+				margin-left: auto;
+				margin-right: auto;	
+				margin-top: auto;
+				margin-bottom: auto;
+				text-align: center;
+				font-size: 115%;
+				color: white;
+				font-weight: bold;				
+				display: inline-block;
+				vertical-align: middle;
+				  
+			}
+			
+			.rcorner-md {
+				border-radius: 10px;				
+				background: white;
+				border-style: solid;
+				border-color: red;
+				border-width: 4px;
+				padding: 5px; 
+				width: 95%;
+				height: auto; 
+				margin-left: auto;
+				margin-right: auto;	
+				margin-top: auto;
+				margin-bottom: auto;
+				text-align: center;
+				font-size: 100%;
+				color: #474547;
+				display: inline-block;
+				vertical-align: middle;
+			}
+			
+			img.center {
+				display: block;
+				margin-left: auto;
+				margin-right: auto;
+				width: 50%;
+				height: auto;
+			}
+			
+			.rcorner {
+				border-radius: 10px;				
+				background: red;
+				padding: 7px; 
+				width: 1000px;
+				height: auto; 
+				margin-left: auto;
+				margin-right: auto;	
+				margin-top: 20px;
+				margin-bottom: 20px;
+				text-align: center;
+				font-size: 110%;
+			}
+			
+		</style>
+		
+	</head>
+
+	<body>
+	
+	<header>
+		<div class="headerclass">
+			<div class="headerlinks"><font color="red">missio</font> - glauben<font color="red">.</font>leben<font color="red">.</font>geben</div>						
+			<img src="/01_Bilder/Logo.jpg" alt="" width="10%" height="80%" style="float:right;margin-right:20px;margin-top:10px">
+		</div>
+	</header>
+	
+	<main>
+	
+	<div class="rowgrey">
+	</div>
+	<div class="row-eq-height">
+		<div class="col-1">			
+		</div>
+		<div class="col-2">
+			<h2><font color="red">missio worldwide</font></h2>
+				
+			<img src="/01_Bilder/world.jpg" alt="" class="center">
+			
+			<div class="rcorner"> 
+				<p><font color="white">Raise and strengthen the missionary awareness of the faithful as a community of learning, prayer, and solidarity.</font></p>
+			</div>
+			<div class="rcorner"> 
+				<p><font color="white">Provide both financial and non-material support for the mission of local Churches in Africa, Asia, and Oceania.</font></p>
+			</div>
+					
+		</div>
+			<div class="col-3">
+			
+			</div>
+		</div>
+	<div class="rowgrey">
+	</div>	
+	
+	</main>
+	</body>
+
+ </html>
