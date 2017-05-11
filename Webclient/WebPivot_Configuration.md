@@ -15,7 +15,7 @@
 DECLARE @FactoryKey BIGINT
 DECLARE @FactoryID nvarchar(255)
 
-DELETE FROM dbo.sx_pf_gFactories WHERE PropertyID IN ('Pivot_1','Pivot_2','Pivot_3','Pivot_4','Pivot_5')
+DELETE FROM dbo.sx_pf_gFactories WHERE PropertyID IN ('Pivot_1','Pivot_2','Pivot_3','Pivot_4','Pivot_5','Pivot_6')
 
 DECLARE MyCursor CURSOR FOR
 
