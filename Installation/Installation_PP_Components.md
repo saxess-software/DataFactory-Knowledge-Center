@@ -8,6 +8,10 @@ https://www.microsoft.com/de-de/download/details.aspx?id=50003
   
 ![PP](images/PP/Download_2012.PNG)
 
+## Installation of SQL Server
+* Add "System" as SQL Server Administrator
+* Activate TCP/IP Protokoll
+
 
 
 ## Download Professional Planner
