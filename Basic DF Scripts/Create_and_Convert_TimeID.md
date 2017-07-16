@@ -1,8 +1,19 @@
 
-TimeID from DateTime
+TimeID from DateTime (replace GetDate with your Datetime Column)
 ````SQL
-SELECT CONVERT(char(10), GETDATE(),112)
+SELECT CONVERT(nvarchar(10), GetDate(),112)
 ````
+Datetime from TimeID (you must cast TimeID as NVARCHAR)
+````SQL
+SELECT CONVERT(Datetime,CAST(TimeID AS NVARCHAR(10)))
+````
+
+Increment TimeID by 7 Days
+````SQL
+SELECT CONVERT(nvarchar(10),DATEADD(d,7,CONVERT(Datetime,CAST(TimeID AS NVARCHAR(10)))),112)
+````
+
+
 
 Liste of TimeIDs per Month for given Years 2017-2018
 ````SQL
