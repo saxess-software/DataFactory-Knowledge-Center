@@ -13,8 +13,10 @@ Increment TimeID by 7 Days
 SELECT CONVERT(nvarchar(10),DATEADD(d,7,CONVERT(Datetime,CAST(TimeID AS NVARCHAR(10)))),112)
 ````
 
-
-
+Check if TimeID is weekday
+````SQL
+IIF(Datepart(weekday,CONVERT(Datetime,CAST(TimeID AS NVARCHAR(10))))<=5,1,0)  AS Day_is_Weekday
+````
 Liste of TimeIDs per Month for given Years 2017-2018
 ````SQL
 IF OBJECT_ID('tempdb..#Jahre') IS NOT NULL DROP TABLE #Jahre
