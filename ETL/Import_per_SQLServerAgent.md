@@ -16,6 +16,7 @@ The SQL Server Agent can execute SQL Script or procedures regualary. This agent 
 ![](images/df_user.png)  
 
 To check if a task is working, let it be executed from the agent by a taskplan - THAT's DIFFERENT from starting the task manually
+You can create "one time" task to check it on demand
 ![](images/manuell.PNG)
 
 
