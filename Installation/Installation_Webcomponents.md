@@ -95,9 +95,16 @@ Tell the users the URL http://[Servername].Domain\[DataBaseName]  This should be
 
 ### Optional https Configuration
 
-* Get a Certifikate from https://letsencrypt.org/
-* Do https Configuration of IIS Server
+* Create a Certificate Request in the IIS Manager on TopLevel - Server Certificates
+* this usually creates a .cer file (public) key
+* Get a Certificate anyway, maybe free of charge from https://letsencrypt.org/
+* You get back a certificate file, probablly a *.p7b file
+* in IIS click on "Complete certificate request" and choose this file, after changing settings on *.*
+* go the the site in ISS manager and set bindings for protocoll HTTPS with PORT 443
+* Install URL Rewrite Modul of Windows Server to rewrite http requests with https
 
+Other sources for Help
+https://www.tbs-certificates.co.uk/FAQ/en/448.html
 
 Other things to think on:  
 * Maybe you must add this URL to the trusted Website for Internet Explorer
