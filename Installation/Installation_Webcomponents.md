@@ -102,6 +102,9 @@ Tell the users the URL http://[Servername].Domain\[DataBaseName]  This should be
 * in IIS click on "Complete certificate request" and choose this file, after changing settings on *.*
 * go the the site in ISS manager and set bindings for protocoll HTTPS with PORT 443
 * Install URL Rewrite Modul of Windows Server to rewrite http requests with https
+* all icons must be load from the local Server, not from a external - otherwise https don't works due to mixed content
+
+![IIS](images/WebComponents/IconsHTTPS.PNG)
 
 Other sources for Help
 https://www.tbs-certificates.co.uk/FAQ/en/448.html
