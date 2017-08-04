@@ -31,3 +31,9 @@ WHILE @@FETCH_STATUS = 0
 CLOSE MyCursor
 DEALLOCATE MyCursor
 ````
+
+Sometimes a cursor loops endlessly...
+
+Solution... FetchStatus is global...so the cursor should be static
+http://www.dotnettricks.com/learn/sqlserver/sql-server-different-types-of-cursors
+https://www.sqlservercentral.com/Forums/1514994/Cursor-fetch-loops-endlessly?PageIndex=3
