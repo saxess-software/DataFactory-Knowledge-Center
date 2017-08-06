@@ -1,4 +1,6 @@
 
+
+````SQL
 /* 
 	This script shows all trigger in this DataFactory database
 	11/2016 Stefan Lindenlaub for saxess-software gmbh
@@ -29,3 +31,5 @@ INNER JOIN sys.schemas s
     ON t.schema_id = s.schema_id 
 
 WHERE sysobjects.type = 'TR' 
+
+````
