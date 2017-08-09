@@ -21,8 +21,8 @@ INSERT INTO dbo.sx_pf_gFactories
 		,FormatID
 		)
 		VALUES  
-			(FactoryKey 
-			,FactoryID
+			(FactoryKey -- extract relevant FactoryKey from table 'gFactories'
+			,FactoryID  -- extract relevant FactoryID from table 'gFactories'
 			,N'Pivot_7' -- enter the PropertyID of your WebPivot 
 			,N'NameMeinerProzedur'   -- enter the name of your procedure
 			,N'NameDerWebPivot'   -- enter the name of your WebPivot
