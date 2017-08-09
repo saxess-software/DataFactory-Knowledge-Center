@@ -24,8 +24,8 @@ INSERT INTO dbo.sx_pf_gFactories
 			(FactoryKey 
 			,FactoryID
 			,N'Pivot_7' -- enter the PropertyID of your WebPivot 
-			,N'NameMeiner Prozedur'   -- enter the name of your procedure
-			,N'Summary'   -- enter the name of your WebPivot
+			,N'NameMeinerProzedur'   -- enter the name of your procedure
+			,N'NameDerWebPivot'   -- enter the name of your WebPivot
 			,N''
 			,N''
 			,N''
