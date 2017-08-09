@@ -1,15 +1,15 @@
 
 ### How to customize WebPivots
 
-1. As a standard feature, when initializing the WebClient six standard WebPivots will be provided. These six standard WebPivots are based on six standard DATAOUTPUT prozedure which are the following:
+1) As a standard feature, when initializing the WebClient six standard WebPivots will be provided. These six standard WebPivots are based on six standard DATAOUTPUT prozedure which are the following:
 - sx_pf_DATAOUPUT_NumericValues
 - sx_pf_DATAOUPUT_FactorySummary
 - sx_pf_DATAOUPUT_Profit
 - sx_pf_DATAOUPUT_CashValues
 - sx_pf_DATAOUPUT_Balance
 - sx_pf_DATAOUPUT_TextValues
-1. For information on the initalization process please have a look at [WebPivot_Configuration](https://github.com/saxess-software/SQL-Best-Practice/edit/master/3c.%20DataFactory%20Installation%20and%20Update/Webclient/WebPivot_Configuration.md).
-1. In order to customize the existing WebPivots you can use the following script. Make sure that any procedure you would like to use for your WebPivot contains the two parameters @Username and @FactoryID as leading parameters.
+2) For information on the initalization process please have a look at [WebPivot_Configuration](https://github.com/saxess-software/SQL-Best-Practice/edit/master/3c.%20DataFactory%20Installation%20and%20Update/Webclient/WebPivot_Configuration.md).
+3) In order to customize the existing WebPivots you can use the following script. Make sure that any procedure you would like to use for your WebPivot contains the two parameters @Username and @FactoryID as leading parameters.
 
 ````SQL
 
