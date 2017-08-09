@@ -34,5 +34,22 @@
 		'' AS FormatID
 	FROM sx_pf_dFactories
 	WHERE FactoryID NOT IN ('ZT')
+	
+-- Pivot 2 'Neue WebPivot 2'
+	INSERT INTO sx_pf_gFactories
+	SELECT	FactoryKey AS FactoryKey,
+		FactoryID,
+		'Pivot_2' AS PropertyID,     -- make sure to include the correct PropertyID of your WebPivot
+		'NameMeinerProzedur2' AS PropertyName,  -- enter the name of your procedure
+		'Neue WebPivot2' AS CommentUser,  -- enter the name of your new WebPivot
+		'' AS CommentDEV,
+		'' AS Unit,
+		'',
+		0 AS ValueINT,
+		0 AS Scale,
+		0 AS IsROSystemProperty,
+		'' AS FormatID
+	FROM sx_pf_dFactories
+	WHERE FactoryID NOT IN ('ZT')
 
 ````
