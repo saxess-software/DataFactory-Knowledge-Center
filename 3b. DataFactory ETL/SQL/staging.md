@@ -11,6 +11,8 @@ There are some advantages, compared to the option to import them direct with a S
     * the target table has NOT NULL Columns
 * eliminate ID problems
     * MandantenID is different in all Source Systems
+* make ID fields conform to DataFactory IDs
+    * Wrap them with dbo.sx_pf_pProtectID Function, otherwise after import in DataFactory you will have mapping problems when accessing staging data with join or drilldown
 * run check before import 
     * stage data - check for problems - import only when check passed
 * you can stage "online" and import "offline"
@@ -25,7 +27,7 @@ CREATE TABLE staging.Artikel (
  INSERT INTO staging.Artikel
     SELECT 
        Firma AS MandantenID
-      ,Nummer AS ArtikelID,
+      ,dbo.sx_pf_pProtectID(Nummer) AS ArtikelID,
       ,Coalesce (Name,'<Bezeichnung fehlt>') AS ArtikelName
     FROM 
       SourceDB.dbo.SourceTable
