@@ -29,6 +29,10 @@ Rules
     * param.* for parameter and mapping tables (maybe materialized Products)
     * control.* for controlling and monitoring objects
     * result.* for objects, which deliver results to customer
+    
+ * create one output format for all calculations - so you can later easy fit them together in one output table (like calc journal) and join this with dimensions
+ 
+ * use negative KeyNumbers for products only existing due to calcualtion and handle them in the result view special
 
 
 ### Rules for issues
