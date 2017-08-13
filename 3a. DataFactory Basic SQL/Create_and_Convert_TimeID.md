@@ -1,4 +1,25 @@
 
+## Get Year / Month / Day from TimeID
+
+Year from TimeID
+````SQL
+SELECT TimeID / 10000
+````
+YearMonth from TimeID
+````SQL
+SELECT TimeID / 100
+````
+Month from TimeID
+````SQL
+SELECT TimeID / 100 % 100
+````
+Day from TimeID
+````SQL
+SELECT TimeID % 100
+````
+
+## Convert to and from Datetime
+
 TimeID from DateTime (replace GetDate with your Datetime Column)
 ````SQL
 SELECT CONVERT(nvarchar(10), GetDate(),112)
@@ -7,6 +28,8 @@ Datetime from TimeID (you must cast TimeID as NVARCHAR)
 ````SQL
 SELECT CONVERT(Datetime,CAST(TimeID AS NVARCHAR(10)))
 ````
+
+## Special operations
 
 Increment TimeID by 7 Days
 ````SQL
@@ -17,6 +40,7 @@ Check if TimeID is weekday
 ````SQL
 IIF(Datepart(weekday,CONVERT(Datetime,CAST(TimeID AS NVARCHAR(10))))<=5,1,0)  AS Day_is_Weekday
 ````
+
 Liste of TimeIDs per Month for given Years 2017-2018
 ````SQL
 -- Helper for Timeline
