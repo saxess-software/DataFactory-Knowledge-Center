@@ -19,6 +19,7 @@ IIF(Datepart(weekday,CONVERT(Datetime,CAST(TimeID AS NVARCHAR(10))))<=5,1,0)  AS
 ````
 Liste of TimeIDs per Month for given Years 2017-2018
 ````SQL
+-- Helper for Timeline
 IF OBJECT_ID('tempdb..#Jahre') IS NOT NULL DROP TABLE #Jahre
 CREATE TABLE #Jahre (Jahr INT) 
 	INSERT INTO #Jahre VALUES (2017),(2018)
