@@ -49,6 +49,8 @@ Check if TimeID is weekday
 IIF(Datepart(weekday,CONVERT(Datetime,CAST(TimeID AS NVARCHAR(10))))<=5,1,0)  AS Day_is_Weekday
 ````
 
+
+## List of Month
 Liste of TimeIDs per Month for given Years 2017-2018
 ````SQL
 -- Helper for Timeline
@@ -68,4 +70,37 @@ CREATE TABLE #Monatsliste (
 
 INSERT INTO #Monatsliste
 	SELECT Jahr * 10000 + Monat*100 + 15 AS TimeID FROM #Jahre LEFT JOIN #Monate ON 1=1
+````
+
+## List of Days
+
+````SQL
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[sx_pf_dTimeDays]') AND type in (N'U'))
+DROP TABLE [dbo].[sx_pf_dTimeDays]
+GO
+
+CREATE TABLE sx_pf_dTimeDays
+(
+     	 Date_Datetime DATETIME
+	,TimeID BIGINT
+)
+
+DECLARE @StartDate DATETIME
+DECLARE @EndDate DATETIME
+SET @StartDate = '20170101'
+SET @EndDate = '20181231'
+
+WHILE @StartDate <= @EndDate
+      BEGIN
+             INSERT INTO sx_pf_dTimeDays
+             (
+                Date_Datetime,
+		TimeID
+             )
+             SELECT
+		 @StartDate
+		,Year(@StartDate)* 10000 + MONTH(@StartDate)*100 + Day(@StartDate)
+
+             SET @StartDate = DATEADD(dd, 1, @StartDate)
+      END
 ````
