@@ -28,6 +28,14 @@ Datetime from TimeID (you must cast TimeID as NVARCHAR)
 ````SQL
 SELECT CONVERT(Datetime,CAST(TimeID AS NVARCHAR(10)))
 ````
+Datetime from Date in ValueText
+````SQL
+CAST(f.ValueText AS datetime)
+````
+TimeID from Date in ValueText
+````SQL
+CONVERT(nvarchar(10),CAST(f.ValueText AS datetime),112)
+````
 
 ## Special operations
 
