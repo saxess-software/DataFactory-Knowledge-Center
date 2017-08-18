@@ -9,4 +9,4 @@ After Installation of Teamviewer Host, Teamviewer is runnig with two Numbers:
 
 To access the computer remote, you need the second number, which is a bit hidden to find.
 
-[pic](pics/hidden.png)
+![pic](pics/hidden.png)
