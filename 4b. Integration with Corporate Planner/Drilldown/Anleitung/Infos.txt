@@ -1,0 +1,22 @@
+1. DataFactory Datenbank als CPCE Datenbank definieren
+
+2. alle Prozeduren in DataFactory Datenbank einspielen
+
+
+Beachten: 
+
+Der Drilldown Schlüssel kann nur aus drei Ebenen bestehen
+- MandantenID
+- CostCenterID
+- KontenID
+
+Es muss daher aggregiert werden um den Drilldown zu nutzen
+
+Es gibt aber noch eine zweite Varianten, den Drilldownschlüssel nach Kostenträger
+
+
+Der Werteimport MUSS über die pCP Prozedur erfolgen.
+
+Der Strukturaufbau kann beliebig erfolgen, solange das korrekte Schlüsselsystem erzeugt wird.
+
+

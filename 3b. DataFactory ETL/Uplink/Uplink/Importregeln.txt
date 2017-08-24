@@ -1,0 +1,8 @@
+
+Daten sollten immer aus dem Quellsystem in Stagingtabellen c[Name] geladen werden. Das Staging bereitet die Daten PlanningFactory konform auf im Sinne:
+
+- alle NULL Werte eliminieren
+- auf richtige Datentypen casten
+- auf richtige Collation casten
+
+

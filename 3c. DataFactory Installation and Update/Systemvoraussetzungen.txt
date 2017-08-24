@@ -1,0 +1,41 @@
+XLS Version ohne Weboberfläche
+******************************
+SQL Server 2012 Express oder jeder höhere Version
+Datenbank mit dbowner Rechten für den Betrieb
+SQL Server sysadmin Rechte bei Systemanpassungen
+(insbesondere für die Verwendung von SQL Profiler / Debugger)
+Entpackersoftware, z.B. 7zip
+
+XLS Installation auf Server oder erreichbarem PC für Testzwecke
+
+AD Gruppe "PlanningFactoryUser" 
+
+Remotezugang über VPN/RDP oder Teamviewer
+
+
+
+
+
+
+
+
+
+
+Volle Version mit Weboberfläche
+*******************************
+Windows 2012 R2 Server
+Aktivierte IIS Rolle
+.NET Framework 4.6
+
+SQL Server 2012 Express oder jeder höhere Version
+Datenbank mit dbowner Rechten für den Betrieb
+SQL Server sysadmin Rechte bei Systemanpassungen
+(insbesondere für die Verwendung von SQL Profiler / Debugger)
+Entpackersoftware, z.B. 7zip
+
+XLS Installation auf Server oder erreichbarem PC für Testzwecke
+Remotezugang über VPN/RDP oder Teamviewer
+
+Bei Installationen mit permanentem Monitoring:
+- fester VPN/RDP Zugang
+- sysadmin Rechte auf SQL Server
