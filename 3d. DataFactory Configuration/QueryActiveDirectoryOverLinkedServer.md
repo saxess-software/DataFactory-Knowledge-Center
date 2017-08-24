@@ -4,6 +4,7 @@ Its used to get the real names and properties for login names.
 
 ````SQL
 -- 1. Register ActiveDirectory as linked Server
+-- set Username / PW !!
 
 USE [master]
 GO 
@@ -38,6 +39,10 @@ EXEC master.dbo.sp_serveroption @server=N'ADSI', @optname=N'remote proc transact
 GO
 
 -- 2. Query AD, Name of Domaincontroller must be set in Query
+-- determine Domaincontroller with DOS Command: echo %LOGONSERVER%
+-- get FQDN from PC Properties e.g. Domain.intern
+-- LDAP://Domaincontroller/DC=FQDN1, DC=FQDN2
+
 
 SELECT * FROM OpenQuery ( 
   ADSI,  
