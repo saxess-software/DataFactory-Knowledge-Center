@@ -1,4 +1,14 @@
 
+
+# Permanent Tables
+
+IF OBJECT_ID('Demotabelle') IS NOT NULL
+DROP TABLE Demotabelle 
+
+
+
+# Temporary Tables
+
 A #Table is a temporary table which lives and is visible only for connection which created this table.
 
 There is also a ##Table, which lives till restart of SQL Server Service and is viewable for all. 
