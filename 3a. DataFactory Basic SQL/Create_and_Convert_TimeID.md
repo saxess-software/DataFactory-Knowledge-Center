@@ -72,7 +72,9 @@ INSERT INTO #Monatsliste
 	SELECT Jahr * 10000 + Monat*100 + 15 AS TimeID FROM #Jahre LEFT JOIN #Monate ON 1=1
 ````
 
-## List of Days
+## List of Days as static table
+
+Creates a static table with all real calendar days between from and to TimeID
 
 ````SQL
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[sx_pf_dTimeDays]') AND type in (N'U'))
@@ -103,4 +105,38 @@ WHILE @StartDate <= @EndDate
 
              SET @StartDate = DATEADD(dd, 1, @StartDate)
       END
+      
+-- SELECT * FROM sx_pf_dTimeDays
 ````
+
+
+## List of Days a temp table
+Creates a temporary table with all real calendaric TimeIDs between two days.
+````SQL
+-- Hilfstabelle Tageskalender *****************************************************************
+-- Gibt alle TimeIDs zwischen FromDate und ToDate zurück
+IF OBJECT_ID ('tempdb..#Days') IS NOT NULL DROP TABLE #Days
+
+CREATE TABLE #Days
+	(
+	TimeID BIGINT
+		)
+
+DECLARE @FromDate DATE 
+SELECT TOP 1 @FromDate = ImportDatum FROM staging.tMassnahmenwerte  -- den Tag des letzten Import als Starttag für den Zeitspreizer setzen 
+DECLARE @ToDate DATE  = '2018-12-31'    
+
+SELECT @fromdate = dateadd(day, datediff(day, 0, @FromDate), 0), 
+@todate = dateadd(day, datediff(day, 0, @ToDate), 0)
+
+INSERT INTO #Days
+	SELECT
+		Format(dateadd(d, number, @fromdate),'yyyyMMdd') TimeID
+	FROM
+	master..spt_values
+	WHERE type = 'P' and
+	@todate >= dateadd(d, number , @fromdate)
+	
+-- SELECT * FROM #Days	
+````
+
