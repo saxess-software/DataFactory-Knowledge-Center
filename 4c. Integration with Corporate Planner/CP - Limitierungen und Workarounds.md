@@ -6,6 +6,7 @@
 * Reports in formatierter Ansicht lassen sich nie kommentieren
 * Ein Import kann nur eine Datenebene laden 
 * Der Drilldown kann die Datenebene nicht als Parameter mitgeben
+* CP kann in einem Bericht nicht auf zwei verschiedene Datenbasen zugreifen, man kann immer nur eine Datenbasis öffnen, nie die Inhalte von zwei Datenbasen in irgendeiner Form vergleichen
 
 
 ## CP Finance 
