@@ -1,0 +1,2 @@
+- Create a Product with the structure of the Importfile
+- copy the Import File into this file

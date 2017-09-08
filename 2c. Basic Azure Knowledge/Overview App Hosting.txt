@@ -34,6 +34,16 @@ SQL Server
 	- definiert den admin user 
 		- dieser sollte bei Zugriff mit SSMS 2014 keine Email Adresse sein
 		- Authenifizierungsmethode Azure AD etc. wird erst ab SSMS 2017 unterstützt
+
+WebAppDeployment
+	- Updload ungezippt per FTP
+	- Config.ini
+	SqlConnectionString[*]=Server=tcp:DataFactory01-sqlserver.database.windows.net,1433;Initial Catalog=AD01070_Tribucon_M10;Persist Security Info=False;User ID=support;Password=xxx;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
+	IdentityServerUrl=https://id.planning-factory.com/
+	IconServerUrl=https://icons.planning-factory.com/
+	WindowsAuthentication=false
+	Title=DataFactory
+
 	
 Datenbank
 	- User müssen per Script angelegt werden
