@@ -38,7 +38,7 @@ SQL Server
 WebAppDeployment
 	- Updload ungezippt per FTP
 	- Config.ini
-	SqlConnectionString[*]=Server=tcp:DataFactory01-sqlserver.database.windows.net,1433;Initial Catalog=AD01070_Tribucon_M10;Persist Security Info=False;User ID=support;Password=xxx;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
+	SqlConnectionString[*]=Server=tcp:DataFactory01-sqlserver.database.windows.net,1433;Persist Security Info=False;User ID=support;Password=xxx;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;
 	IdentityServerUrl=https://id.planning-factory.com/
 	IconServerUrl=https://icons.planning-factory.com/
 	WindowsAuthentication=false
