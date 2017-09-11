@@ -26,6 +26,7 @@ in einem Ordner: Ordnerpfad wird in dFactories hinterlegt. Spalte "ImageName"
 
 ### Konfiguration statischer Html-Seiten als Web-Pivots
 
+````SQL
 /*
 GET Operation for determining the Websites, useable with this Factory
 
@@ -208,3 +209,5 @@ GO
 
 GRANT EXECUTE ON OBJECT ::[dbo].[sx_pf_GET_FactoryWebsites] TO pf_PlanningFactoryUser;
 GRANT EXECUTE ON OBJECT ::[dbo].[sx_pf_GET_FactoryWebsites] TO pf_PlanningFactoryService;
+
+````SQL
