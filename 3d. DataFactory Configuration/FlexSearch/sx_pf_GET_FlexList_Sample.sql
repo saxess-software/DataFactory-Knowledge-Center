@@ -48,6 +48,7 @@ BEGIN
 	DECLARE @TimestampCall AS DATETIME = CURRENT_TIMESTAMP;
 	DECLARE @Comment AS NVARCHAR (2000) = N'';				-- SET during Execution
 	DECLARE @SearchDoneFlag AS INT = 0;
+	DECLARE @NameShort_Globalattribute NVARCHAR(255);
 
 	DECLARE @ParameterString AS NVARCHAR (MAX) = N'''' + ISNULL(@Username, N'NULL') + N''',''' + ISNULL(@FactoryID, N'NULL') + N''',''' + ISNULL(@ProductLineID, N'NULL')
 		 + N''',''' + ISNULL(@ProductID, N'NULL') + N''',''' + ISNULL(@ValueSeriesID, N'NULL') + N''',''' + ISNULL(@GlobalattributeNumber, N'NULL')  
@@ -84,6 +85,57 @@ BEGIN
 		END;
 
 
+		-- Hilfstabelle mit Namen der Globalattribute
+		IF OBJECT_ID('tempdb..#GANames') IS NOT NULL
+		DROP TABLE #GANames
+
+		CREATE TABLE #GANames
+			(
+				 RowKey BIGINT IDENTITY (1,1)
+				,FactoryID NVARCHAR (255)
+				,ProductLineID NVARCHAR (255)
+				,Globalattribute NVARCHAR (255)
+				,GlobalattributeNumber INT
+				,Aliasname NVARCHAR (255)
+
+			)
+			
+		INSERT INTO #GANames
+			SELECT
+				FactoryID
+				,ProductLineID
+				,Globalattribute
+				,COALESCE(TRY_CAST(Right(Globalattribute,2) AS INT), TRY_CAST(Right(Globalattribute,1) AS INT)) AS GlobalattributeNumber
+				,Aliasname
+			FROM sx_pf_dProductLines
+			UNPIVOT
+			(
+				Aliasname
+				for Globalattribute IN (
+											GlobalattributeAlias1, GlobalattributeAlias2, GlobalattributeAlias3, GlobalattributeAlias4, GlobalattributeAlias5
+										,GlobalattributeAlias6, GlobalattributeAlias7, GlobalattributeAlias8, GlobalattributeAlias9, GlobalattributeAlias10
+										,GlobalattributeAlias11, GlobalattributeAlias12, GlobalattributeAlias13, GlobalattributeAlias14, GlobalattributeAlias15
+										,GlobalattributeAlias16, GlobalattributeAlias17, GlobalattributeAlias18, GlobalattributeAlias19, GlobalattributeAlias20
+										,GlobalattributeAlias21, GlobalattributeAlias22, GlobalattributeAlias23, GlobalattributeAlias24, GlobalattributeAlias25
+										)
+			) unpiv
+
+			WHERE 
+				FactoryID = @FactoryID AND
+				ProductlineID = @ProductLineID
+
+
+
+		-- Namen des Globalattributes ermitteln
+		SELECT @NameShort_Globalattribute = Aliasname 
+		
+		FROM #GANames 
+
+		WHERE GlobalattributeNumber = @GlobalattributeNumber
+		
+		
+
+
 		/*
 		DEFINITION DER FLEX LISTEN ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -118,8 +170,8 @@ BEGIN
 				SET @SearchDoneFlag = 1;
 		END
 
-		-- Sachkontoauswahl auf allen SKTO ValueSeries
-		IF LEFT(@ValueSeriesID,4) = N'SKTO' 
+		-- Sachkontoauswahl auf allen SKTO ValueSeries oder SKTO Globalattributen
+		IF LEFT(@ValueSeriesID,4) = N'SKTO' OR LEFT(@NameShort_Globalattribute,4) = N'SKTO'
 			BEGIN
 				SELECT
 					 'Bitte ein Sachkonto auswählen, im Eingabefeld kann per Teilwort gefiltert werden' AS Hint
@@ -135,8 +187,8 @@ BEGIN
 				SET @SearchDoneFlag = 1;
 			END
 		
-		-- Kostenstellenauswahl auf allen KST ValueSeries
-		IF LEFT(@ValueSeriesID,3) = N'KST' 
+		-- Kostenstellenauswahl auf allen KST ValueSeries oder KST Globalattributen
+		IF LEFT(@ValueSeriesID,3) = N'KST'  OR LEFT(@NameShort_Globalattribute,3) = N'KST'
 			BEGIN
 				SELECT
 					 'Bitte eine Kostenstelle auswählen, im Eingabefeld kann per Teilwort gefiltert werden' AS Hint
@@ -208,6 +260,27 @@ BEGIN
 					dP.FactoryID = @FactoryID
 		
 				ORDER BY dP.NameShort;
+
+				SET @SearchDoneFlag = 1;
+			END
+
+		-- ShareID Auswahl auf allen zweistellinge S* ValueSeries
+		IF @ValueSeriesID like N'S%' AND LEN(@ValueSeriesID) = 2
+			BEGIN
+				SELECT
+					 'Bitte eine ShareID auswählen.' AS Hint
+					,fV.ValueText AS ShareID_LS60
+
+				FROM dbo.sx_pf_fValues fV
+		 
+				WHERE 
+					
+					fV.ProductlineID = '5' AND 
+					fV.FactoryID = @FactoryID AND
+					fV.ValueSeriesID like 'S%' AND
+					LEN(fV.ValueSeriesID) = 2
+
+				ORDER BY fV.ValueText;
 
 				SET @SearchDoneFlag = 1;
 			END

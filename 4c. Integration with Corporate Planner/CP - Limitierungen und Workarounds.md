@@ -7,7 +7,8 @@
 * Ein Import kann nur eine Datenebene laden 
 * Der Drilldown kann die Datenebene nicht als Parameter mitgeben
 * CP kann in einem Report nicht auf zwei verschiedene Datenbasen zugreifen, oder Vergleichsberichte dieser Art vergleichen (nur in der AcHoc Ansicht kann ich zwei Datenbasen per Splittfenster übereinander zeigen)
-
+* Kommentare werden bei Datenebene kopieren nicht mit kopiert
+* Texte sind (als Daten) nicht kommentierbar
 
 ## CP Finance 
 
