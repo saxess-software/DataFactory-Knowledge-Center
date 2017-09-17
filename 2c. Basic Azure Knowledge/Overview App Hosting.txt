@@ -23,17 +23,23 @@ AppServices
 	- logisch gesehen gemanagter IIS Server
 	- incl. Loadbalancer etc.
 
+SQL Server
+	- als logischer Server (Liste von Datenbanken)
+	- hat virtuelle MasterDB
+	- kann mehrere Datenbankpools besitzen 
+	- definiert den admin user 
+		- dieser sollte bei Zugriff mit SSMS 2014 keine Email Adresse sein
+		- Authenifizierungsmethode Azure AD etc. wird erst ab SSMS 2017 unterstützt
+
 
 SQL Server Elastic Database Pool
 	- kleinster Eleastic Pool kostet ca. 65 EUR pro Monat (fix, SQL Server Lizenz enthalten)
 
 
-SQL Server
-	- als VM möglich
-	- besser als Pool 
-	- definiert den admin user 
-		- dieser sollte bei Zugriff mit SSMS 2014 keine Email Adresse sein
-		- Authenifizierungsmethode Azure AD etc. wird erst ab SSMS 2017 unterstützt
+Datenbank
+	- gehört zu einem Server direkt, oder einem Pool
+	- User müssen per Script angelegt werden
+
 
 WebAppDeployment
 	- Updload ungezippt per FTP
@@ -44,9 +50,6 @@ WebAppDeployment
 	WindowsAuthentication=false
 	Title=DataFactory
 
-	
-Datenbank
-	- User müssen per Script angelegt werden
 
 Sonstiges
 	- Enterprise Aggreement mit Microsoft treffen (Ressourcen vorab kaufen) - ab ca. 1.000 EUR pro Monat
