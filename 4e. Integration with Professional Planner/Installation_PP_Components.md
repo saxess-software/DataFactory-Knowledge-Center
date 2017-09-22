@@ -6,7 +6,7 @@ If DataFactory is used togehter with Professional Planner, some limitations are 
 ## Download SQL Server 2012 Express SP3
 https://www.microsoft.com/de-de/download/details.aspx?id=50003
   
-![PP](images/PP/Download_2012.PNG)
+![PP](images/Download_2012.PNG)
 
 ## Installation of SQL Server
 * Add "System" as SQL Server Administrator
@@ -18,4 +18,17 @@ https://www.microsoft.com/de-de/download/details.aspx?id=50003
 You need a valid serial number for login on the Downloadpage.  
 https://downloads.prevero.com/dlc2009/default.aspx?formvariant=pp8&formlanguage=DE
   
-![PP](images/PP/Download_PP.PNG)
+![PP](images/Download_PP.PNG)
+
+* Download Professional Planner 
+* Start the downloaded exe file -> it will just unpack and create a folder with the installation files
+* skip the autostarted dialog for installation
+* open in the installation folder the subfolder "ProfessionalPlanner"
+* start the setup.exe
+* do standard installation
+* open OLCAP Runtime
+* enter instance name of SQL Server in Tab Settings (this ist "SQLExpress" if you did not modify)
+* activate the software on the licence tab -> you should now see which edition you have and how long it runs
+* start Professional Planner
+* create a Session 
+* create a Dataset in the session for testing
