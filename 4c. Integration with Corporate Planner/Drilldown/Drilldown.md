@@ -11,7 +11,7 @@
 
 * Die Daten können beliebig eingelesen werden, nur der Schlüssel des Feldes entscheidet, ob der Drilldown ausgeführt wird und der Menüpunkt erscheint
 
-* Der Feldschlüssel muss vom Ty CL []... | CC [...]| CT [...] oder CL []... | CU [...]| CT [...] sein 
+* Der Feldschlüssel muss vom Typ CL []... | CC [...]| CT [...] oder CL []... | CU [...]| CT [...] sein 
 
 ## Importprozedur
 
