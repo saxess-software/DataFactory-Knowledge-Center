@@ -33,7 +33,11 @@ OPEN MyCursor
 FETCH MyCursor INTO @FactoryID,@ProductLineID,@ProductID
 WHILE @@FETCH_STATUS = 0
 BEGIN
+      -- set fixation after first TimeID
       EXEC sx_pf_POST_ProductProperty 'SQL',@ProductID,'4',@FactoryID,'xl_pdp_header_fixation_offset_timeline','','','','','1','0','1','2',''
+      
+      -- set Autoscroll off
+      --EXEC sx_pf_POST_ProductProperty	'SQL',@ProductID,@ProductLineID,@FactoryID,'xl_pdp_no_autoscroll','','','','','1','0','1','2',''
       
       FETCH MyCursor INTO @FactoryID,@ProductLineID,@ProductID
 	  Print  @ProductID+'_'+@ProductLineID+'_'+@FactoryID + ' done'
