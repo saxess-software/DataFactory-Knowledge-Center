@@ -17,7 +17,7 @@ Farben an verschiedenen Stellen/Objekten ändern
 Ordner wwwroot/Content/images
 
 Bild mit Bezeichnung "logo.png"
-Größe 456px x 96px
+Größenverhältnis 2:1
 
 ### Icons
 
