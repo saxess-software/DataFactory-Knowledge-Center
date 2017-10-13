@@ -19,6 +19,11 @@ Ordner wwwroot/Content/images
 Bild mit Bezeichnung "logo.png"
 Größenverhältnis 2:1
 
+### Schriftfarbe
+
+Ordner Content\site.css
+An 5 Stellen ist Farbe zu ändern (RGBA & color)
+
 ### Icons
 
 Zentrale Ablage auf "Icon-Server": https://icons.planning-factory.com
