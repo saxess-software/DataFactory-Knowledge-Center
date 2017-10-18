@@ -22,6 +22,13 @@ AppServices
 	- hosten Web Apps
 	- logisch gesehen gemanagter IIS Server
 	- incl. Loadbalancer etc.
+	- always on kann immer eingeschaltet werden, wirkt nicht auf Pricing
+	- Local Cache per Optionszeile definieren 
+
+	- Application Insights wird in Applikation per NuGet Package eingebaut
+	- http Komprimierung muss in Application eingeschaltet werden, nicht in Azure
+	- http to https rewrite muss in web.config definiert werden, nicht im Azure
+
 
 SQL Server
 	- als logischer Server (Liste von Datenbanken)
