@@ -17,6 +17,10 @@ Day from TimeID
 ````SQL
 SELECT TimeID % 100
 ````
+Date as String from TimeID (still looking for a nicer way...)
+````SQL
+Right(TimeID,2) +'.' + CAST(TimeID / 100 % 100 AS NVARCHAR) + '.' + CAST(TimeID/10000 AS NVARCHAR)
+````
 
 ## Convert to and from Datetime
 
