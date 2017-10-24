@@ -39,3 +39,28 @@ Remotezugang über VPN/RDP oder Teamviewer
 Bei Installationen mit permanentem Monitoring:
 - fester VPN/RDP Zugang
 - sysadmin Rechte auf SQL Server
+
+Idealer DataFactory Server bei sehr hohen Berechnungsanforderungen (z.B. BFW)
+*****************************************************************************
+Ausrichtung:
+Sichere Speicherung permanenter Daten
+Hochperformante Berechung flüchtiger Daten
+
+- Speicherdatenbanken auf D:\ in Wiederherstellungsmodell vollständig
+- Berechnungsdatenbanken auf E:\ in Wiederherstellungsmodell vollständig
+
+C:\ Betriebssystem und Programm - RAID aus SATA Platten 250 GB
+D:\ Permante Daten und Log - RAID aus Standard SSDs 500 GB
+F:\ SQL Server Temp DB - RAID aus NVMe SSDs 250 GB
+E:\ Flüchtige Daten - Single NVMe SSD 500 GB
+F:\ Flüchtige Daten Log - Single NVMe SSD 500 GB
+
+
+
+64 GB RAM
+
+Xeon 4 Core oder 8 Cores (entscheidend für SQL Server Lizenzkosten)
+
+SQL Server mit Adminrechten 
+
+Email Account im Intranet zum Versand von Servermail
