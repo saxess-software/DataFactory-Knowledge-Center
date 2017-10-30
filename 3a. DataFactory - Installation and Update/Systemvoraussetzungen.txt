@@ -51,7 +51,7 @@ Hochperformante Berechung flüchtiger Daten
 
 C:\ Betriebssystem und Programm - RAID aus SATA Platten 250 GB
 D:\ Permante Daten und Log - RAID aus Standard SSDs 500 GB
-F:\ SQL Server Temp DB - RAID aus NVMe SSDs 250 GB
+F:\ SQL Server Temp DB - RAID aus NVMe SSDs 250 GB, mehrere gleich große Dateien für tempdb, ein pro logischem Prozessor
 E:\ Flüchtige Daten - Single NVMe SSD 500 GB
 F:\ Flüchtige Daten Log - Single NVMe SSD 500 GB
 

@@ -16,7 +16,7 @@ There is also a ##Table, which lives till restart of SQL Server Service and is v
 
 ````SQL
 
-DROP TABLE IF EXISTS #Neueinstellungen -- ab SQL Server 2016
+DROP TABLE IF EXISTS #Neueinstellungen -- from SQL Server 2016 on
 
 IF OBJECT_ID('tempdb..#Mappping') IS NOT NULL
 DROP TABLE #Mapping
