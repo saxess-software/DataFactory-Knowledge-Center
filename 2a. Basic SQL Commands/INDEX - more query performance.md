@@ -19,7 +19,7 @@
 * can be combined with other indexes
 * RULE: use it for big read-only Tables, where you need nearly all rows -> much better I/O Performance
 
-### Create a clusterd columnstore index on sx_pf_fValues (needs SQL Server 2014 Enterprise or 2016 Standard)
+### Create a clusterd columnstore index on sx_pf_fValues (needs SQL Server 2014 Enterprise or 2016 Express+)
 ````SQL
 -- delete exising Constraints for NVARCHAR(MAX) Column
 
