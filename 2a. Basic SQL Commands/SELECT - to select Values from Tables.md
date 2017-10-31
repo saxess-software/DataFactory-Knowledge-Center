@@ -28,3 +28,14 @@ SELECT
 
 FROM table
 ````
+
+### add a row Number to a table per partion
+You get the row numbers per Item in the Partition part
+````SQL
+SELECT 
+		 ROW_NUMBER () OVER (PARTITION BY Spalte1 ORDER BY Spalte1, Spalte2) AS RowNumber
+		,..
+
+FROM table
+````
+It's not possible to filter in the WHERE clause to a special Row number, as WHERE is evaluated before the Window clause
