@@ -41,6 +41,7 @@ SQL Server
 
 SQL Server Elastic Database Pool
 	- kleinster Eleastic Pool kostet ca. 65 EUR pro Monat (fix, SQL Server Lizenz enthalten)
+	- das Service Tier eines Pools kann man nicht ändern, man muss einen neuen Pool anlegen und die Datenbanken in diesen verschieben
 
 
 Datenbank
@@ -65,5 +66,12 @@ Sonstiges
 	- Application Insights in Application implemtieren wenn ASP.NET
 
 
+Erfahrungen:
+	- Views mit mehrern UNIONs werden sehr schnell (schon bei Mehrfachabfrage 60k Tabelle) unausführbar wegen durchbrechen des DTU Limits (statt UNION besser #Table verwenden)
+
+
+
+
 temporäre Passwörter für DB/FTP
 	- sxDF / 12345#%sx
+
