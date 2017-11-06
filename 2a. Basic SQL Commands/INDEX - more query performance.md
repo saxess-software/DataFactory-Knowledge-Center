@@ -11,6 +11,7 @@
 * always all columns included
 * no other index for this table possible
 * index is not an additional index for the table, it replaces the table
+* there CAN'T be a Trigger on Table with Column Store Index
 * THERORIE: use this for the sx_pf_fValues  Table if its not hold as in Memory OLTP
 
 ### COLUMNSTORE Index Non-Clusterd
