@@ -47,15 +47,32 @@ Sichere Speicherung permanenter Daten
 Hochperformante Berechung flüchtiger Daten
 
 - Speicherdatenbanken auf D:\ in Wiederherstellungsmodell vollständig
-- Berechnungsdatenbanken auf E:\ in Wiederherstellungsmodell vollständig
+- Berechnungsdatenbanken auf E:\ in Wiederherstellungsmodell einfach
 
-C:\ Betriebssystem und Programm - RAID aus SATA Platten 250 GB
-D:\ Permante Daten und Log - RAID aus Standard SSDs 500 GB
-F:\ SQL Server Temp DB - RAID aus NVMe SSDs 250 GB, mehrere gleich große Dateien für tempdb, ein pro logischem Prozessor
-E:\ Flüchtige Daten - Single NVMe SSD 500 GB
-F:\ Flüchtige Daten Log - Single NVMe SSD 500 GB
+Optimale Konfiguration:
 
+C:\ Betriebssystem und Programm - RAID (Sicherheit) aus SATA Platten 250 GB
+D:\ Permante Daten und Log - RAID (Sicherheit) aus Standard SSDs 500 GB
+E:\ SQL Server Temp DB - RAID (I/O Performance) aus NVMe SSDs 250 GB, mehrere gleich große Dateien für tempdb, eine pro logischem Prozessor
+F:\ Flüchtige Daten - Single NVMe SSD 500 GB
+G:\ Flüchtige Daten Log - Single NVMe SSD 500 GB
 
+C:\ 	- Betriebssystem und Programme
+	- geringe Beanspruchung im Betrieb
+
+D:\	- DataFactory Produktivdatenbanken im Wiederherstellungmodell vollstängig.
+	- vielen kleine Schreibvorgänge und umfangreiche Block-Lesevorgänge
+	- Sicherung täglich Full Backup, alle 15 min Transaktionslog Backup
+
+E:\ 	- höchste Last, alle Operationen nutzen tempdb, insbesondere Kalkulationen
+	- keine Sicherung
+
+F:\ 	- Speicherort für DataFactory Kalkulationsdatenbank (Daten) hohe Schreib/Lesebelastung durch Blockoperationen
+	- keine Sicherung, permanenten Neuerstellung
+
+G:\ 	- Speicherort für DataFactory Kalkulationsdatenbank (Log) hohe Schreibbelastung durch Blockoperationen
+	- Speicher wird durch Wiederherstellungsmodell einfach immer wieder freigegeben
+	
 
 64 GB RAM
 
