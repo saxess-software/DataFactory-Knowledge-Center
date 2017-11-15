@@ -16,3 +16,6 @@ If you have a conflict in GitHub Desktop, do the following:
 
 git fetch downloads the latest from remote without trying to merge or rebase anything.
 Then the git reset resets the master branch to what you just fetched. The --hard option changes all the files in your working tree to match the files in origin/master
+
+Ways to crash GitHub
+* use the pipe in a filename (happend in DataFactory Knowledge Center)
