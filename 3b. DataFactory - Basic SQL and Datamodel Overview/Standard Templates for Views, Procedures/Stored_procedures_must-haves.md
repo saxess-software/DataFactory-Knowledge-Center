@@ -1,8 +1,6 @@
 # Stored procedures must-haves
 
 - Header with information on content of procedure, creation date, author
-- Every DATAOUTPUT Procedure must have the parameters: @username, @factoryid,@productlineid (to use it with the webclient)
-- To call a dataoutput procedure from a webcluster via PowerQuery it must be named as dbo.sx_pf_DATAOUTPUT_Name
 - Drop procedure if already exists and create procedure
 - Clean IDs
 - Set nocount on
