@@ -6,6 +6,7 @@
 	- Create the user for this Cluster in this database
 */
 
-CREATE DATABASE AWT_Niendorf
-	-- optional, within a database pool
-	( SERVICE_OBJECTIVE = ELASTIC_POOL ( name = [DataFactory01-ElasticDatabasePool] ) ) 
+CREATE DATABASE Demo  -- SET Name here !
+
+	-- optional, but usual - within a database pool
+	( SERVICE_OBJECTIVE = ELASTIC_POOL ( name = [DataFactory01-EDP01] ) ) 
