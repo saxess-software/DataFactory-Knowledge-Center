@@ -11,16 +11,18 @@ WITH vlookupPC AS
 		FROM
 			(
 				SELECT 
-					TimeID
-					,ValueSeriesID
+					 TimeID
+					,fV.ValueSeriesID
 					--the Value, it must one column - so squeeze it if different types
 					,IIF(IsNumeric = 0,ValueText,CAST(CAST(ValueInt AS Money)/100 AS NVARCHAR)) AS Value
 
-				FROM sx_pf_fValues 
+				FROM sx_pf_fValues fV 
+					LEFT JOIN sx_pf_dValueSeries dVS
+						ON  fV.ValueSeriesKey = dVS.ValueSeriesKey
 
 				WHERE 	
 					-- the Product(s)	
-					FactoryID = 'ZT' AND ProductLineID = 'BFW' AND ProductID = 'M1' AND
+					fV.FactoryID = 'ZT' AND fV.ProductLineID = 'BFW' AND fV.ProductID = 'M1' AND
 					-- the needed ValueSeries of this Product
 					ValueSeriesID IN ('1','UV')
 			) AS SourceTable
