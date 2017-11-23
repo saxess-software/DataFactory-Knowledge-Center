@@ -8,3 +8,4 @@ in the key (because many user use this Key, or because you have many Key files)
 3. copy the key of the templatestore from folger "Keys" to "IDs"
 4. change the file extension form *.pfk to *.pfc
 5. open the file using an editor and delete all lines except "User" and "Password"
+6. the passwort must be encoded to Base64 format (use for example <https://www.base64encode.org/>)
