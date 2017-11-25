@@ -18,7 +18,34 @@
     -> which is only used for very limited task
     -> all work should be done by users with limited roles
 
+- a global administrator can not manage automaticly azure subscriptions, he must be given this right explicit in properties of the Directory
 
+## Users an roles
+
+- Azure is a collection of resource providers, which each over specific actions with URLs like an REST Service
+- a role is the ability to perform a set of actions on a scope 
+    - scope = a resource -> a resource group -> the subscription
+    - role = reader -> specific set of rights -> contributer -> owner
+
+    - owner 
+        - actions {*}
+        - not actions {}
+        - owners should usually be glass break accounts
+    - contributer
+        - actions {*}
+        - not actions 
+            - {Authorization\*\Delete}
+            - {Authorization\*\Write}
+    - reader
+        - actions {*\read} (sensitive actions never end in read)
+
+    - robots should usually have rights only on resource level
+
+    - resource specific roles like "Virtual machine contributer"
+
+    - only roles have "not actions" - the user is calculated and has only grants "There is no deny - there is only grant !"
+
+    - PIM = Privileged Identity Managment -> Just in time access on privileged level -> expires automaticly -> good to work as user and take owner role etc. only for one hour
 
 
 
