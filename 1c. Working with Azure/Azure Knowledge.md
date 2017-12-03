@@ -47,6 +47,10 @@
 
     - PIM = Privileged Identity Managment -> Just in time access on privileged level -> expires automaticly -> good to work as user and take owner role etc. only for one hour
 
+- There is only one FTP User/PW per Subscription for Deployment of Application over FTP
+
+- For SQL Server there must be ONE SQL-Auth based Servermanager, an can be one Azure AD based User or Usergroup as Serveradmin, rights of all other users must be granted on database level
+
 
 
 ### Transfer a local Database to azure
