@@ -1,19 +1,23 @@
+/*
+FactoryService gets
+- a Login in the master database
+- a user in the destination database
+- a the role FactoryService in the destination database
 
--- NO Use Database on Azure - you must switch the connection between the steps
--- https://www.youtube.com/watch?v=SDBy9JjsZBw
+This account gets NOT a user in the master database, thats why the Service can create only connections to single databases, not to the server
 
--- ONLY ONCE - Konfiguration of the Server
+*/
+
+-- ONLY ONCE - Konfiguration of the Server *****************************
 
 -- 1. CREATE a LOGIN on the master Database
 CREATE LOGIN FactoryService WITH password='secret';
 
--- 2. CREATE a USER in the master Database
+
+-- For every DataFactory Database *************************************** 
+
+-- 2a. CREATE a USER in the destination Database
 CREATE USER FactoryService FROM LOGIN FactoryService
 
--- For every DataFactory Database 
-
--- 2. CREATE a USER in the destination Database
-CREATE USER FactoryService FROM LOGIN FactoryService
-
--- 3. Give a databbase role
+-- 2b. Give the database role
 EXEC sp_addrolemember 'pf_PlanningFactoryService', 'FactoryService';
