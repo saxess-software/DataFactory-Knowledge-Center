@@ -40,7 +40,7 @@ GO
 
 -- 2. Query AD, Name of Domaincontroller must be set in Query
 -- determine Domaincontroller with DOS Command: echo %LOGONSERVER%
--- get FQDN from PC Properties e.g. Domain.intern
+-- get FQDN from PC Properties e.g. Domain.intern with "whoami  /FQDN"
 -- LDAP://Domaincontroller/DC=FQDN1, DC=FQDN2
 
 
