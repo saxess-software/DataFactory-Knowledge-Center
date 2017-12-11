@@ -46,7 +46,7 @@ WITH vlookupPC AS
 					-- the Product(s)	
 					fV.FactoryID = 'ZT' AND fV.ProductLineID = 'BFW' AND fV.ProductID = 'M1' AND
 					-- the needed ValueSeries of this Product
-					ValueSeriesID IN ('1','UV')
+					fV.ValueSeriesID IN ('1','UV')
 			) AS SourceTable
 
 		PIVOT
