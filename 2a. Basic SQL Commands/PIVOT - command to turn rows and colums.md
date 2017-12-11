@@ -36,7 +36,7 @@ WITH vlookupPC AS
 					 TimeID
 					,fV.ValueSeriesID
 					--the Value, it must one column - so squeeze it if different types
-					,IIF(IsNumeric = 0,ValueText,CAST(CAST(ValueInt AS Money)/100 AS NVARCHAR)) AS Value
+					,IIF(IsNumeric = 0,ValueText,CAST(CAST(ValueInt AS Money)/dVS.Scale AS NVARCHAR)) AS Value
 
 				FROM sx_pf_fValues fV 
 					LEFT JOIN sx_pf_dValueSeries dVS
