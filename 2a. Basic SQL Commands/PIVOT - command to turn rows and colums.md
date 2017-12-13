@@ -36,7 +36,7 @@ WITH vlookupPC AS
 					 TimeID
 					,fV.ValueSeriesID
 					--the Value, it must one column - so squeeze it if different types
-					,IIF(IsNumeric = 0,ValueText,CAST(CAST(ValueInt AS Money)/100 AS NVARCHAR)) AS Value
+					,IIF(IsNumeric = 0,ValueText,CAST(CAST(ValueInt AS Money)/dVS.Scale AS NVARCHAR)) AS Value
 
 				FROM sx_pf_fValues fV 
 					LEFT JOIN sx_pf_dValueSeries dVS
@@ -46,7 +46,7 @@ WITH vlookupPC AS
 					-- the Product(s)	
 					fV.FactoryID = 'ZT' AND fV.ProductLineID = 'BFW' AND fV.ProductID = 'M1' AND
 					-- the needed ValueSeries of this Product
-					ValueSeriesID IN ('1','UV')
+					fV.ValueSeriesID IN ('1','UV')
 			) AS SourceTable
 
 		PIVOT

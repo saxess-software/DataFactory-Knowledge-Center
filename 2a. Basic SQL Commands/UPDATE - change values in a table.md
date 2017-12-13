@@ -21,8 +21,8 @@ ROLLBACK TRAN
 -- Update with Join - e.g. Update Values, where a Globalattribute is changed to somethings
 UPDATE fV
   SET fV.ValueInt = 0 
-  FROM sx_pf_fValues fV, sx_pf_dProducts dP
-  WHERE 
+  FROM sx_pf_fValues fV INNER JOIN sx_pf_dProducts dP
+  ON 
     fV.ProductKey = dP.ProductKey AND
     dP.[Status] = 'inaktiv' AND
     fV.TimeID > 20170000
