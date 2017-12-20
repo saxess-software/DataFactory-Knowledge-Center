@@ -66,3 +66,23 @@ WITH vlookupPC AS
 Knwn Solutions:
  * you can realize dynamic column output with dynamic SQL - query first the existing column members and create from this the 
  Pivot clause. Buffer the needed table rows in a temp table first, as the user otherwise needs read right on the basis table.
+
+
+
+ The Unpivot Commad turns a Table with many column in a small long table with many rows
+````SQL
+ SELECT 
+	  Spalte
+	 ,Wert 
+
+FROM dbo.sx_pf_dFactories dF
+
+UNPIVOT (
+
+	WERT FOR Spalte IN (FactoryID,NameShort)
+
+) AS UnpivotTable
+````
+
+Know Problems:
+* The Values must have the same DataType
