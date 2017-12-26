@@ -144,3 +144,21 @@ INSERT INTO #Days
 -- SELECT * FROM #Days	
 ````
 
+## List of Weeks with startdate - enddate as TimeID
+````SQL
+DECLARE @FromDate DATE = '2016-08-01'    
+DECLARE @ToDate DATE  = '2017-12-31'    
+
+SELECT @fromdate = dateadd(day, datediff(day, 0, @FromDate)/7*7, 0), 
+@todate = dateadd(day, datediff(day, 0, @ToDate)/7*7, 6)
+
+
+--INSERT INTO #Weeks
+	SELECT
+		Format(dateadd(d, number * 7, @fromdate),'yyyyMMdd') StartTimeID, 
+		Format(dateadd(d, number * 7 + 6, @fromdate),'yyyyMMdd') EndTimeID
+	FROM
+	master..spt_values
+	WHERE type = 'P' and
+	@todate >= dateadd(d, number * 7, @fromdate)
+````
