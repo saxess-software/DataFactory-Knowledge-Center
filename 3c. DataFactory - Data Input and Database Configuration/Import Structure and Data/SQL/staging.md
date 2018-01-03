@@ -21,6 +21,8 @@ There are some advantages, compared to the option to import them direct with a S
    * Database generated Keys are called Key (RowKey)
    * Business Keys are called ID (KontenID, ArtikelID)
    * Names for things are called Name (KontenName, ArtikelName) not "Bezeichnung" or implicit "Konto"
+   
+* should be writen as TRY_CATCH Query to write an LogEntry on CATCH
 
 ````SQL
 CREATE TABLE staging.Artikel (
