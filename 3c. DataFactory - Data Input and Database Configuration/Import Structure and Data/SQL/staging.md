@@ -17,6 +17,13 @@ There are some advantages, compared to the option to import them direct with a S
     * stage data - check for problems - import only when check passed
 * you can stage "online" and import "offline"
 
+* force naming conventions
+   * Database generated Keys are called Key (RowKey)
+   * Business Keys are called ID (KontenID, ArtikelID)
+   * Names for things are called Name (KontenName, ArtikelName) not "Bezeichnung" or implicit "Konto"
+   
+* should be writen as TRY_CATCH Query to write an LogEntry on CATCH
+
 ````SQL
 CREATE TABLE staging.Artikel (
    MandantenID NVARCHAR(255) NOT NULL
