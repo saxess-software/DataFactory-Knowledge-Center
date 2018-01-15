@@ -1,10 +1,8 @@
-
 /*
-
-Import Data from load.tfValues using PostProductDataTableValues
-
+Stefan Lindenlaub
+01/2018
 Import Products from load.tdProducts
-
+	EXEC [import].[sp_POST_dProducts '','',''
 */
 
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[import].[sp_POST_dProducts]') AND type in (N'P', N'PC'))
@@ -12,67 +10,66 @@ DROP PROCEDURE [import].[sp_POST_dProducts]
 GO
 
 CREATE PROCEDURE [import].[sp_POST_dProducts]
-		@ProductID		AS NVARCHAR(255),
-		@ProductLineID	AS NVARCHAR(255),
-		@FactoryID		AS NVARCHAR(255)
-				   
-				   
-
+		(	@ProductID		AS NVARCHAR(255),
+			@ProductLineID	AS NVARCHAR(255),
+			@FactoryID		AS NVARCHAR(255))
+				   			  
 AS
-
 SET NOCOUNT ON
 
-DECLARE @TimestampCall AS DATETIME = CURRENT_TIMESTAMP
-DECLARE @ProcedureName AS NVARCHAR (255) = OBJECT_NAME(@@PROCID)
-DECLARE @RC INT
+-------------------------------------------------------------------------------------------------------------------
+-- ##### VARIABLES ###########
+DECLARE @TimestampCall				AS DATETIME = CURRENT_TIMESTAMP
+DECLARE @ProcedureName				AS NVARCHAR (255) = OBJECT_NAME(@@PROCID)
+DECLARE @RC							AS INT
 
-DECLARE @TimeType				 AS NVARCHAR (255)
-DECLARE @NameShort				 AS NVARCHAR (255)
-DECLARE @NameLong				 AS NVARCHAR (255)
-DECLARE @CommentUser			 AS NVARCHAR (255)
-DECLARE @CommentDev				 AS NVARCHAR (255)
-DECLARE @ResponsiblePerson		 AS NVARCHAR (255)
-DECLARE @ImageName				 AS NVARCHAR (255)
-DECLARE @Status					 AS NVARCHAR (255)
-DECLARE @Template				 AS NVARCHAR (255)
-DECLARE @TemplateVersion		 AS NVARCHAR (255)
-DECLARE @GA1 					 AS NVARCHAR (255)
-DECLARE @GA2 					 AS NVARCHAR (255)
-DECLARE @GA3 					 AS NVARCHAR (255)
-DECLARE @GA4 					 AS NVARCHAR (255)
-DECLARE @GA5 					 AS NVARCHAR (255)
-DECLARE @GA6 					 AS NVARCHAR (255)
-DECLARE @GA7 					 AS NVARCHAR (255)
-DECLARE @GA8 					 AS NVARCHAR (255)
-DECLARE @GA9 					 AS NVARCHAR (255)
-DECLARE @GA10					 AS NVARCHAR (255)
-DECLARE @GA11					 AS NVARCHAR (255)
-DECLARE @GA12					 AS NVARCHAR (255)
-DECLARE @GA13					 AS NVARCHAR (255)
-DECLARE @GA14					 AS NVARCHAR (255)
-DECLARE @GA15					 AS NVARCHAR (255)
-DECLARE @GA16					 AS NVARCHAR (255)
-DECLARE @GA17					 AS NVARCHAR (255)
-DECLARE @GA18					 AS NVARCHAR (255)
-DECLARE @GA19					 AS NVARCHAR (255)
-DECLARE @GA20					 AS NVARCHAR (255)
-DECLARE @GA21					 AS NVARCHAR (255)
-DECLARE @GA22					 AS NVARCHAR (255)
-DECLARE @GA23					 AS NVARCHAR (255)
-DECLARE @GA24					 AS NVARCHAR (255)
-DECLARE @GA25					 AS NVARCHAR (255)
+DECLARE @TimeType					AS NVARCHAR (255)
+DECLARE @NameShort					AS NVARCHAR (255)
+DECLARE @NameLong					AS NVARCHAR (255)
+DECLARE @CommentUser				AS NVARCHAR (MAX)
+DECLARE @CommentDev					AS NVARCHAR (255)
+DECLARE @ResponsiblePerson			AS NVARCHAR (255)
+DECLARE @ImageName					AS NVARCHAR (255)
+DECLARE @Status						AS NVARCHAR (255)
+DECLARE @Template					AS NVARCHAR (255)
+DECLARE @TemplateVersion			AS NVARCHAR (255)
+DECLARE @GA1 						AS NVARCHAR (255)
+DECLARE @GA2 						AS NVARCHAR (255)
+DECLARE @GA3 						AS NVARCHAR (255)
+DECLARE @GA4 						AS NVARCHAR (255)
+DECLARE @GA5 						AS NVARCHAR (255)
+DECLARE @GA6 						AS NVARCHAR (255)
+DECLARE @GA7 						AS NVARCHAR (255)
+DECLARE @GA8 						AS NVARCHAR (255)
+DECLARE @GA9 						AS NVARCHAR (255)
+DECLARE @GA10						AS NVARCHAR (255)
+DECLARE @GA11						AS NVARCHAR (255)
+DECLARE @GA12						AS NVARCHAR (255)
+DECLARE @GA13						AS NVARCHAR (255)
+DECLARE @GA14						AS NVARCHAR (255)
+DECLARE @GA15						AS NVARCHAR (255)
+DECLARE @GA16						AS NVARCHAR (255)
+DECLARE @GA17						AS NVARCHAR (255)
+DECLARE @GA18						AS NVARCHAR (255)
+DECLARE @GA19						AS NVARCHAR (255)
+DECLARE @GA20						AS NVARCHAR (255)
+DECLARE @GA21						AS NVARCHAR (255)
+DECLARE @GA22						AS NVARCHAR (255)
+DECLARE @GA23						AS NVARCHAR (255)
+DECLARE @GA24						AS NVARCHAR (255)
+DECLARE @GA25						AS NVARCHAR (255)
 
--- Temptable for Cursor
-
+-------------------------------------------------------------------------------------------------------------------
+-- ##### TEMPORARY TABLES ###########
 IF OBJECT_ID('tempdb..#tmp') IS NOT NULL DROP TABLE #tmp
-	CREATE TABLE #tmp (		
-			ProductID				NVARCHAR (255)
+CREATE TABLE #tmp 
+		(	ProductID				NVARCHAR (255)
 		   ,ProductLineID			NVARCHAR (255)
 		   ,FactoryID				NVARCHAR (255)
 		   ,TimeType				NVARCHAR (255)
 		   ,NameShort				NVARCHAR (255)
 		   ,NameLong				NVARCHAR (255)
-		   ,CommentUser				NVARCHAR (255)
+		   ,CommentUser				NVARCHAR (MAX)
 		   ,CommentDev				NVARCHAR (255)
 		   ,ResponsiblePerson		NVARCHAR (255)
 		   ,ImageName				NVARCHAR (255)
@@ -103,8 +100,7 @@ IF OBJECT_ID('tempdb..#tmp') IS NOT NULL DROP TABLE #tmp
 		   ,GA22					NVARCHAR (255)
 		   ,GA23					NVARCHAR (255)
 		   ,GA24					NVARCHAR (255)
-		   ,GA25					NVARCHAR (255)
-		  )
+		   ,GA25					NVARCHAR (255))
 
 INSERT INTO #tmp
 	SELECT   tdP.ProductID
@@ -149,13 +145,13 @@ INSERT INTO #tmp
 	WHERE	(@FactoryID = '' OR tdP.FactoryID = @FactoryID)
 	 AND    (@ProductLineID = '' OR tdP.ProductLineID = @ProductLineID)
 	 AND    (@ProductID = '' OR tdP.ProductID = @ProductID)
-	
+
+-------------------------------------------------------------------------------------------------------------------
+-- ##### POST ###########
 DECLARE MyCursor CURSOR FOR
-	SELECT *
-	FROM #tmp t
+	SELECT * FROM #tmp t
 OPEN MyCursor
 FETCH MyCursor INTO @ProductID,@ProductLineID,@FactoryID,@TimeType,@NameShort,@NameLong,@CommentUser,@CommentDev,@ResponsiblePerson,@ImageName,@Status,@Template,@TemplateVersion,@GA1 ,@GA2 ,@GA3 ,@GA4 ,@GA5 ,@GA6 ,@GA7 ,@GA8 ,@GA9 ,@GA10,@GA11,@GA12,@GA13,@GA14,@GA15,@GA16,@GA17,@GA18,@GA19,@GA20,@GA21,@GA22,@GA23,@GA24,@GA25
-
 WHILE @@FETCH_STATUS = 0
 BEGIN
 EXECUTE @RC = [dbo].[sx_pf_POST_Product]
@@ -199,10 +195,15 @@ EXECUTE @RC = [dbo].[sx_pf_POST_Product]
 		,@GA24				
 		,@GA25	
 					
-Print @RC
+	Print @RC
 FETCH MyCursor INTO  @ProductID,@ProductLineID,@FactoryID,@TimeType,@NameShort,@NameLong,@CommentUser,@CommentDev,@ResponsiblePerson,@ImageName,@Status,@Template,@TemplateVersion,@GA1 ,@GA2 ,@GA3 ,@GA4 ,@GA5 ,@GA6 ,@GA7 ,@GA8 ,@GA9 ,@GA10,@GA11,@GA12,@GA13,@GA14,@GA15,@GA16,@GA17,@GA18,@GA19,@GA20,@GA21,@GA22,@GA23,@GA24,@GA25
 END
 CLOSE MyCursor
 DEALLOCATE MyCursor
 
+-------------------------------------------------------------------------------------------------------------------
 GO
+GRANT EXECUTE ON OBJECT ::[import].[sp_POST_dProducts] TO pf_PlanningFactoryUser;
+GRANT EXECUTE ON OBJECT ::[import].[sp_POST_dProducts] TO pf_PlanningFactoryService;
+GO
+
