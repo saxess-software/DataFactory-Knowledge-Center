@@ -11,34 +11,34 @@ DROP PROCEDURE [import].[sp_POST_fValuesPDTV]
 GO
 
 CREATE PROCEDURE [import].[sp_POST_fValuesPDTV]
-				(	@FactoryID 	AS NVARCHAR(255) = '',
-					@ProductlineID 	AS NVARCHAR(255) = '',
-					@ProductID	AS NVARCHAR(255) = '',
-					@ValueSeriesID 	AS NVARCHAR (255) = '',
-					@TimeID		 AS INT = 0)	   
+				(	@FactoryID 			AS NVARCHAR(255) = '',
+					@ProductlineID 		AS NVARCHAR(255) = '',
+					@ProductID			AS NVARCHAR(255) = '',
+					@ValueSeriesID 		AS NVARCHAR (255) = '',
+					@TimeID				AS INT = 0)	   
 
 AS
 SET NOCOUNT ON
 
 -------------------------------------------------------------------------------------------------------------------
 -- ##### VARIABLES ###########
-DECLARE @TimestampCall 				AS DATETIME = CURRENT_TIMESTAMP
-DECLARE @ProcedureName 				AS NVARCHAR (255) = OBJECT_NAME(@@PROCID)
-DECLARE @RC 					AS INT
+DECLARE @TimestampCall 						AS DATETIME = CURRENT_TIMESTAMP
+DECLARE @ProcedureName 						AS NVARCHAR (255) = OBJECT_NAME(@@PROCID)
+DECLARE @RC 								AS INT
 
-DECLARE @ValueFormula			 	AS NVARCHAR (255)
-DECLARE @ValueINT				AS INT
-DECLARE @ValueText				AS NVARCHAR (MAX)
-DECLARE @ValueComment			 	AS NVARCHAR (255)
+DECLARE @ValueFormula			 			AS NVARCHAR (255)
+DECLARE @ValueINT							AS INT
+DECLARE @ValueText							AS NVARCHAR (MAX)
+DECLARE @ValueComment			 			AS NVARCHAR (255)
 
-DECLARE @IsIncrementalValuesFlag		AS INT
+DECLARE @IsIncrementalValuesFlag			AS INT
 DECLARE	@ValuesInBracketsCommaSeparated 	AS NVARCHAR(MAX) 
 
 DECLARE @ToDoList AS TABLE
-	(	 ProductID 				NVARCHAR (255)
-		,ProductLineID 				NVARCHAR (255)
-		,FactoryID 				NVARCHAR (255)
-		,IsIncrementalValuesFlag 		INT
+	(	 ProductID 							NVARCHAR (255)
+		,ProductLineID 						NVARCHAR (255)
+		,FactoryID 							NVARCHAR (255)
+		,IsIncrementalValuesFlag 			INT
 		,ValuesInBracketsCommaSeparated 	NVARCHAR(MAX))
 				
 -------------------------------------------------------------------------------------------------------------------
@@ -46,14 +46,14 @@ DECLARE @ToDoList AS TABLE
 -- Temporäre Tabelle als Datensammler
 IF OBJECT_ID('tempdb..#DATA') IS NOT NULL DROP TABLE #DATA
 CREATE TABLE #DATA	
-		(ProductID		NVARCHAR (255)
+		(ProductID			NVARCHAR (255)
 		,ProductLineID		NVARCHAR (255)
-		,FactoryID		NVARCHAR (255)
+		,FactoryID			NVARCHAR (255)
 		,ValueSeriesID		NVARCHAR (255)
-		,TimeID			INT
+		,TimeID				INT
 		,ValueFormula		NVARCHAR (255)
-		,ValueINT		BIGINT
-		,ValueText		NVARCHAR (MAX)
+		,ValueINT			BIGINT
+		,ValueText			NVARCHAR (MAX)
 		,ValueComment		NVARCHAR (2555))
 
 INSERT INTO #DATA
