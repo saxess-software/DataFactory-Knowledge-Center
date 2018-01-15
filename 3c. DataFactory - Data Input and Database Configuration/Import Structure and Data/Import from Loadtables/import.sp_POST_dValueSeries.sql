@@ -1,10 +1,8 @@
-
 /*
-
-Import Data from load.tfValues using PostProductDataTableValues
-
+Stefan Lindenlaub
+01/2018
 Import ValueSeries from load.tdValueSeries
-
+	EXEC [import].[sp_POST_dValueSeries] '','','',''
 */
 
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[import].[sp_POST_dValueSeries]') AND type in (N'P', N'PC'))
@@ -12,42 +10,41 @@ DROP PROCEDURE [import].[sp_POST_dValueSeries]
 GO
 
 CREATE PROCEDURE [import].[sp_POST_dValueSeries]
-					@FactoryID     AS NVARCHAR(255),
-					@ProductlineID AS NVARCHAR(255),
-					@ProductID	 AS NVARCHAR (255),
-					@ValueSeriesID	AS NVARCHAR (255)
-
-		   
+					(	@FactoryID     AS NVARCHAR(255),
+						@ProductlineID AS NVARCHAR(255),
+						@ProductID	 AS NVARCHAR (255),
+						@ValueSeriesID	AS NVARCHAR (255))		   
 
 AS
-
 SET NOCOUNT ON
 
-DECLARE @TimestampCall AS DATETIME = CURRENT_TIMESTAMP
-DECLARE @ProcedureName AS NVARCHAR (255) = OBJECT_NAME(@@PROCID)
-DECLARE @RC INT
+-------------------------------------------------------------------------------------------------------------------
+-- ##### VARIABLES ###########
+DECLARE @TimestampCall				AS DATETIME = CURRENT_TIMESTAMP
+DECLARE @ProcedureName				AS NVARCHAR (255) = OBJECT_NAME(@@PROCID)
+DECLARE @RC							AS INT
 
-DECLARE @RequestedValueSeriesNo	 AS NVARCHAR (255)
-DECLARE @NameShort				 AS NVARCHAR (255)
-DECLARE @NameLong				 AS NVARCHAR (255)
-DECLARE @CommentUser			 AS NVARCHAR (255)
-DECLARE @CommentDev				 AS NVARCHAR (255)
-DECLARE @ImageName				 AS NVARCHAR (255)
-DECLARE @IsNumeric				 AS NVARCHAR (255)
-DECLARE @VisibilityLevel		 AS NVARCHAR (255)
-DECLARE @ValueSource			 AS NVARCHAR (255)
-DECLARE @ValueListID			 AS NVARCHAR (255)
-DECLARE @ValueFormatID			 AS NVARCHAR (255)
-DECLARE @Unit					 AS NVARCHAR (255)
-DECLARE @Scale					 AS NVARCHAR (255)
-DECLARE @Effect					 AS NVARCHAR (255)
-DECLARE @EffectParameter		 AS NVARCHAR (255)
+DECLARE @RequestedValueSeriesNo		AS NVARCHAR (255)
+DECLARE @NameShort					AS NVARCHAR (255)
+DECLARE @NameLong					AS NVARCHAR (255)
+DECLARE @CommentUser				AS NVARCHAR (255)
+DECLARE @CommentDev					AS NVARCHAR (255)
+DECLARE @ImageName					AS NVARCHAR (255)
+DECLARE @IsNumeric					AS NVARCHAR (255)
+DECLARE @VisibilityLevel			AS NVARCHAR (255)
+DECLARE @ValueSource				AS NVARCHAR (255)
+DECLARE @ValueListID				AS NVARCHAR (255)
+DECLARE @ValueFormatID				AS NVARCHAR (255)
+DECLARE @Unit						AS NVARCHAR (255)
+DECLARE @Scale						AS NVARCHAR (255)
+DECLARE @Effect						AS NVARCHAR (255)
+DECLARE @EffectParameter			AS NVARCHAR (255)
 
--- Temptable for Cursor
-
+-------------------------------------------------------------------------------------------------------------------
+-- ##### TEMPORARY TABLES ###########
 IF OBJECT_ID('tempdb..#tmp') IS NOT NULL DROP TABLE #tmp
-	CREATE TABLE #tmp (		
-			ProductID				NVARCHAR (255)
+CREATE TABLE #tmp 
+	(		ProductID				NVARCHAR (255)
 		   ,ProductLineID			NVARCHAR (255)
 		   ,FactoryID				NVARCHAR (255)
 		   ,ValueSeriesID			NVARCHAR (255)
@@ -65,8 +62,7 @@ IF OBJECT_ID('tempdb..#tmp') IS NOT NULL DROP TABLE #tmp
 		   ,Unit					NVARCHAR (255)
 		   ,Scale					NVARCHAR (255)
 		   ,Effect					NVARCHAR (255)
-		   ,EffectParameter			NVARCHAR (255)
-		  )
+		   ,EffectParameter			NVARCHAR (255))
 
 INSERT INTO #tmp
 	SELECT   tdVS.ProductID				
@@ -94,39 +90,44 @@ INSERT INTO #tmp
 	 AND    (@ProductID = '' OR tdVS.ProductID = @ProductID)
 	 AND    (@ValueSeriesID = '' OR tdVS.ValueSeriesID = @ValueSeriesID)
 
+-------------------------------------------------------------------------------------------------------------------
+-- ##### POST ###########
 DECLARE MyCursor CURSOR FOR
-	SELECT * 
-	FROM #tmp t
+	SELECT * FROM #tmp t
 OPEN MyCursor
 FETCH MyCursor INTO @ProductID,@ProductLineID,@FactoryID,@ValueSeriesID,@RequestedValueSeriesNo,@NameShort,@NameLong,@CommentUser,@CommentDev,@ImageName,@IsNumeric,@VisibilityLevel,@ValueSource,@ValueListID,@ValueFormatID,@Unit,@Scale,@Effect,@EffectParameter
 
 WHILE @@FETCH_STATUS = 0
 BEGIN
-EXECUTE @RC = [dbo].[sx_pf_POST_ValueSerie]
-		'SQL'
-		,@ProductID
-		,@ProductLineID
-		,@FactoryID
-		,@ValueSeriesID
-		,@RequestedValueSeriesNo
-		,@NameShort
-		,@NameLong
-		,@CommentUser
-		,@CommentDev
-		,@ImageName
-		,@IsNumeric
-		,@VisibilityLevel
-		,@ValueSource
-		,@ValueListID
-		,@ValueFormatID
-		,@Unit
-		,@Scale
-		,@Effect
-		,@EffectParameter				
-Print @RC
+	EXECUTE @RC = [dbo].[sx_pf_POST_ValueSerie]
+			'SQL'
+			,@ProductID
+			,@ProductLineID
+			,@FactoryID
+			,@ValueSeriesID
+			,@RequestedValueSeriesNo
+			,@NameShort
+			,@NameLong
+			,@CommentUser
+			,@CommentDev
+			,@ImageName
+			,@IsNumeric
+			,@VisibilityLevel
+			,@ValueSource
+			,@ValueListID
+			,@ValueFormatID
+			,@Unit
+			,@Scale
+			,@Effect
+			,@EffectParameter				
+	Print @RC
 FETCH MyCursor INTO @ProductID,@ProductLineID,@FactoryID,@ValueSeriesID,@RequestedValueSeriesNo,@NameShort,@NameLong,@CommentUser,@CommentDev,@ImageName,@IsNumeric,@VisibilityLevel,@ValueSource,@ValueListID,@ValueFormatID,@Unit,@Scale,@Effect,@EffectParameter
 END
 CLOSE MyCursor
 DEALLOCATE MyCursor
 
+-------------------------------------------------------------------------------------------------------------------
+GO
+GRANT EXECUTE ON OBJECT ::[import].[sp_POST_dValueSeries] TO pf_PlanningFactoryUser;
+GRANT EXECUTE ON OBJECT ::[import].[sp_POST_dValueSeries] TO pf_PlanningFactoryService;
 GO
