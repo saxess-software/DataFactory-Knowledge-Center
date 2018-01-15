@@ -2,7 +2,7 @@
 Stefan Lindenlaub
 01/2018
 Import Products from load.tdProducts
-	EXEC [import].[sp_POST_dProducts '','',''
+	EXEC [import].[sp_POST_dProducts] '','',''
 */
 
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[import].[sp_POST_dProducts]') AND type in (N'P', N'PC'))
