@@ -4,7 +4,7 @@
 * Domänenuser FactoryService anlegen
 
 * Installationsdatei ausführen
-* im schwarzen cmd Dialog User FactoryService angeben (Domäne\User) und Passwort
+* im schwarzen cmd Dialog User FactoryService MIT DOMÄNDE angeben (Domäne\User) und Passwort
 
 * Datei appsettings.json anpassen
     * Connection zum SQL Server setzen
