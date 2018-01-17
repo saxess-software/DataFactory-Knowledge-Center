@@ -26,8 +26,10 @@ DECLARE @Title NVARCHAR (255) = 'HelloWorld'
 ![this](pictures/Trigger_task_scheduler_1.PNG)
 
 #### Task in Windows task scheduler
-**Trigger**
+**Trigger**  
+
 ![this](pictures/Trigger_task_scheduler_2.PNG)
 
-**Action**
+**Action**  
+
 ![this](pictures/Trigger_task_scheduler_3.PNG)
