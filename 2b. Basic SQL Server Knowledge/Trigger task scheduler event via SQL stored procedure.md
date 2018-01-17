@@ -24,3 +24,10 @@ DECLARE @Title NVARCHAR (255) = 'HelloWorld'
   - eventID: 17061
 - results in 
 ![this](pictures/Trigger_task_scheduler_1.PNG)
+
+#### Task in Windows task scheduler
+**Trigger**
+![this](pictures/Trigger_task_scheduler_2.PNG)
+
+**Action**
+![this](pictures/Trigger_task_scheduler_3.PNG)
