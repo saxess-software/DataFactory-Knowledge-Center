@@ -1,4 +1,4 @@
-### Trigger task scheduler event via SQL stored procedure
+## Trigger task scheduler event via SQL stored procedure
 
 - uses system extended stored procedure 'xp_logevent'  --> xp_logevent { error_number , 'message' } [ , 'severity' ] 
 - membership in database role db_owner in master database or membership in server role sysadmin required
@@ -6,7 +6,7 @@
 - execution of scheduled task is triggered on event
 - event = specific event-id, source and log 
 
-#### SQL stored procedure for writing into Windows log file
+### SQL stored procedure for writing into Windows log file
 ```SQL
 USE PlanningFactory_META
 DECLARE @Logstring NVARCHAR(1000);
@@ -25,7 +25,7 @@ DECLARE @Title NVARCHAR (255) = 'HelloWorld'
 - results in 
 ![this](pictures/Trigger_task_scheduler_1.PNG)
 
-#### Task in Windows task scheduler
+### Task in Windows task scheduler
 **Trigger**  
 
 ![this](pictures/Trigger_task_scheduler_2.PNG)
