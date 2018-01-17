@@ -48,6 +48,11 @@ Increment TimeID by 7 Days
 SELECT CONVERT(nvarchar(10),DATEADD(d,7,CONVERT(Datetime,CAST(TimeID AS NVARCHAR(10)))),112)
 ````
 
+TimeID from XLS Datenumber
+````SQL
+SELECT CAST(47848 - 2 as Datetime)
+````
+
 Check if TimeID is weekday
 ````SQL
 IIF(Datepart(weekday,CONVERT(Datetime,CAST(TimeID AS NVARCHAR(10))))<=5,1,0)  AS Day_is_Weekday
