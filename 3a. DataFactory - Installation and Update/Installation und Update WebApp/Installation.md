@@ -15,6 +15,8 @@
 
 * Dienst DataFactoryService neu starten
 
+* eigene Bilder im Ordner wwwroot unter content\images ablegen (diesen Pfad ggf. schaffen)
+
 ### Vor Update
 
 * Kopie von Datei appsettings.json als appsettings.user.json benennen
