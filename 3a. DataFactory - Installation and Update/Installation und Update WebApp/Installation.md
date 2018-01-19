@@ -15,7 +15,8 @@
 
 * Dienst DataFactoryService neu starten
 
-* eigene Bilder im Ordner wwwroot unter content\images ablegen (diesen Pfad ggf. schaffen)
+* eigene Bilder im Ordner wwwroot\content\images ablegen (diesen Pfad ggf. schaffen)
+* Logo für Applikation ablegen unter wwwroot\assets\images
 
 ### Vor Update
 
