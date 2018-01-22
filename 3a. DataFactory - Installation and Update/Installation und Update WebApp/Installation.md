@@ -23,6 +23,7 @@
 * jetzt muss der Dienst unter http://[IP oder Rechnername]:5000/ClusterName erreichbar sein
 * eigene Bilder im Ordner wwwroot\content\images ablegen (diesen Pfad ggf. schaffen)
 * Logo für Applikation ablegen unter wwwroot\assets\images
+* Internetexplorer darf nicht in den Kompatibilitätsmodus gehen für Intranet etc. (Option deaktivieren)
 
 ### falls das Dienstkonto des DataFactoryService geändert wird, muss die URL wieder freigegben werden
 
