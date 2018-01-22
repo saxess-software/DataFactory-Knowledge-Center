@@ -19,10 +19,14 @@
 
 * Dienst DataFactoryService neu starten
 * jetzt muss der Dienst unter http://localhost:5000/ClusterName erreichbar sein
-* in admin-cmd "netsh http add urlacl url="http://*:5000/" user=..." für den User unter welchem der Serive läuft angeben
+
 * jetzt muss der Dienst unter http://[IP oder Rechnername]:5000/ClusterName erreichbar sein
 * eigene Bilder im Ordner wwwroot\content\images ablegen (diesen Pfad ggf. schaffen)
 * Logo für Applikation ablegen unter wwwroot\assets\images
+
+### falls das Dienstkonto des DataFactoryService geändert wird, muss die URL wieder freigegben werden
+
+* in admin-cmd "netsh http add urlacl url="http://*:5000/" user=..." für den User unter welchem der Serive läuft angeben
 
 ### Vor Update
 
