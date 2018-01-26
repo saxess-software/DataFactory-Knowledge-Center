@@ -29,6 +29,9 @@
 
 * in admin-cmd "netsh http add urlacl url="http://*:5000/" user=..." für den User unter welchem der Serive läuft angeben
 
+* netsh http delete urlacl url=http://*:5000/
+* netsh http add urlacl url=https://*:5000/ user=MALTA1350\FactoryService
+
 ### Vor Update
 
 * Kopie von Datei appsettings.json als appsettings.user.json benennen
