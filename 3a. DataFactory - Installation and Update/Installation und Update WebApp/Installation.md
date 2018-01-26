@@ -37,4 +37,19 @@
 * Kopie von Datei appsettings.json als appsettings.user.json benennen
 
 
+
+### Bindung an SSL Zertifikat
+* Liste der exitierenden Zertifikate anzeigen (Powershell): dir cert:\localmachine\my
+
+* eine GUID generieren https://www.guidgen.com/
+* in CMD mit GUID und Cert Thumbprint registieren
+
+* netsh http add sslcert hostnameport=Hostname:Port certhash=CertHash_Here appid={f4eb66b6-c8ac-4b71-aa9c-5dbd310c27c6} certstore=my
+
+* netsh http add sslcert hostnameport=saxess1.planning-factory.com:5000 certhash=0B14B6E3A23E0B717970724734E4224F182BAA02 appid={f4eb66b6-c8ac-4b71-aa9c-5dbd310c27c6} certstore=my
+
+* ggf. vorher vorhandene Bindung lösen: netsh http delete sslcert hostnameport=saxess1.planning-factory.com:5000
+
+
+
 ## Variante B: Installation auf IIS
