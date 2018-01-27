@@ -9,25 +9,31 @@ It contains two basic steps:
 
 -- Sample to export each Product in SQL Server Format
 
-DECLARE @ProductID NVARCHAR(255)
-DECLARE @ProductLineID NVARCHAR(255)
-DECLARE @FactoryID NVARCHAR(255)
+DECLARE	 @ProductID			NVARCHAR(255) = ''
+		,@ProductLineID		NVARCHAR(255) = ''
+		,@FactoryID		NVARCHAR(255) = ''
+
 DECLARE MyCursor CURSOR FOR
 
 	-- Query fills the Cursor
-	SELECT ProductID, ProductLineID,FactoryID
-	FROM sx_pf_dProductLines
+	SELECT 
+		 ProductID
+		,ProductLineID
+		,FactoryID
+	FROM dbo.sx_pf_dProducts
+	WHERE 
+		FactoryID <> 'ZT'
 
 OPEN MyCursor
--- Stuff the columns of the first row into the Cursor
-FETCH MyCursor INTO @ProductID, @ProductLineID, @FactoryID
-WHILE @@FETCH_STATUS = 0
-	BEGIN
-     	 	EXEC sx_pf_EXPORT_Product 'SQL', @FactoryID, @ProductlineID, @ProductID, 1
+	-- Stuff the columns of the first row into the Cursor
+	FETCH MyCursor INTO @ProductID, @ProductLineID, @FactoryID
+	WHILE @@FETCH_STATUS = 0
+		BEGIN
+     	 		EXEC dbo.sx_pf_EXPORT_Product 'SQL', @FactoryID, @ProductlineID, @ProductID, 1
 
-        -- Stuff the columns of the next row into the Cursor
-      	FETCH MyCursor INTO @ProductID, @ProductLineID, @FactoryID
-	END
+			-- Stuff the columns of the next row into the Cursor
+      		FETCH MyCursor INTO @ProductID, @ProductLineID, @FactoryID
+		END
 CLOSE MyCursor
 DEALLOCATE MyCursor
 ````
