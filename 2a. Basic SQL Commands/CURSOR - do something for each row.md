@@ -9,9 +9,9 @@ It contains two basic steps:
 
 -- Sample to export each Product in SQL Server Format
 
-DECLARE	 @ProductID			NVARCHAR(255) = ''
-		,@ProductLineID		NVARCHAR(255) = ''
-		,@FactoryID		NVARCHAR(255) = ''
+DECLARE	 @ProductID		NVARCHAR(255) = ''
+	,@ProductLineID		NVARCHAR(255) = ''
+	,@FactoryID		NVARCHAR(255) = ''
 
 DECLARE MyCursor CURSOR FOR
 
