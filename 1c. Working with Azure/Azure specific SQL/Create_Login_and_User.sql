@@ -12,14 +12,14 @@
   DataFactory Right system to get access.
 */
 
-DECLARE  @LoginUser NVARCHAR(255) = 'sxTrainer'
-DECLARE  @Password NVARCHAR(255) = '_tmp2017'
-DECLARE  @SQL NVARCHAR(MAX)=''
+DECLARE  @LoginUser	NVARCHAR(255)	= 'sxad.krause'   -- give enduser the prefix "sxad" to signalize the this is a User from SX Active Directory B2C
+DECLARE  @Password	NVARCHAR(255)	= 'qx7uOh'
+DECLARE  @SQL		NVARCHAR(MAX)	= ''
 
 IF  DB_NAME() = 'master'
 	BEGIN
 		-- 1. CREATE a LOGIN on the master Database
-		SET @SQL = 'CREATE LOGIN ' + @LoginUser + ' WITH password= ''' + @Password + '''';
+		SET @SQL = 'CREATE LOGIN [' + @LoginUser + '] WITH password= ''' + @Password + '''';
 		EXEC (@SQL)
 
 		-- 2. CREATE a USER in the master Database - Usually NOT - with this the user can start on server level and can see (not access) all other databases
@@ -31,7 +31,7 @@ IF  DB_NAME() != 'master'
 	BEGIN
 
 		-- 2. CREATE USER in the destination Database
-		SET  @SQL = 'CREATE USER ' + @LoginUser + ' FROM LOGIN ' + @LoginUser
+		SET  @SQL = 'CREATE USER [' + @LoginUser + '] FROM LOGIN [' +  @LoginUser +']'
 		EXEC (@SQL)
 
 		-- 3. Give a databbase role

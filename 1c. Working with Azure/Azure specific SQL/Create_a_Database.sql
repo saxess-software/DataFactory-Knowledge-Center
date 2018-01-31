@@ -6,7 +6,7 @@
 	- Create the user for this Cluster in this database
 */
 
-CREATE DATABASE Demo  -- SET Name here !
+CREATE DATABASE AD00XXX_Kunde_Zweck  -- SET Name here !
 
 	-- optional, but usual - within a database pool
 	( SERVICE_OBJECTIVE = ELASTIC_POOL ( name = [DataFactory01-EDP01] ) ) 
