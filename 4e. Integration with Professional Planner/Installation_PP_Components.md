@@ -1,7 +1,7 @@
 ## Installation Preparemtens (Professional Planner)
 If DataFactory is used togehter with Professional Planner, some limitations are important
 * PP can't access Excel 64 Installations, only Excel 32 Bit
-* PP should be used with SQL Server 2012 SP3
+* PP should be used with SQL Server 2012 SP4
 
 ## Download SQL Server 2012 Express SP4
 https://download.microsoft.com/download/B/6/4/B6488B3E-025A-4F4F-9475-9E55FB8C8EE3/SQLEXPRWT_x64_DEU.exe
