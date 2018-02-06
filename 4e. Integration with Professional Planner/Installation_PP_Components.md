@@ -5,8 +5,6 @@ If DataFactory is used togehter with Professional Planner, some limitations are 
 
 ## Download SQL Server 2012 Express SP4
 https://download.microsoft.com/download/B/6/4/B6488B3E-025A-4F4F-9475-9E55FB8C8EE3/SQLEXPRWT_x64_DEU.exe
-  
-![PP](images/Download_2012.PNG)
 
 ## Installation of SQL Server
 * Add "System" as SQL Server Administrator
