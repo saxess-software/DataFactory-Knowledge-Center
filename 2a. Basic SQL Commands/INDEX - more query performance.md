@@ -1,3 +1,18 @@
+Every Table should have a primary Key - a primary key is always an unique Index
+Setting an index on non-numeric columns has strong limits due to 
+
+## Clustered Index
+* one table can have only one clusterd Index, this index depends the physical order of rows
+* Size of the index column is maximum 900 kB (so FactoryID, ProductlineID in combination is not possible 255 * 2 (NVARCHAR) * 2 = 1020)
+* index can be unique (enforces PrimaryKey), or not
+* this index don't need additional space, as this index is the table
+
+## Non-Clusterd Index
+* one table can have many non-clusterd Index, the index is represented as separate table
+* Size of the index column is maximum 900 kB up to SQL 2014 / 1700 Bytes from SQL 2016 on
+* index can be unique (enforces PrimaryKey), or not
+
+
 
 ## COLUMNSTORE Index
 * results in very high perfomance when quering star-schema like table
