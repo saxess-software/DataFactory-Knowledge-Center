@@ -7,7 +7,36 @@ Cleanup Script für API Wechsel
 - löscht alle Prozeduren
 - löscht alle Funktionen
 
+
+Einzelne Batches, da am Ende immer noch ein Befehlsfragment hängt
+
 */
+
+
+
+-- alle Prozeduren löschen
+DECLARE  @sql VARCHAR(MAX) = ''
+        ,@crlf VARCHAR(2) = CHAR(13) + CHAR(10) ;
+
+SELECT @sql = @sql + 'DROP PROCEDURE ' + QUOTENAME(SCHEMA_NAME(schema_id)) + '.' + QUOTENAME(v.name) +';' + @crlf
+FROM   sys.procedures v
+
+PRINT @sql;
+EXEC(@sql);
+
+GO
+
+
+-- alle Funktionen löschen
+DECLARE  @sql VARCHAR(MAX) = ''
+        ,@crlf VARCHAR(2) = CHAR(13) + CHAR(10) ;
+SELECT @sql = @sql + 'DROP FUNCTION ' + QUOTENAME(SCHEMA_NAME(schema_id)) + '.' + QUOTENAME(v.name) +';' + @crlf
+FROM   sys.objects v WHERE type_desc LIKE '%FUNCTION%' 
+
+PRINT @sql;
+EXEC(@sql)
+
+GO
 
 
 -- alle Views löschen
@@ -19,22 +48,6 @@ FROM   sys.views v
 
 PRINT @sql;
 EXEC(@sql);
-
-
--- alle Prozeduren löschen
-SELECT @sql = @sql + 'DROP PROCEDURE ' + QUOTENAME(SCHEMA_NAME(schema_id)) + '.' + QUOTENAME(v.name) +';' + @crlf
-FROM   sys.procedures v
-
-PRINT @sql;
-EXEC(@sql);
-
-
--- alle Funktionen löschen
-SELECT @sql = @sql + 'DROP FUNCTION ' + QUOTENAME(SCHEMA_NAME(schema_id)) + '.' + QUOTENAME(v.name) +';' + @crlf
-FROM   sys.objects v WHERE type_desc LIKE '%FUNCTION%' 
-
-PRINT @sql;
-EXEC(@sql)
 
 GO
 
