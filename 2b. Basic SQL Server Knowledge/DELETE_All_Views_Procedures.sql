@@ -1,16 +1,16 @@
-/*
-Cleanup Script für API Wechsel
+ï»¿/*
+Cleanup Script fÃ¼r API Wechsel
 
-- ändert KEINE Tabellen 
+- Ã¤ndert KEINE Tabellen 
 
-- löscht alle Views
-- löscht alle Prozeduren
-- löscht alle Funktionen
+- lÃ¶scht alle Views
+- lÃ¶scht alle Prozeduren
+- lÃ¶scht alle Funktionen
 
 */
 
 
--- alle Views löschen
+-- alle Views lÃ¶schen
 DECLARE  @sql VARCHAR(MAX) = ''
         ,@crlf VARCHAR(2) = CHAR(13) + CHAR(10) ;
 
@@ -21,7 +21,7 @@ PRINT @sql;
 EXEC(@sql);
 
 
--- alle Prozeduren löschen
+-- alle Prozeduren lÃ¶schen
 SELECT @sql = @sql + 'DROP PROCEDURE ' + QUOTENAME(SCHEMA_NAME(schema_id)) + '.' + QUOTENAME(v.name) +';' + @crlf
 FROM   sys.procedures v
 
@@ -29,7 +29,7 @@ PRINT @sql;
 EXEC(@sql);
 
 
--- alle Funktionen löschen
+-- alle Funktionen lÃ¶schen
 SELECT @sql = @sql + 'DROP FUNCTION ' + QUOTENAME(SCHEMA_NAME(schema_id)) + '.' + QUOTENAME(v.name) +';' + @crlf
 FROM   sys.objects v WHERE type_desc LIKE '%FUNCTION%' 
 
