@@ -1,6 +1,10 @@
 
 
 ## Variante A: Installation als Stand-alone Service
+
+--------------------------------
+### WebApp needs at least API 72
+--------------------------------
 * Domänenuser FactoryService anlegen
 
 * Installationsdatei ausführen
