@@ -1,6 +1,6 @@
 
 --------------------------------
-### WebApp needs at least API 72
+### WebApp benötigt mindestens API 72
 --------------------------------
 
 ## Variante A: Installation als Stand-alone Service
