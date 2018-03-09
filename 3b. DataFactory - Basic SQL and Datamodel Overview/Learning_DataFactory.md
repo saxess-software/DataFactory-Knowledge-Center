@@ -1,4 +1,4 @@
-
+t
 ### What should i learn to work deep with DataFactory ?
 
 
@@ -14,4 +14,4 @@ There are good online coures, e.g
 
 https://www.youtube.com/watch?v=ZNObiptSMSI&list=PL08903FB7ACA1C2FB
 
-Beside SQL you need good knowledge of datamodelling  - but his will come by time and trial & error.
+Beside SQL you need good knowledge of datamodelling  - but this will come by time and trial & error.
