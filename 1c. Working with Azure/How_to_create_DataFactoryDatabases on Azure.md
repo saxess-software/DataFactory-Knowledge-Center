@@ -2,8 +2,8 @@
 ## How to create a new Cluster on Azure
 
 1. Connect the Azure Database Server with your * @saxess.onmicrosoft.com Login
-2. Create the Database using the Azure DB create Script from API Deployment folder (AD0XXX_Name_Usage)
-3. Execute script "Create Database with pool allocation' from API Deployment folder
+2. Execute script "Create Database with pool allocation' from API Deployment folder
+3. Create the Database using the Azure DB create Script from API Deployment folder (AD0XXX_Name_Usage)
 4. Execute API Create Script from API Deployment folder 
 5. Execute script 'sx_pf_Create_DF_User_ClusterAdmin' to add you as user with role admin
 
