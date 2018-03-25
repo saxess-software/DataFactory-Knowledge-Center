@@ -1,11 +1,10 @@
 
---------------------------------
-### WebApp benötigt mindestens API 72
---------------------------------
 
-## Variante A: Installation als Stand-alone Service
-* Domänenuser FactoryService anlegen
+### Vorbereitungen
+* Windows User "FactoryService" anlegen - als lokaler User auf TestPCs, als Domänenuser bei Multiuserbetrieb
+* DataFactory Cluster auf API 4.0.72+ updaten
 
+### Installation
 * Installationsdatei ausführen
 * im schwarzen cmd Dialog User FactoryService MIT DOMÄNDE angeben (Domäne\User) und Passwort
 * jetzt muss der Dienst unter http://localhost:5000 erreichbar sein
@@ -18,8 +17,7 @@
     * Windows-Auth True/False (das bedeutet für die User)
     * ggf. Farben und Schaltflächen an / aus
     
-    
-
+   
 * Dienst DataFactoryService neu starten
 * jetzt muss der Dienst unter http://localhost:5000/ClusterName erreichbar sein
 
@@ -27,6 +25,7 @@
 * eigene Bilder im Ordner wwwroot\content\images ablegen (diesen Pfad ggf. schaffen)
 * Logo für Applikation ablegen unter wwwroot\assets\images
 * Internetexplorer darf nicht in den Kompatibilitätsmodus gehen für Intranet etc. (Option deaktivieren)
+* damit Firefox mit WindowsAuth SSO arbeitet -> about:config -> Suche nach "Trusted" -> URL des Server bei *.trusted-uris hinterlegen
 
 ### falls das Dienstkonto des DataFactoryService geändert wird, muss die URL wieder freigegben werden
 
@@ -34,11 +33,6 @@
 
 * netsh http delete urlacl url=http://*:5000/
 * netsh http add urlacl url=https://*:5000/ user=MALTA1350\FactoryService
-
-### Vor Update
-
-* Kopie von Datei appsettings.json als appsettings.user.json benennen
-
 
 
 ### Bindung an SSL Zertifikat
@@ -53,6 +47,9 @@
 
 * ggf. vorher vorhandene Bindung lösen: netsh http delete sslcert hostnameport=saxess1.planning-factory.com:5000
 
+### SSL Sicherheitskonfiguration vornehmen
+
+* URL scannen mit http://ssl-checker.online-domain-tools.com/
+* schwache ssl Protokolle und ciphers auschalten https://www.nartac.com/Products/IISCrypto
 
 
-## Variante B: Installation auf IIS
