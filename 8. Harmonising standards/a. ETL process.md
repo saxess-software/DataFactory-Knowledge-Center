@@ -8,9 +8,9 @@ staging.sp*
 * Data types
 * Selection of relevant rows and columns
 * Handling staging errors
-** Access denied
-** Timeout
-** Wrong or inconsistent data
+  * Access denied
+  * Timeout
+  * Wrong or inconsistent data
 
 ## Load
 load.t* &
