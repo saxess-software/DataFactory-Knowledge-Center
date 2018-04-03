@@ -35,6 +35,19 @@
 * netsh http add urlacl url=https://*:5000/ user=MALTA1350\FactoryService
 
 
+### Powerloader konfigurieren
+
+* URLs um zweite URL für Powerloader erweitern: "Urls": "https://*:443;http://*:4000"
+
+* Festen User für Powerloader zuweisen    "PowerLoaderUser": "AD-ONE\\slindenl"
+    
+* mit netsh http show urlacl prüfen ob Powerloader URL registriert ist (muss für richtigen User = FactoryService registriert sein)
+
+* ggf. löschen: netsh http delete urlacl url="http://*:4000/"
+
+* anlegen: netsh http add urlacl url="http://*:4000/" user="MyDomain\MyUsername"
+
+
 ### Bindung an SSL Zertifikat
 * Liste der exitierenden Zertifikate anzeigen (Powershell): dir cert:\localmachine\my
 
