@@ -1,4 +1,5 @@
-d## Staging
+# Schemas
+## Staging
 staging.t* &
 staging.sp*
 * Harmonising of clients
@@ -30,3 +31,5 @@ dbo.sx_pf_*
 ## Control
 
 ## Result
+
+# Prefixes
