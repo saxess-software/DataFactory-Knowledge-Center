@@ -1,4 +1,4 @@
-## Staging
+d## Staging
 staging.t* &
 staging.sp*
 * Harmonising of clients
@@ -20,8 +20,8 @@ load.sp*
 * Reduction of cursors
 
 ## Import
-import.sp*
-dbo.sxpf.dFactories ... / sxdf.dFactories ...
+import.sp* &
+dbo.sx_pf_*
 
 ## Calc
 
