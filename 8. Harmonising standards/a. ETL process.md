@@ -45,10 +45,9 @@ result.td*, result.tf*, result.v*, result.sp*
 * For identification and preservation in case of a system rebuilding
 
 # Prefixes
-
-.t: 	table
-.sc: 	script
-.sp: 	stored procedure
-.v:		view
-.fn:	function
-.tr:	trigger
+* .t: 	table
+* .sc: 	script
+* .sp: 	stored procedure
+* .v:		view
+* .fn:	function
+* .tr:	trigger
