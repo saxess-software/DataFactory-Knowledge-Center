@@ -27,17 +27,18 @@ dbo.sx_pf_*
 
 ## Calc
 * Calculation objects (all kind of objects with schema calc. are possible)
+* Only for calculations
 
 ## Param
 param.v*, param.mqt*
 * Usually Views or tables to integrate parameters or auxiliary values from parameter products (e.g. mappings, price lists etc.)
 
 ## Control
-control.sp*
-* Monitoring processes and error 
+control.sp*, control.v*, control.t*
+* Monitoring processes
 
 ## Result
-result.td*, result.tf*, result.v*, result.sp*
+result.t*, result.v*, result.sp*
 * Yields results directly usable for external or downstream systems, reporting , BI Tools etc.
 
 ## Custom
