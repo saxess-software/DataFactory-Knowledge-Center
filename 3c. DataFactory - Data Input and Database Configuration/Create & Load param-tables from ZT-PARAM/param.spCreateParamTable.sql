@@ -1,6 +1,6 @@
 /*
 Creates table from Parameter-Product in Factory 'ZT' and ProductLine 'PARAM'
-		EXEC [param].[spCreateParamTable] 'SQL','PARAM1'
+		EXEC [param].[spCreateParamTable] 'SQL','para'
 */
 
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[param].[spCreateParamTable]') AND type in (N'P', N'PC'))
@@ -19,9 +19,7 @@ DECLARE @StringBasic			NVARCHAR(MAX)	= 'FactoryID NVARCHAR(255),ProductLineID NV
 DECLARE @StringText				NVARCHAR(MAX)	
 DECLARE @StringInt				NVARCHAR(MAX)	
 DECLARE @SQLCreate				NVARCHAR(MAX)
-DECLARE @SQLDrop				NVARCHAR(MAX)
 DECLARE	@TableName				NVARCHAR(MAX)
-DECLARE	@Table					NVARCHAR(MAX)
 
 -- API Variables
 DECLARE @TransactUsername		NVARCHAR(255)	= N'';
@@ -88,16 +86,6 @@ BEGIN
 END
 
 	PRINT @StringText  PRINT @StringInt  PRINT @TableName
-
--------------------------------------------------------------------------------------------------------------------
--- ##### IF EXISTS ###########
-BEGIN
-	SET @Table = @TablePreName + @TableName
-
-	SET @SQLDrop = 'IF OBJECT_ID(''' + @Table + ''', ''U'') IS NOT NULL	DROP TABLE ' + @Table
-
-	EXECUTE sp_executesql @SQLDrop
-END
 
 -------------------------------------------------------------------------------------------------------------------
 -- ##### FLAG ###########

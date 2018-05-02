@@ -12,7 +12,34 @@ SET NOCOUNT ON
 -------------------------------------------------------------------------------------------------------------------
 -- ##### VARIABLES ###########
 DECLARE @TemplateProductID						NVARCHAR(255)
+DECLARE	@TablePreName							NVARCHAR(MAX)	= 'param.t'
+DECLARE @TableDelete							NVARCHAR(MAX)
+DECLARE @TableDeleteID							NVARCHAR(MAX)
+DECLARE @SQLDrop								NVARCHAR(MAX)
+
 DECLARE @RC										INT
+
+-------------------------------------------------------------------------------------------------------------------
+-- ##### IF EXISTS ###########
+BEGIN
+	DECLARE MyCursor CURSOR FOR
+		SELECT dP.ProductID
+		FROM dbo.sx_pf_dProducts dP
+		WHERE dP.FactoryID = 'ZT' AND dP.ProductLineID = 'PARAM'
+	OPEN MyCursor
+	FETCH MyCursor INTO @TableDeleteID
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
+		SET @TableDelete = @TablePreName + @TableDeleteID
+		SET @SQLDrop = 'IF OBJECT_ID(''' + @TableDelete + ''', ''U'') IS NOT NULL	DROP TABLE ' + @TableDelete
+
+		EXECUTE sp_executesql @SQLDrop
+		
+		FETCH MyCursor INTO @TableDeleteID
+	END
+	CLOSE MyCursor
+	DEALLOCATE MyCursor
+END
 
 -------------------------------------------------------------------------------------------------------------------
 -- ##### CREATE ###########
