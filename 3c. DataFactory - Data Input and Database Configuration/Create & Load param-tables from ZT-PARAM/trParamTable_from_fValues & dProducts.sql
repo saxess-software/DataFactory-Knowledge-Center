@@ -6,7 +6,7 @@ Mandy Hauck 04.2018
 
 -------------------------------------------------------------------------------------------------------------------
 -- ##### Trigger auf Tabelle fValues ###########
-IF  EXISTS (SELECT * FROM sys.triggers WHERE object_id = OBJECT_ID(N'[trVerrechnungsparameter_from_fValues]'))
+IF  EXISTS (SELECT * FROM sys.triggers WHERE object_id = OBJECT_ID(N'[trParamTable_from_fValues]'))
 DROP TRIGGER [trParamTable_from_fValues]
 GO
 
@@ -43,13 +43,26 @@ AS
 BEGIN
 	DECLARE @FactoryID				NVARCHAR(255) = ''
 	DECLARE @ProductlineID			NVARCHAR(255) = ''
-	SELECT  @FactoryID = FactoryID, 
-			@ProductLineID = ProductlineID
-	FROM Inserted
-	
-	IF @factoryID = 'ZT' AND @ProductLineID ='PARAM'
 	BEGIN
-		EXEC [control].[spParamTables]
+		SELECT  @FactoryID = FactoryID, 
+				@ProductLineID = ProductlineID
+		FROM Inserted
+	
+		IF @factoryID = 'ZT' AND @ProductLineID ='PARAM'
+		BEGIN
+			EXEC [control].[spParamTables]
+		END
+	END
+	BEGIN
+		SELECT  @FactoryID = FactoryID, 
+				@ProductLineID = ProductlineID
+		FROM Deleted
+	
+		IF @factoryID = 'ZT' AND @ProductLineID ='PARAM'
+		BEGIN
+			EXEC [control].[spParamTables]
+		END
 	END
 END
 GO
+
