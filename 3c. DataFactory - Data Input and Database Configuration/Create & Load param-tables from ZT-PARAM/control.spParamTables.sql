@@ -12,9 +12,9 @@ SET NOCOUNT ON
 -------------------------------------------------------------------------------------------------------------------
 -- ##### VARIABLES ###########
 DECLARE @TemplateProductID						NVARCHAR(255)
-DECLARE	@TablePreName							NVARCHAR(MAX)	= 'param.t'
+DECLARE	@TableSchema							NVARCHAR(MAX)	= 'param.'
 DECLARE @TableDelete							NVARCHAR(MAX)
-DECLARE @TableDeleteID							NVARCHAR(MAX)
+DECLARE @TableDeleteName						NVARCHAR(MAX)
 DECLARE @SQLDrop								NVARCHAR(MAX)
 
 DECLARE @RC										INT
@@ -23,19 +23,21 @@ DECLARE @RC										INT
 -- ##### IF EXISTS ###########
 BEGIN
 	DECLARE MyCursor CURSOR FOR
-		SELECT dP.ProductID
-		FROM dbo.sx_pf_dProducts dP
-		WHERE dP.FactoryID = 'ZT' AND dP.ProductLineID = 'PARAM'
+		SELECT 
+		  tbl.name			AS TableName 
+		FROM sys.tables tbl
+		INNER JOIN sys.schemas sch ON tbl.schema_id = sch.schema_id
+		WHERE sch.name = 'param' AND tbl.name LIKE 't%'
 	OPEN MyCursor
-	FETCH MyCursor INTO @TableDeleteID
+	FETCH MyCursor INTO @TableDeleteName
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
-		SET @TableDelete = @TablePreName + @TableDeleteID
+		SET @TableDelete = @TableSchema + @TableDeleteName
 		SET @SQLDrop = 'IF OBJECT_ID(''' + @TableDelete + ''', ''U'') IS NOT NULL	DROP TABLE ' + @TableDelete
 
 		EXECUTE sp_executesql @SQLDrop
 		
-		FETCH MyCursor INTO @TableDeleteID
+		FETCH MyCursor INTO @TableDeleteName
 	END
 	CLOSE MyCursor
 	DEALLOCATE MyCursor
