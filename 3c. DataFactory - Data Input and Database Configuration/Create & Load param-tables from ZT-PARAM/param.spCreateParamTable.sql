@@ -1,6 +1,6 @@
 /*
 Creates table from Parameter-Product in Factory 'ZT' and ProductLine 'PARAM'
-		EXEC [param].[spCreateParamTable] 'SQL','para'
+		EXEC [param].[spCreateParamTable] 'SQL','Tarif'
 */
 
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[param].[spCreateParamTable]') AND type in (N'P', N'PC'))
@@ -85,12 +85,12 @@ BEGIN
 	SELECT @TableName = @TemplateProductID
 END
 
-	PRINT @StringText  PRINT @StringInt  PRINT @TableName
+	PRINT 'StringText ' + @StringText  PRINT 'StringInt ' + @StringInt  PRINT 'Tablename ' + @TableName
 
 -------------------------------------------------------------------------------------------------------------------
 -- ##### FLAG ###########
 BEGIN
-	IF 	@StringText IS NULL		SET @StringInt = '0'
+	IF 	@StringText IS NULL		SET @StringText = '0'
 	IF 	@StringInt IS NULL		SET @StringInt = '0'
 END
 

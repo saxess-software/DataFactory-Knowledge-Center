@@ -132,7 +132,7 @@ BEGIN
 	FETCH MyCursor INTO @ProductID,@ProductLineID,@FactoryID, @IsIncrementalValuesFlag, @ValuesInBracketsCommaSeparated	
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
-	EXECUTE @ResultCode = sx_pf_POST_ProductDataTableValues
+	EXECUTE @ResultCode = sx_pf_POST_ProductDataTableValues_Import
 			 @UserName
 			,@ProductID		
 			,@ProductLineID	

@@ -15,10 +15,10 @@ SET NOCOUNT ON
 -- Procedure Variables
 DECLARE @Table								NVARCHAR(MAX)
 DECLARE @TablePreName						NVARCHAR(MAX)	= 'param.t'
-DECLARE @STRINGText1						NVARCHAR(MAX)
+DECLARE @STRINGText1						NVARCHAR(MAX)	
 DECLARE @STRINGText2						NVARCHAR(MAX)
 DECLARE @STRINGText3						NVARCHAR(MAX)
-DECLARE @STRINGInt1							NVARCHAR(MAX)
+DECLARE @STRINGInt1							NVARCHAR(MAX)	
 DECLARE @STRINGInt2							NVARCHAR(MAX)
 DECLARE @STRINGInt3							NVARCHAR(MAX)
 DECLARE @FLAGText							NVARCHAR(255)	= '0'
@@ -72,7 +72,6 @@ EXEC @ResultCode = dbo.sx_pf_pGET_ClusterWriteRight @TransactUsername;
 	IF @ResultCode <> 200
 		RAISERROR('Invalid rights', 16, 10);
 
-			
 -------------------------------------------------------------------------------------------------------------------
 -- ##### IF EXISTS tmp ###########
 IF OBJECT_ID('dbo.tmpText', 'U') IS NOT NULL	DROP TABLE dbo.tmpText
@@ -89,78 +88,73 @@ SET @Table =  @TablePreName + @TemplateProductID
 	FROM sx_pf_dValueSeries dVS
 	WHERE	dVS.FactoryID = 'ZT' AND dVS.IsNumeric = 0 AND dVS.ProductLineID = 'PARAM' AND dVS.ProductID = @TemplateProductID
 
-	-- PRINT @STRINGText1
-
 	SELECT @STRINGText2 = COALESCE(@STRINGText2 + ',', '') +  'COALESCE([' + CONVERT(NVARCHAR(MAX),ValueSeriesID) + '],'''') AS [' + convert(NVARCHAR(MAX),NameShort) + ']'
 	FROM sx_pf_dValueSeries dVS
 	WHERE	dVS.FactoryID = 'ZT' AND dVS.IsNumeric = 0  AND dVS.ProductLineID = 'PARAM' AND dVS.ProductID = @TemplateProductID
 
-	-- PRINT @STRINGText2
-
 	SELECT @STRINGText3 = COALESCE(@STRINGText3 + ',', '') +  'tT.[' + CONVERT(NVARCHAR(MAX),NameShort) + ']'
 	FROM sx_pf_dValueSeries dVS
 	WHERE	dVS.FactoryID = 'ZT' AND dVS.IsNumeric = 0  AND dVS.ProductLineID = 'PARAM' AND dVS.ProductID = @TemplateProductID
-
-	-- PRINT @STRINGText3
 
 -- INT
 	SELECT @STRINGInt1 = COALESCE(@STRINGInt1 + ',', '') +  '[' + CONVERT(NVARCHAR(MAX),ValueSeriesID) + ']'
 	FROM sx_pf_dValueSeries dVS
 	WHERE	dVS.FactoryID = 'ZT' AND dVS.IsNumeric = 1 AND dVS.ProductLineID = 'PARAM' AND dVS.ProductID = @TemplateProductID
 
-	-- PRINT @STRINGInt1
-
 	SELECT @STRINGInt2 = COALESCE(@STRINGInt2 + ',', '') +  'COALESCE([' + CONVERT(NVARCHAR(MAX),ValueSeriesID) + '],'''') AS [' + convert(NVARCHAR(MAX),NameShort) + ']'
 	FROM sx_pf_dValueSeries dVS
 	WHERE	dVS.FactoryID = 'ZT' AND dVS.IsNumeric = 1  AND dVS.ProductLineID = 'PARAM' AND dVS.ProductID = @TemplateProductID
-
-	-- PRINT @STRINGInt2
 
 	SELECT @STRINGInt3 = COALESCE(@STRINGInt3 + ',', '') +  'COALESCE(CAST(tI.[' + CONVERT(NVARCHAR(MAX),NameShort) + '] AS MONEY) / dVS.Scale,'''') '
 	FROM sx_pf_dValueSeries dVS
 	WHERE	dVS.FactoryID = 'ZT' AND dVS.IsNumeric = 1  AND dVS.ProductLineID = 'PARAM' AND dVS.ProductID = @TemplateProductID
 
-	-- PRINT @STRINGInt3
-
+	--PRINT 'STRINGText1 ' + @STRINGText1 PRINT 'STRINGText2 ' +  @STRINGText2 PRINT 'STRINGText3 ' +  @STRINGText3 
+	--PRINT 'STRINGInt1 ' + @STRINGInt1 PRINT 'STRINGInt2 ' + @STRINGInt2 PRINT 'STRINGInt3 ' + @STRINGInt3
 -------------------------------------------------------------------------------------------------------------------
 -- ##### SELECT ###########
 -- STRING
-	DECLARE @SQLText	NVARCHAR(MAX) = '
-		SELECT	 PivotT.FactoryID,PivotT.ProductLineID,PivotT.ProductID,PivotT.TimeID
-				,' + @STRINGText2 + '
-		INTO dbo.tmpText
-		FROM 
-			(	SELECT fV.FactoryID,fV.ProductLineID,fV.ProductID,fV.ValueSeriesID,fV.TimeID,fV.ValueText
-				FROM sx_pf_fValues fV
-					LEFT JOIN sx_pf_dValueSeries dVS
-						ON fV.ValueSeriesKey = dVS.ValueSeriesKey
-					LEFT JOIN sx_pf_dProducts	dP ON fV.ProductKey = dP.ProductKey
-				WHERE fV.FactoryID = ''ZT'' AND fV.ProductLineID = ''PARAM'' AND dP.ProductID =''' + @TemplateProductID + ''' AND fV.ValueText != ''''	) AS Source
-		PIVOT
-			(	MAX(ValueText) FOR ValueSeriesID IN (' + @STRINGText1 + ')	) AS PivotT'
+	IF @STRINGText1 != ''
+	BEGIN
+		DECLARE @SQLText	NVARCHAR(MAX) = '
+			SELECT	 PivotT.FactoryID,PivotT.ProductLineID,PivotT.ProductID,PivotT.TimeID
+					,' + @STRINGText2 + '
+			INTO dbo.tmpText
+			FROM 
+				(	SELECT fV.FactoryID,fV.ProductLineID,fV.ProductID,fV.ValueSeriesID,fV.TimeID,fV.ValueText
+					FROM sx_pf_fValues fV
+						LEFT JOIN sx_pf_dValueSeries dVS
+							ON fV.ValueSeriesKey = dVS.ValueSeriesKey
+						LEFT JOIN sx_pf_dProducts	dP ON fV.ProductKey = dP.ProductKey
+					WHERE fV.FactoryID = ''ZT'' AND fV.ProductLineID = ''PARAM'' AND dP.ProductID =''' + @TemplateProductID + ''' AND fV.ValueText != ''''	) AS Source
+			PIVOT
+				(	MAX(ValueText) FOR ValueSeriesID IN (' + @STRINGText1 + ')	) AS PivotT'
 
-	EXECUTE sp_executesql @SQLText
-
-		--SELECT * FROM dbo.tmpText
+		EXECUTE sp_executesql @SQLText
+	END
+	-- SELECT * FROM dbo.tmpText
 
 -- INT
-	DECLARE @SQLInt	NVARCHAR(MAX) = '
-		SELECT	 PivotT.FactoryID,PivotT.ProductLineID,PivotT.ProductID,PivotT.TimeID
-				,' + @STRINGInt2 + '
-		INTO dbo.tmpInt
-		FROM 
-			(	SELECT fV.FactoryID,fV.ProductLineID,fV.ProductID,fV.ValueSeriesID,fV.TimeID,fV.ValueInt
-				FROM sx_pf_fValues fV
-					LEFT JOIN sx_pf_dValueSeries dVS
-						ON fV.ValueSeriesKey = dVS.ValueSeriesKey
-						LEFT JOIN sx_pf_dProducts	dP ON fV.ProductKey = dP.ProductKey
-				WHERE fV.FactoryID = ''ZT'' AND fV.ProductLineID = ''PARAM'' AND dP.ProductID =''' + @TemplateProductID + ''' AND fV.ValueInt != ''''	) AS Source
-		PIVOT
-			(	MAX(ValueInt) FOR ValueSeriesID IN (' + @STRINGInt1 + ')	) AS PivotT'
+	IF @STRINGInt1 != ''
+	BEGIN
+		DECLARE @SQLInt	NVARCHAR(MAX) = '
+			SELECT	 PivotT.FactoryID,PivotT.ProductLineID,PivotT.ProductID,PivotT.TimeID
+					,' + @STRINGInt2 + '
+			INTO dbo.tmpInt
+			FROM 
+				(	SELECT fV.FactoryID,fV.ProductLineID,fV.ProductID,fV.ValueSeriesID,fV.TimeID,fV.ValueInt
+					FROM sx_pf_fValues fV
+						LEFT JOIN sx_pf_dValueSeries dVS
+							ON fV.ValueSeriesKey = dVS.ValueSeriesKey
+							LEFT JOIN sx_pf_dProducts	dP ON fV.ProductKey = dP.ProductKey
+					WHERE fV.FactoryID = ''ZT'' AND fV.ProductLineID = ''PARAM'' AND dP.ProductID =''' + @TemplateProductID + ''' AND fV.ValueInt != ''''	) AS Source
+			PIVOT
+				(	MAX(ValueInt) FOR ValueSeriesID IN (' + @STRINGInt1 + ')	) AS PivotT'
 
-	EXECUTE sp_executesql @SQLInt
+		EXECUTE sp_executesql @SQLInt
+	END
 
-		--SELECT * FROM dbo.tmpInt WHERE ProductLIneID = '1125'
+	-- SELECT * FROM dbo.tmpInt 
 		
 -------------------------------------------------------------------------------------------------------------------
 -- ##### FLAG ###########
