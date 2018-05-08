@@ -66,3 +66,42 @@ BEGIN
 END
 GO
 
+
+-------------------------------------------------------------------------------------------------------------------
+-- ##### Trigger auf Tabelle dValueSeries ###########
+IF  EXISTS (SELECT * FROM sys.triggers WHERE object_id = OBJECT_ID(N'[trParamTable_from_dValueSeries]'))
+DROP TRIGGER [trParamTable_from_dValueSeries]
+GO
+
+CREATE TRIGGER [trParamTable_from_dValueSeries]
+ON dbo.sx_pf_dValueSeries
+AFTER INSERT, UPDATE, DELETE 
+AS 
+
+BEGIN
+	DECLARE @FactoryID				NVARCHAR(255) = ''
+	DECLARE @ProductlineID			NVARCHAR(255) = ''
+	BEGIN
+		SELECT  @FactoryID = FactoryID, 
+				@ProductLineID = ProductlineID
+		FROM Inserted
+	
+		IF @factoryID = 'ZT' AND @ProductLineID ='PARAM'
+		BEGIN
+			EXEC [control].[spParamTables]
+		END
+	END
+	BEGIN
+		SELECT  @FactoryID = FactoryID, 
+				@ProductLineID = ProductlineID
+		FROM Deleted
+	
+		IF @factoryID = 'ZT' AND @ProductLineID ='PARAM'
+		BEGIN
+			EXEC [control].[spParamTables]
+		END
+	END
+END
+GO
+
+
