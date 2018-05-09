@@ -12,11 +12,13 @@
   DataFactory Right system to get access.
 */
 
-DECLARE  @LoginUser	NVARCHAR(255)	= 'sxad.krause'   -- give enduser the prefix "sxad" to signalize the this is a User from SX Active Directory B2C
-DECLARE  @Password	NVARCHAR(255)	= 'qx7uOh'
-DECLARE  @SQL		NVARCHAR(MAX)	= ''
+DECLARE  @LoginUser			NVARCHAR(255)	= 'sxad.michaeldaehnert';   -- give enduser the prefix "sxad" to signalize the this is a User from SX Active Directory B2C
+DECLARE  @Password			NVARCHAR(255)	= 'qx7uOh3534';
+DECLARE  @SQL				NVARCHAR(MAX)	= '';
+DECLARE  @ChangePassword	INT				= 0;						-- set this to 1 if you want to change the password of an existing user
 
-IF  DB_NAME() = 'master'
+-- Login and password are created / changed if you execute this script in master database
+IF  DB_NAME() = 'master' AND @ChangePassword = 0
 	BEGIN
 		-- 1. CREATE a LOGIN on the master Database
 		SET @SQL = 'CREATE LOGIN [' + @LoginUser + '] WITH password= ''' + @Password + '''';
@@ -27,6 +29,15 @@ IF  DB_NAME() = 'master'
 		-- EXEC (@SQL)
 	END
 
+IF  DB_NAME() = 'master' AND @ChangePassword = 1
+	BEGIN
+		-- 3. Alter Password for LOGIN in the master Database
+		SET @SQL = 'ALTER LOGIN [' + @LoginUser + '] WITH password= ''' + @Password + '''';
+		EXEC (@SQL)
+
+	END
+
+-- User and database rights are created if you execute this script in the target database
 IF  DB_NAME() != 'master'
 	BEGIN
 
