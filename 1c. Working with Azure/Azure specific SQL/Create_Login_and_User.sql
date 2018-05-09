@@ -12,8 +12,8 @@
   DataFactory Right system to get access.
 */
 
-DECLARE  @LoginUser			NVARCHAR(255)	= 'sxad.michaeldaehnert';   -- give enduser the prefix "sxad" to signalize the this is a User from SX Active Directory B2C
-DECLARE  @Password			NVARCHAR(255)	= 'qx7uOh3534';
+DECLARE  @LoginUser			NVARCHAR(255)	= 'sxad.HansSommer';   -- give enduser the prefix "sxad" to signalize the this is a User from SX Active Directory B2C
+DECLARE  @Password			NVARCHAR(255)	= 'qx7uOh3d';
 DECLARE  @SQL				NVARCHAR(MAX)	= '';
 DECLARE  @ChangePassword	INT				= 0;						-- set this to 1 if you want to change the password of an existing user
 
