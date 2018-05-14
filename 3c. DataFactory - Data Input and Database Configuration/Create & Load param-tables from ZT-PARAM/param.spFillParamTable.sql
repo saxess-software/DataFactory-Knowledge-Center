@@ -117,7 +117,10 @@ SET @Table =  @TablePreName + @TemplateProductID
 	IF @STRINGText1 != ''
 	BEGIN
 		DECLARE @SQLText	NVARCHAR(MAX) = '
-			SELECT	 PivotT.FactoryID,PivotT.ProductLineID,PivotT.ProductID,PivotT.TimeID
+			SELECT	 PivotT.FactoryID			AS FactoryID_PARAM
+					,PivotT.ProductLineID		AS ProductLineID_PARAM
+					,PivotT.ProductID			AS ProductID_PARAM
+					,PivotT.TimeID				AS TimeID_PARAM
 					,' + @STRINGText2 + '
 			INTO dbo.tmpText
 			FROM 
@@ -138,7 +141,10 @@ SET @Table =  @TablePreName + @TemplateProductID
 	IF @STRINGInt1 != ''
 	BEGIN
 		DECLARE @SQLInt	NVARCHAR(MAX) = '
-			SELECT	 PivotT.FactoryID,PivotT.ProductLineID,PivotT.ProductID,PivotT.TimeID
+			SELECT	 PivotT.FactoryID			AS FactoryID_PARAM
+					,PivotT.ProductLineID		AS ProductLineID_PARAM
+					,PivotT.ProductID			AS ProductID_PARAM
+					,PivotT.TimeID				AS TimeID_PARAM
 					,' + @STRINGInt2 + '
 			INTO dbo.tmpInt
 			FROM 
@@ -166,14 +172,14 @@ IF OBJECT_ID('dbo.tmpInt', 'U') IS NOT NULL		SET @FLAGInt = '1'
 IF @FLAGText = '1' AND @FLAGInt = '1'		-- Sowohl Text- als auch Int-Werte sind vorhanden
 	BEGIN
 		SET @SQLInsert  = 'INSERT INTO ' + @Table + '
-			SELECT DISTINCT	dVS.FactoryID,dVS.ProductLineID,dVS.ProductID,COALESCE(tT.TimeID,tI.TimeID)
+			SELECT DISTINCT	dVS.FactoryID,dVS.ProductLineID,dVS.ProductID,COALESCE(tT.TimeID_PARAM,tI.TimeID_PARAM)
 					,' + @STRINGText3 + '
 					,' + @STRINGInt3 + '
 			FROM sx_pf_dValueSeries dVS
 				LEFT JOIN sx_pf_dProducts	dP ON dVS.ProductKey = dP.ProductKey
-				LEFT JOIN dbo.tmpText tT	ON dVS.FactoryID = tT.FactoryID AND dVS.ProductLineID = tT.ProductLineID AND dVS.ProductID = tT.ProductID
-				LEFT JOIN dbo.tmpInt tI		ON dVS.FactoryID = tI.FactoryID AND dVS.ProductLineID = tI.ProductLineID AND dVS.ProductID = tI.ProductID AND tT.TimeID = tI.TimeID
-			WHERE dVS.FactoryID = ''ZT'' AND dVS.ProductLineID = ''PARAM'' AND (tT.TimeID IS NOT NULL OR tI.TimeID IS NOT NULL) AND dP.ProductID =''' + @TemplateProductID + '''	'
+				LEFT JOIN dbo.tmpText tT	ON dVS.FactoryID = tT.FactoryID_PARAM AND dVS.ProductLineID = tT.ProductLineID_PARAM AND dVS.ProductID = tT.ProductID_PARAM
+				LEFT JOIN dbo.tmpInt tI		ON dVS.FactoryID = tI.FactoryID_PARAM AND dVS.ProductLineID = tI.ProductLineID_PARAM AND dVS.ProductID = tI.ProductID_PARAM AND tT.TimeID_PARAM = tI.TimeID_PARAM
+			WHERE dVS.FactoryID = ''ZT'' AND dVS.ProductLineID = ''PARAM'' AND (tT.TimeID_PARAM IS NOT NULL OR tI.TimeID_PARAM IS NOT NULL) AND dP.ProductID =''' + @TemplateProductID + '''	'
 
 		EXECUTE sp_executesql @SQLInsert
 	END
@@ -181,12 +187,12 @@ IF @FLAGText = '1' AND @FLAGInt = '1'		-- Sowohl Text- als auch Int-Werte sind v
 IF @FLAGText = '1' AND @FLAGInt = '0'		-- Es sind nur Textwerte vorhanden
 	BEGIN
 		SET @SQLInsert = 'INSERT INTO ' + @Table + '
-			SELECT DISTINCT	dVS.FactoryID,dVS.ProductLineID,dVS.ProductID,tT.TimeID
+			SELECT DISTINCT	dVS.FactoryID,dVS.ProductLineID,dVS.ProductID,tT.TimeID_PARAM
 					,' + @STRINGText3 + '
 			FROM sx_pf_dValueSeries dVS
 				LEFT JOIN sx_pf_dProducts	dP ON dVS.ProductKey = dP.ProductKey
-				LEFT JOIN dbo.tmpText tT	ON dVS.FactoryID = tT.FactoryID AND dVS.ProductLineID = tT.ProductLineID AND dVS.ProductID = tT.ProductID
-			WHERE dVS.FactoryID = ''ZT'' AND dVS.ProductLineID = ''PARAM'' AND tT.TimeID IS NOT NULL AND dP.ProductID =''' + @TemplateProductID + '''	'
+				LEFT JOIN dbo.tmpText tT	ON dVS.FactoryID = tT.FactoryID_PARAM AND dVS.ProductLineID = tT.ProductLineID_PARAM AND dVS.ProductID = tT.ProductID_PARAM
+			WHERE dVS.FactoryID = ''ZT'' AND dVS.ProductLineID = ''PARAM'' AND tT.TimeID_PARAM IS NOT NULL AND dP.ProductID =''' + @TemplateProductID + '''	'
 
 		EXECUTE sp_executesql @SQLInsert
 	END
@@ -194,12 +200,12 @@ IF @FLAGText = '1' AND @FLAGInt = '0'		-- Es sind nur Textwerte vorhanden
 IF @FLAGText = '0' AND @FLAGInt = '1'		-- Es sind nur Intwerte vorhanden
 	BEGIN
 		SET @SQLInsert = 'INSERT INTO ' + @Table + '
-			SELECT DISTINCT	dVS.FactoryID,dVS.ProductLineID,dVS.ProductID,tI.TimeID
+			SELECT DISTINCT	dVS.FactoryID,dVS.ProductLineID,dVS.ProductID,tI.TimeID_PARAM
 					,' + @STRINGInt3 + '
 			FROM sx_pf_dValueSeries dVS
 				LEFT JOIN sx_pf_dProducts	dP ON dVS.ProductKey = dP.ProductKey
-				LEFT JOIN dbo.tmpInt tI		ON dVS.FactoryID = tI.FactoryID AND dVS.ProductLineID = tI.ProductLineID AND dVS.ProductID = tI.ProductID
-			WHERE dVS.FactoryID = ''ZT'' AND dVS.ProductLineID = ''PARAM'' AND tI.TimeID IS NOT NULL AND dP.ProductID =''' + @TemplateProductID + '''	'
+				LEFT JOIN dbo.tmpInt tI		ON dVS.FactoryID = tI.FactoryID_PARAM AND dVS.ProductLineID = tI.ProductLineID_PARAM AND dVS.ProductID = tI.ProductID_PARAM
+			WHERE dVS.FactoryID = ''ZT'' AND dVS.ProductLineID = ''PARAM'' AND tI.TimeID_PARAM IS NOT NULL AND dP.ProductID =''' + @TemplateProductID + '''	'
 
 		EXECUTE sp_executesql @SQLInsert
 	END
