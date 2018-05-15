@@ -22,14 +22,14 @@ DECLARE @RC										INT
 -------------------------------------------------------------------------------------------------------------------
 -- ##### IF EXISTS ###########
 BEGIN
-	DECLARE MyCursor CURSOR FOR
+	DECLARE MyCursorParam CURSOR FOR
 		SELECT 
 		  tbl.name			AS TableName 
 		FROM sys.tables tbl
 		INNER JOIN sys.schemas sch ON tbl.schema_id = sch.schema_id
 		WHERE sch.name = 'param' AND tbl.name LIKE 't%'
-	OPEN MyCursor
-	FETCH MyCursor INTO @TableDeleteName
+	OPEN MyCursorParam
+	FETCH MyCursorParam INTO @TableDeleteName
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 		SET @TableDelete = @TableSchema + @TableDeleteName
@@ -37,22 +37,22 @@ BEGIN
 
 		EXECUTE sp_executesql @SQLDrop
 		
-		FETCH MyCursor INTO @TableDeleteName
+		FETCH MyCursorParam INTO @TableDeleteName
 	END
-	CLOSE MyCursor
-	DEALLOCATE MyCursor
+	CLOSE MyCursorParam
+	DEALLOCATE MyCursorParam
 END
 
 -------------------------------------------------------------------------------------------------------------------
 -- ##### CREATE ###########
-	DECLARE MyCursor CURSOR FOR
+	DECLARE MyCursorParam CURSOR FOR
 
 		SELECT dP.ProductID
 		FROM [dbo].[sx_pf_dProducts] dP
 		WHERE dP.FactoryID = 'ZT' AND dP.ProductLIneID = 'PARAM'
 
-	OPEN MyCursor
-		FETCH MyCursor INTO @TemplateProductID
+	OPEN MyCursorParam
+		FETCH MyCursorParam INTO @TemplateProductID
 		WHILE @@FETCH_STATUS = 0
 			BEGIN
 				BEGIN
@@ -63,10 +63,10 @@ END
 					EXEC @RC =[param].[spFillParamTable]  'SQL',@TemplateProductID
 					PRINT @RC
 				END
-      			FETCH MyCursor INTO @TemplateProductID
+      			FETCH MyCursorParam INTO @TemplateProductID
 			END
-	CLOSE MyCursor
-	DEALLOCATE MyCursor
+	CLOSE MyCursorParam
+	DEALLOCATE MyCursorParam
 
 -------------------------------------------------------------------------------------------------------------------	
 GO
