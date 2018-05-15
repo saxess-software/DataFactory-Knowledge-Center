@@ -18,14 +18,27 @@ AS
 BEGIN
 	DECLARE @FactoryID				NVARCHAR(255) = ''
 	DECLARE @ProductlineID			NVARCHAR(255) = ''
-	SELECT  @FactoryID = FactoryID, 
-			@ProductLineID = ProductlineID
-	FROM Inserted
-	
-	IF @FactoryID = 'ZT' AND @ProductLineID ='PARAM'
 	BEGIN
-		EXEC [control].[spParamTables]
+		SELECT  @FactoryID = FactoryID, 
+				@ProductLineID = ProductlineID
+		FROM Inserted
+	
+		IF @FactoryID = 'ZT' AND @ProductLineID ='PARAM'
+		BEGIN
+			EXEC [control].[spParamTables]
+		END
 	END
+	BEGIN
+		SELECT  @FactoryID = FactoryID, 
+				@ProductLineID = ProductlineID
+		FROM Deleted
+	
+		IF @FactoryID = 'ZT' AND @ProductLineID ='PARAM'
+		BEGIN
+			EXEC [control].[spParamTables]
+		END
+	END
+
 END
 GO
 
