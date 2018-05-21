@@ -1,6 +1,6 @@
 /*
 Creates table from Parameter-Product in Factory 'ZT' and ProductLine 'PARAM'
-		EXEC [param].[spCreateParamTable] 'SQL','Tarif'
+		EXEC [param].[spCreateParamTable] 'SQL','MP'
 */
 
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[param].[spCreateParamTable]') AND type in (N'P', N'PC'))
@@ -15,7 +15,7 @@ SET NOCOUNT ON
 -- ##### VARIABLES ###########
 -- Procedure Variables
 DECLARE	@TablePreName			NVARCHAR(MAX)	= 'param.t'
-DECLARE @StringBasic			NVARCHAR(MAX)	= 'FactoryID NVARCHAR(255),ProductLineID NVARCHAR(255),ProductID NVARCHAR(255),TimeID INT'
+DECLARE @StringBasic			NVARCHAR(MAX)	= 'FactoryID_PARAM NVARCHAR(255),ProductLineID_PARAM NVARCHAR(255),ProductID_PARAM NVARCHAR(255),TimeID_PARAM INT'
 DECLARE @StringText				NVARCHAR(MAX)	
 DECLARE @StringInt				NVARCHAR(MAX)	
 DECLARE @SQLCreate				NVARCHAR(MAX)
