@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
 DYNAMIC PIVOT | Ausgabe der Werte aus Tabelle sx_pf_fValues als Pivot-Tabelle und schreiben in eine Zieltabelle/ Transponieren der Zeilen in Spalten
 	EXEC [param].[spFillParamTable]  'SQL','LNK'
@@ -485,5 +484,4 @@ END TRY
 GO
 GRANT EXECUTE ON OBJECT ::[param].[spFillParamTable]  TO pf_PlanningFactoryUser;
 GRANT EXECUTE ON OBJECT ::[param].[spFillParamTable]  TO pf_PlanningFactoryService;
->>>>>>> 016f08a2dc30c901dbcd27510a3243fe40cd0646
 GO
