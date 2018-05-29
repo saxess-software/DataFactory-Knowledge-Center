@@ -1,7 +1,7 @@
-## Problems between differnt collations of copied azure database and tempDB
+## Collation problem between local copy of Azure database and tempDB
 
-- Collation on Azure might differ from collation of lokal server
-- When using a lokal copy of an azure database, procedures or scripts might result in an error due to different collations of the database in use (the copy of the azure database) and the tempDB 
+- Collation on Azure might differ from collation of local server
+- When using a local copy of an Azure database, procedures and scripts might result in an error due to different collations of the database in use (the copy of the azure database) and the tempDB 
 
 ## To avoid the problem
 
