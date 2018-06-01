@@ -1,15 +1,23 @@
--- Delete all Factories
--- This script loops over all selected Factories and deletes them
+/*
+DELETE all Factories
+This script loops over all selected Factories and deletes them
+All FactoryIDs provided through SELECT-Statement will be deleted
+*/
 
-DECLARE @FactoryID nvarchar(255)
+-------------------------------------------------------------------------------------------------------------------
+-- ##### VARIABLES ###########
+DECLARE @FactoryID NVARCHAR(255)
 
+-------------------------------------------------------------------------------------------------------------------
+-- ##### DELETE ###########
 DECLARE MyCursor CURSOR FOR
 
-	-- Filter the fitting products here !!!
 	SELECT FactoryID
-	FROM sx_pf_dFactories WHERE FactoryID <> 'ZT'      -- CONFIG HERE
-		-- AND FactoryID IN (   )
-		-- AND NameShort like '%xxx%'
+	FROM sx_pf_dFactories 
+	WHERE FactoryID NOT IN ('ZT')     
+		-- AND FactoryID IN ()
+		-- AND NameShort LIKE '%xxx%'
+		-- AND ResponsiblePerson LIKE '%xxx%'
 
 OPEN MyCursor
 FETCH MyCursor INTO @FactoryID
