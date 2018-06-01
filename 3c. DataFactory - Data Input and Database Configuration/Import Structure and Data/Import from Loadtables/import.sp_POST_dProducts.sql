@@ -1,78 +1,76 @@
 /*
-Mandy Hauck 2018/02
-Import all values from load.tdProducts
-	EXEC [import].[sp_POST_dProducts] '','','',''
+Mandy Hauck, Stefan Lindenlaub
+2018/06
+Import all values from load.tdProducts with specific load-procedure as source
+	EXEC [import].[spPOST_dProducts] '','','',''
 */
 
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[import].[sp_POST_dProducts]') AND type in (N'P', N'PC'))
-DROP PROCEDURE [import].[sp_POST_dProducts]
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[import].[spPOST_dProducts]') AND type in (N'P', N'PC'))
+DROP PROCEDURE [import].[spPOST_dProducts]
 GO
 
-CREATE PROCEDURE [import].[sp_POST_dProducts]
-		(	 
-			 @Username		AS NVARCHAR(255)
-			,@FactoryID		AS NVARCHAR(255)
-			,@ProductLineID	AS NVARCHAR(255)
-			,@ProductID		AS NVARCHAR(255)			
-			,@Source		AS NVARCHAR(255)
-		)
+CREATE PROCEDURE [import].[spPOST_dProducts]
+				(		 @Username		AS NVARCHAR(255)
+						,@FactoryID		AS NVARCHAR(255)
+						,@ProductLineID	AS NVARCHAR(255)
+						,@ProductID		AS NVARCHAR(255)			
+						,@Source		AS NVARCHAR(255)		)
 				   			  
 AS
 
 BEGIN
-
 	SET NOCOUNT ON
 
 	-------------------------------------------------------------------------------------------------------------------
 	-- ##### VARIABLES ###########
-	DECLARE @TimestampCall		 DATETIME		= CURRENT_TIMESTAMP;
-	DECLARE @ProcedureName		 NVARCHAR (255) = OBJECT_SCHEMA_NAME(@@PROCID) + N'.' + OBJECT_NAME(@@PROCID);
-	DECLARE @ResultCode			 INT			= 501;
-	DECLARE @EffectedRows		 INT			= 0;					
-	DECLARE @TransactUsername	 NVARCHAR(255)	= N'';
-	DECLARE @ParameterString	 NVARCHAR (MAX) = N''''
-			+ ISNULL(@Username			, N'NULL')			 + N''',''' 
-			+ ISNULL(@FactoryID			, N'NULL')			 + N''','''
-			+ ISNULL(@ProductLineID		, N'NULL')			 + N''','''
-			+ ISNULL(@ProductID			, N'NULL')			 + N''','''
-			+ ISNULL(@Source			, N'NULL')			 + N'''';
-	DECLARE @Comment			 NVARCHAR(2000) = N'';	
+	DECLARE @TimestampCall				DATETIME		= CURRENT_TIMESTAMP;
+	DECLARE @ProcedureName				NVARCHAR(255)	= OBJECT_SCHEMA_NAME(@@PROCID) + N'.' + OBJECT_NAME(@@PROCID);
+	DECLARE @ResultCode					INT				= 501;
+	DECLARE @EffectedRows				INT				= 0;					
+	DECLARE @TransactUsername			NVARCHAR(255)	= N'';
+	DECLARE @ParameterString			NVARCHAR(MAX)	= N''''
+														+ ISNULL(@Username		, N'NULL')	 + N''',''' 
+														+ ISNULL(@FactoryID		, N'NULL')	 + N''','''
+														+ ISNULL(@ProductLineID	, N'NULL')	 + N''','''
+														+ ISNULL(@ProductID		, N'NULL')	 + N''','''
+														+ ISNULL(@Source		, N'NULL')	 + N'''';
+	DECLARE @Comment					NVARCHAR(2000) = N'';
+	DECLARE @TimeType					NVARCHAR(255)
+	DECLARE @NameShort					NVARCHAR(255)
+	DECLARE @NameLong					NVARCHAR(255)
+	DECLARE @CommentUser				NVARCHAR(MAX)
+	DECLARE @CommentDev					NVARCHAR(255)
+	DECLARE @ResponsiblePerson			NVARCHAR(255)
+	DECLARE @ImageName					NVARCHAR(255)
+	DECLARE @Status						NVARCHAR(255)
+	DECLARE @Template					NVARCHAR(255)
+	DECLARE @TemplateVersion			NVARCHAR(255)
+	DECLARE @GA1 						NVARCHAR(255)
+	DECLARE @GA2 						NVARCHAR(255)
+	DECLARE @GA3 						NVARCHAR(255)
+	DECLARE @GA4 						NVARCHAR(255)
+	DECLARE @GA5 						NVARCHAR(255)
+	DECLARE @GA6 						NVARCHAR(255)
+	DECLARE @GA7 						NVARCHAR(255)
+	DECLARE @GA8 						NVARCHAR(255)
+	DECLARE @GA9 						NVARCHAR(255)
+	DECLARE @GA10						NVARCHAR(255)
+	DECLARE @GA11						NVARCHAR(255)
+	DECLARE @GA12						NVARCHAR(255)
+	DECLARE @GA13						NVARCHAR(255)
+	DECLARE @GA14						NVARCHAR(255)
+	DECLARE @GA15						NVARCHAR(255)
+	DECLARE @GA16						NVARCHAR(255)
+	DECLARE @GA17						NVARCHAR(255)
+	DECLARE @GA18						NVARCHAR(255)
+	DECLARE @GA19						NVARCHAR(255)
+	DECLARE @GA20						NVARCHAR(255)
+	DECLARE @GA21						NVARCHAR(255)
+	DECLARE @GA22						NVARCHAR(255)
+	DECLARE @GA23						NVARCHAR(255)
+	DECLARE @GA24						NVARCHAR(255)
+	DECLARE @GA25						NVARCHAR(255)
 
-	DECLARE @TimeType					AS NVARCHAR (255)
-	DECLARE @NameShort					AS NVARCHAR (255)
-	DECLARE @NameLong					AS NVARCHAR (255)
-	DECLARE @CommentUser				AS NVARCHAR (MAX)
-	DECLARE @CommentDev					AS NVARCHAR (255)
-	DECLARE @ResponsiblePerson			AS NVARCHAR (255)
-	DECLARE @ImageName					AS NVARCHAR (255)
-	DECLARE @Status						AS NVARCHAR (255)
-	DECLARE @Template					AS NVARCHAR (255)
-	DECLARE @TemplateVersion			AS NVARCHAR (255)
-	DECLARE @GA1 						AS NVARCHAR (255)
-	DECLARE @GA2 						AS NVARCHAR (255)
-	DECLARE @GA3 						AS NVARCHAR (255)
-	DECLARE @GA4 						AS NVARCHAR (255)
-	DECLARE @GA5 						AS NVARCHAR (255)
-	DECLARE @GA6 						AS NVARCHAR (255)
-	DECLARE @GA7 						AS NVARCHAR (255)
-	DECLARE @GA8 						AS NVARCHAR (255)
-	DECLARE @GA9 						AS NVARCHAR (255)
-	DECLARE @GA10						AS NVARCHAR (255)
-	DECLARE @GA11						AS NVARCHAR (255)
-	DECLARE @GA12						AS NVARCHAR (255)
-	DECLARE @GA13						AS NVARCHAR (255)
-	DECLARE @GA14						AS NVARCHAR (255)
-	DECLARE @GA15						AS NVARCHAR (255)
-	DECLARE @GA16						AS NVARCHAR (255)
-	DECLARE @GA17						AS NVARCHAR (255)
-	DECLARE @GA18						AS NVARCHAR (255)
-	DECLARE @GA19						AS NVARCHAR (255)
-	DECLARE @GA20						AS NVARCHAR (255)
-	DECLARE @GA21						AS NVARCHAR (255)
-	DECLARE @GA22						AS NVARCHAR (255)
-	DECLARE @GA23						AS NVARCHAR (255)
-	DECLARE @GA24						AS NVARCHAR (255)
-	DECLARE @GA25						AS NVARCHAR (255)
 	-------------------------------------------------------------------------------------------------------------------
 	-- ##### DETERMINE TRANSACTION USER ###########
 	SELECT @TransactUsername = dbo.sx_pf_Determine_TransactionUsername (@Username);
@@ -81,44 +79,44 @@ BEGIN
 	-- ##### TEMPORARY TABLES ###########
 	IF OBJECT_ID('tempdb..#tmp') IS NOT NULL DROP TABLE #tmp
 	CREATE TABLE #tmp 
-			(	ProductID				NVARCHAR (255)
-			   ,ProductLineID			NVARCHAR (255)
-			   ,FactoryID				NVARCHAR (255)
-			   ,TimeType				NVARCHAR (255)
-			   ,NameShort				NVARCHAR (255)
-			   ,NameLong				NVARCHAR (255)
-			   ,CommentUser				NVARCHAR (MAX)
-			   ,CommentDev				NVARCHAR (255)
-			   ,ResponsiblePerson		NVARCHAR (255)
-			   ,ImageName				NVARCHAR (255)
-			   ,Status					NVARCHAR (255)
-			   ,Template				NVARCHAR (255)
-			   ,TemplateVersion			NVARCHAR (255)
-			   ,GA1 					NVARCHAR (255)
-			   ,GA2 					NVARCHAR (255)
-			   ,GA3 					NVARCHAR (255)
-			   ,GA4 					NVARCHAR (255)
-			   ,GA5 					NVARCHAR (255)
-			   ,GA6 					NVARCHAR (255)
-			   ,GA7 					NVARCHAR (255)
-			   ,GA8 					NVARCHAR (255)
-			   ,GA9 					NVARCHAR (255)
-			   ,GA10					NVARCHAR (255)
-			   ,GA11					NVARCHAR (255)
-			   ,GA12					NVARCHAR (255)
-			   ,GA13					NVARCHAR (255)
-			   ,GA14					NVARCHAR (255)
-			   ,GA15					NVARCHAR (255)
-			   ,GA16					NVARCHAR (255)
-			   ,GA17					NVARCHAR (255)
-			   ,GA18					NVARCHAR (255)
-			   ,GA19					NVARCHAR (255)
-			   ,GA20					NVARCHAR (255)
-			   ,GA21					NVARCHAR (255)
-			   ,GA22					NVARCHAR (255)
-			   ,GA23					NVARCHAR (255)
-			   ,GA24					NVARCHAR (255)
-			   ,GA25					NVARCHAR (255))
+			(	ProductID				NVARCHAR(255)
+			   ,ProductLineID			NVARCHAR(255)
+			   ,FactoryID				NVARCHAR(255)
+			   ,TimeType				NVARCHAR(255)
+			   ,NameShort				NVARCHAR(255)
+			   ,NameLong				NVARCHAR(255)
+			   ,CommentUser				NVARCHAR(MAX)
+			   ,CommentDev				NVARCHAR(255)
+			   ,ResponsiblePerson		NVARCHAR(255)
+			   ,ImageName				NVARCHAR(255)
+			   ,Status					NVARCHAR(255)
+			   ,Template				NVARCHAR(255)
+			   ,TemplateVersion			NVARCHAR(255)
+			   ,GA1 					NVARCHAR(255)
+			   ,GA2 					NVARCHAR(255)
+			   ,GA3 					NVARCHAR(255)
+			   ,GA4 					NVARCHAR(255)
+			   ,GA5 					NVARCHAR(255)
+			   ,GA6 					NVARCHAR(255)
+			   ,GA7 					NVARCHAR(255)
+			   ,GA8 					NVARCHAR(255)
+			   ,GA9 					NVARCHAR(255)
+			   ,GA10					NVARCHAR(255)
+			   ,GA11					NVARCHAR(255)
+			   ,GA12					NVARCHAR(255)
+			   ,GA13					NVARCHAR(255)
+			   ,GA14					NVARCHAR(255)
+			   ,GA15					NVARCHAR(255)
+			   ,GA16					NVARCHAR(255)
+			   ,GA17					NVARCHAR(255)
+			   ,GA18					NVARCHAR(255)
+			   ,GA19					NVARCHAR(255)
+			   ,GA20					NVARCHAR(255)
+			   ,GA21					NVARCHAR(255)
+			   ,GA22					NVARCHAR(255)
+			   ,GA23					NVARCHAR(255)
+			   ,GA24					NVARCHAR(255)
+			   ,GA25					NVARCHAR(255)		)
 
 	INSERT INTO #tmp
 		SELECT   tdP.ProductID
@@ -174,46 +172,46 @@ BEGIN
 	FETCH MyCursor INTO @ProductID,@ProductLineID,@FactoryID,@TimeType,@NameShort,@NameLong,@CommentUser,@CommentDev,@ResponsiblePerson,@ImageName,@Status,@Template,@TemplateVersion,@GA1 ,@GA2 ,@GA3 ,@GA4 ,@GA5 ,@GA6 ,@GA7 ,@GA8 ,@GA9 ,@GA10,@GA11,@GA12,@GA13,@GA14,@GA15,@GA16,@GA17,@GA18,@GA19,@GA20,@GA21,@GA22,@GA23,@GA24,@GA25
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
-	EXECUTE @ResultCode = [dbo].[sx_pf_POST_Product]
-			 @Username
-			,@ProductID
-			,@ProductLineID				
-			,@FactoryID			
-			,@TimeType			
-			,@NameShort			
-			,@NameLong			
-			,@CommentUser		
-			,@CommentDev			
-			,@ResponsiblePerson	
-			,@ImageName			
-			,@Status				
-			,@Template			
-			,@TemplateVersion	
-			,@GA1 				
-			,@GA2 				
-			,@GA3 				
-			,@GA4 				
-			,@GA5 				
-			,@GA6 				
-			,@GA7 				
-			,@GA8 				
-			,@GA9 				
-			,@GA10				
-			,@GA11				
-			,@GA12				
-			,@GA13				
-			,@GA14				
-			,@GA15				
-			,@GA16				
-			,@GA17				
-			,@GA18				
-			,@GA19				
-			,@GA20				
-			,@GA21				
-			,@GA22				
-			,@GA23				
-			,@GA24				
-			,@GA25	
+		EXECUTE @ResultCode = [dbo].[sx_pf_POST_Product]
+				 @Username
+				,@ProductID
+				,@ProductLineID				
+				,@FactoryID			
+				,@TimeType			
+				,@NameShort			
+				,@NameLong			
+				,@CommentUser		
+				,@CommentDev			
+				,@ResponsiblePerson	
+				,@ImageName			
+				,@Status				
+				,@Template			
+				,@TemplateVersion	
+				,@GA1 				
+				,@GA2 				
+				,@GA3 				
+				,@GA4 				
+				,@GA5 				
+				,@GA6 				
+				,@GA7 				
+				,@GA8 				
+				,@GA9 				
+				,@GA10				
+				,@GA11				
+				,@GA12				
+				,@GA13				
+				,@GA14				
+				,@GA15				
+				,@GA16				
+				,@GA17				
+				,@GA18				
+				,@GA19				
+				,@GA20				
+				,@GA21				
+				,@GA22				
+				,@GA23				
+				,@GA24				
+				,@GA25	
 					
 		Print @ResultCode
 	FETCH MyCursor INTO  @ProductID,@ProductLineID,@FactoryID,@TimeType,@NameShort,@NameLong,@CommentUser,@CommentDev,@ResponsiblePerson,@ImageName,@Status,@Template,@TemplateVersion,@GA1 ,@GA2 ,@GA3 ,@GA4 ,@GA5 ,@GA6 ,@GA7 ,@GA8 ,@GA9 ,@GA10,@GA11,@GA12,@GA13,@GA14,@GA15,@GA16,@GA17,@GA18,@GA19,@GA20,@GA21,@GA22,@GA23,@GA24,@GA25
@@ -222,10 +220,15 @@ BEGIN
 	DEALLOCATE MyCursor
 
 	SET @ResultCode = 200;
+
 	EXEC dbo.sx_pf_pPOST_API_LogEntry @Username, @TransactUsername, @ProcedureName, @ParameterString, @EffectedRows, @ResultCode, @TimestampCall, @Comment;
+
 	RETURN @ResultCode;
 
 END;
 
 -------------------------------------------------------------------------------------------------------------------
+GO
+GRANT EXECUTE ON OBJECT ::[import].[spPOST_dProducts] TO pf_PlanningFactoryUser;
+GRANT EXECUTE ON OBJECT ::[import].[spPOST_dProducts] TO pf_PlanningFactoryService;
 GO
