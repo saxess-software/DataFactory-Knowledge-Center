@@ -1,13 +1,33 @@
 
 
 ### Vorbereitungen
-* Windows User "FactoryService" anlegen - als lokaler User auf TestPCs, als Domänenuser bei Multiuserbetrieb
-* DataFactory Cluster auf API 4.0.72+ updaten
+* Windows User "FactoryService" anlegen und Passwort dokumentieren - als lokaler User auf TestPCs, als Domänenuser bei Multiuserbetrieb
+* DataFactory Cluster auf API 4.0.74+ updaten
+* Windows User "FactoryService" auf dem SQL Server als User anlegen und in den DataFactory Datenbanken die Rolle "pf_PlanningFactoryService" geben
+* Login als Admin auf dem Server, welcher als DF Webserver dient
+
+* Kompatibilätsmodus für IE im Intranet deaktivieren (auf jedem User PC)
+* Windows Auth im Firefox freischalten (auf jedem User PC, sonst Dialogbox)
+
 
 ### Installation
 * Installationsdatei ausführen
 * im schwarzen cmd Dialog User FactoryService MIT DOMÄNDE angeben (Domäne\User) und Passwort
 * jetzt muss der Dienst unter http://localhost:5000 erreichbar sein
+
+### Test auf Installationsserver 
+*  zunächst muss der Dienst unter http://localhost:5000 erreichbar sein 
+** im IE müsste das sofort gehen
+** im Firefox muss das (mit Login Dialog) auch möglich sein (WinAuth im Firefox muss erst freigeschalten werden)
+
+* jetzt muss das Cluster unter http://localhost:5000/ClusterName erreichbar sein
+* jetzt muss das Cluster unter http://[IP oder Servername]:5000/ClusterName erreichbar sein 
+** von diesem Server
+** von den PCs 
+
+### Bei manueller Configuration
+
+* die Detailanleitung im WebApp Repo lesen
 
 * Datei appsettings.json anpassen
     * Connection zum SQL Server setzen
@@ -16,16 +36,13 @@
     
     * Windows-Auth True/False (das bedeutet für die User)
     * ggf. Farben und Schaltflächen an / aus
-    
-   
-* Dienst DataFactoryService neu starten
-* jetzt muss der Dienst unter http://localhost:5000/ClusterName erreichbar sein
 
-* jetzt muss der Dienst unter http://[IP oder Rechnername]:5000/ClusterName erreichbar sein
 * eigene Bilder im Ordner wwwroot\content\images ablegen (diesen Pfad ggf. schaffen)
 * Logo für Applikation ablegen unter wwwroot\assets\images
 * Internetexplorer darf nicht in den Kompatibilitätsmodus gehen für Intranet etc. (Option deaktivieren)
-* damit Firefox mit WindowsAuth SSO arbeitet -> about:config -> Suche nach "Trusted" -> URL des Server bei *.trusted-uris hinterlegen
+* damit Firefox mit WindowsAuth SSO arbeitet -> about:config -> Suche nach "Trusted" -> URL des Server bei *.trusted-uris hinterlegen (mehrere Einträge mit Komma trennen, z.B. "http:localhost, http://DR74"
+
+* Dienst DataFactoryService neu starten
 
 ### falls das Dienstkonto des DataFactoryService geändert wird, muss die URL wieder freigegben werden
 
