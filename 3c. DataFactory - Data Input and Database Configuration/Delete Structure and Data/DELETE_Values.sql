@@ -1,35 +1,34 @@
 /*
-DELETE all Products 
+DELETE certain Values
 This script loops over all selected products and deletes them
-All ProductIDs provided through SELECT-Statement will be deleted
+All Values provided through SELECT-Statement will be deleted
 */
 -------------------------------------------------------------------------------------------------------------------
 -- ##### VARIABLES ###########
 DECLARE @FactoryID			NVARCHAR(255)
 DECLARE @ProductLineID		NVARCHAR(255)
 DECLARE @ProductID			NVARCHAR(255)
+DECLARE @ValueSeriesID		NVARCHAR(255)
 
 -------------------------------------------------------------------------------------------------------------------
 -- ##### DELETE ###########
 DECLARE MyCursor CURSOR FOR
 
-	SELECT FactoryID,ProductLineID,ProductID
-	FROM sx_pf_dProducts 
+	SELECT FactoryID,ProductLineID,ProductID,ValueSeriesID
+	FROM dbo.sx_pf_dValueSeries 
 	WHERE FactoryID NOT IN ('ZT')     
 		-- AND FactoryID IN (   )
 		-- AND ProductlineID IN (   )
-		-- AND Template = 'Unikum_VM'
+		-- AND ProductID IN (   )
 		-- AND NameShort like '%xxx%'
-		-- AND Status IN (	)
-		-- AND GlobalAttribute1 IN (	)
 
 OPEN MyCursor
-FETCH MyCursor INTO  @FactoryID,@ProductID,@ProductLineID
+FETCH MyCursor INTO  @FactoryID,@ProductID,@ProductLineID,@ValueSeriesID
 WHILE @@FETCH_STATUS = 0
 BEGIN
-      EXEC sx_pf_DELETE_Product 'SQL',@FactoryID, @ProductlineID, @ProductID
+      EXEC dbo.sx_pf_DELETE_Values 'SQL',@FactoryID, @ProductlineID, @ProductID,@ValueSeriesID
 
-      FETCH MyCursor INTO @FactoryID,@ProductID,@ProductLineID
+      FETCH MyCursor INTO @FactoryID,@ProductID,@ProductLineID,@ValueSeriesID
 END
 CLOSE MyCursor
 DEALLOCATE MyCursor
