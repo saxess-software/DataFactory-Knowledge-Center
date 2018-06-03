@@ -46,21 +46,32 @@ AS
          ,dVS.Effect
          ,dVS.EffectParameter
 
-  FROM   sx_pf_fValues fV
-         LEFT JOIN sx_pf_dValueSeries dVS
+  FROM   dbo.sx_pf_fValues fV
+         LEFT JOIN dbo.sx_pf_dValueSeries dVS
                 ON fV.ValueSeriesKey = dVS.ValueSeriesKey
-         LEFT JOIN sx_pf_dProducts dP
+         LEFT JOIN dbo.sx_pf_dProducts dP
                 ON fV.ProductKey = dP.ProductKey
-         LEFT JOIN sx_pf_dProductLines dPL
+         LEFT JOIN dbo.sx_pf_dProductLines dPL
                 ON fV.ProductLineKey = dPL.ProductLineKey
-         LEFT JOIN sx_pf_dFactories dF
+         LEFT JOIN dbo.sx_pf_dFactories dF
                 ON fV.FactoryKey = dF.FactoryKey
-		 LEFT JOIN sx_pf_vUserRights vR
+		 LEFT JOIN dbo.sx_pf_gValueEffects gVE
+				ON dVS.Effect = gVE.EffectID
+		 LEFT JOIN dbo.sx_pf_vUserRights vR
 				ON fV.FactoryID = vR.FactoryID AND 
-				   fV.ProductLineID = vR.ProductLineID			
+				   fV.ProductLineID = vR.ProductLineID		
+			
 
   WHERE fV.ValueInt <> 0 AND dVS.[IsNumeric] = 1 
-		AND vR.[Right] IN ('Write','Read') AND vR.Username = SYSTEM_USER
+		AND vR.[Right] IN ('Write','Read') 
+		AND vR.Username = SYSTEM_USER
+		-- nur GuV und Bilanzwerte an CP übergeben - Definition ggf. erweitern falls auch Mengen / Cash gewünscht
+		AND 
+			(gVE.ProfitLossEffect <> 0
+			 OR
+			 gVE.BalanceEffect <> 0
+			)
+		
 		
 		
 GO
