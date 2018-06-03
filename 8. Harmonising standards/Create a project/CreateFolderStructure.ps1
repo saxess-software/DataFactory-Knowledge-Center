@@ -23,10 +23,10 @@ New-Item -ItemType directory -Name '2. Projektumsetzung\API\1. Standard API'
 New-Item -ItemType directory -Name '2. Projektumsetzung\API\2. API Modifikation'
 New-Item -ItemType directory -Name '2. Projektumsetzung\API\3. Kundenerweiterungen'
 
-New-Item -ItemType File -Name '2. Projektumsetzung\API\0. permanente Erweiterungstabellen\dummy.txt'
-New-Item -ItemType File -Name '2. Projektumsetzung\API\1. Standard API\dummy.txt'
-New-Item -ItemType File -Name '2. Projektumsetzung\API\2. API Modifikation\dummy.txt'
-New-Item -ItemType File -Name '2. Projektumsetzung\API\3. Kundenerweiterungen\dummy.txt'
+New-Item -ItemType File -Name '2. Projektumsetzung\API\0. permanente Erweiterungstabellen\dummy.sql'
+New-Item -ItemType File -Name '2. Projektumsetzung\API\1. Standard API\dummy.sql'
+New-Item -ItemType File -Name '2. Projektumsetzung\API\2. API Modifikation\dummy.sql'
+New-Item -ItemType File -Name '2. Projektumsetzung\API\3. Kundenerweiterungen\dummy.sql'
 
 # Folder for Templates
 New-Item -ItemType directory -Name '2. Projektumsetzung\Templates\'
