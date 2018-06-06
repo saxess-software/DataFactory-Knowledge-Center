@@ -23,12 +23,12 @@ DECLARE MyCursor CURSOR FOR
 		-- AND NameShort like '%xxx%'
 
 OPEN MyCursor
-FETCH MyCursor INTO  @FactoryID,@ProductID,@ProductLineID,@ValueSeriesID
+FETCH MyCursor INTO  @FactoryID,@ProductLineID,@ProductID,@ValueSeriesID
 WHILE @@FETCH_STATUS = 0
 BEGIN
       EXEC dbo.sx_pf_DELETE_Values 'SQL',@FactoryID, @ProductlineID, @ProductID,@ValueSeriesID
 
-      FETCH MyCursor INTO @FactoryID,@ProductID,@ProductLineID,@ValueSeriesID
+      FETCH MyCursor INTO @FactoryID,@ProductLineID,@ProductID,@ValueSeriesID
 END
 CLOSE MyCursor
 DEALLOCATE MyCursor
