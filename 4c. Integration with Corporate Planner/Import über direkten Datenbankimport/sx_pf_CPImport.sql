@@ -45,6 +45,7 @@ AS
          ,dVS.Unit
          ,dVS.Effect
          ,dVS.EffectParameter
+		 ,'CL '+fV.FactoryID+'|CC '+fV.ProductLineID+'|CT '+RIGHT('0000000'+LEFT(fV.ValueSeriesID,6),8) AS CPKey	
 
   FROM   dbo.sx_pf_fValues fV
          LEFT JOIN dbo.sx_pf_dValueSeries dVS
@@ -71,7 +72,8 @@ AS
 			 OR
 			 gVE.BalanceEffect <> 0
 			)
-		
-		
-		
+	
+GO
+
+GRANT SELECT ON OBJECT ::[dbo].[sx_pf_CPImport] TO pf_PlanningFactoryUser;
 GO
