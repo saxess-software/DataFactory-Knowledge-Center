@@ -1,6 +1,6 @@
 /*
 DYNAMIC PIVOT | Ausgabe der Werte aus Tabelle sx_pf_fValues als Pivot-Tabelle und schreiben in eine Zieltabelle/ Transponieren der Zeilen in Spalten
-	EXEC [param].[spFillParamTable]  'SQL','LNK'
+	EXEC [param].[spFillParamTable]  'SQL','TAB'
 */
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[param].[spFillParamTable]') AND type in (N'P', N'PC'))
 DROP PROCEDURE [param].[spFillParamTable]

@@ -1,6 +1,6 @@
 /*
 Creates table from Parameter-Product in Factory 'ZT' and ProductLine 'PARAM'
-		EXEC [param].[spCreateParamTable] 'SQL','MP'
+		EXEC [param].[spCreateParamTable] 'SQL','TAB'
 */
 
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[param].[spCreateParamTable]') AND type in (N'P', N'PC'))
@@ -70,13 +70,13 @@ EXEC @ResultCode = dbo.sx_pf_pGET_ClusterWriteRight @TransactUsername;
 -------------------------------------------------------------------------------------------------------------------
 -- ##### SET ###########
 BEGIN
-	SELECT @STRINGText = COALESCE(@STRINGText + ',', '') +  '[' + CONVERT(NVARCHAR(MAX),dVS.NameShort) + '] NVARCHAR(MAX)'
+	SELECT @STRINGText = COALESCE(@STRINGText + ',', '') +  '[' + CONVERT(NVARCHAR(MAX),dVS.ValueSeriesID) + '] NVARCHAR(MAX)'
 	FROM [dbo].[sx_pf_dProducts] dP
 		LEFT JOIN sx_pf_dValueseries dVS ON dP.ProductKey = dVS.ProductKey
 	WHERE dP.FactoryID = 'ZT' AND dVS.FactoryID = 'ZT' AND dVS.ProductLIneID = 'PARAM' AND dVS.[IsNumeric] = 0
 			AND dP.ProductID = @TemplateProductID  AND dP.ProductLIneID = 'PARAM'
 
-	SELECT @StringInt = COALESCE(@StringInt + ',', '') +  '[' + CONVERT(NVARCHAR(MAX),dVS.NameShort) + '] MONEY'
+	SELECT @StringInt = COALESCE(@StringInt + ',', '') +  '[' + CONVERT(NVARCHAR(MAX),dVS.ValueSeriesID) + '] MONEY'
 	FROM [dbo].[sx_pf_dProducts] dP
 		LEFT JOIN sx_pf_dValueseries dVS ON dP.ProductKey = dVS.ProductKey
 	WHERE dP.FactoryID = 'ZT' AND dVS.FactoryID = 'ZT' AND dVS.ProductLIneID = 'PARAM' AND dVS.[IsNumeric] = 1
@@ -85,7 +85,7 @@ BEGIN
 	SELECT @TableName = @TemplateProductID
 END
 
-	PRINT 'StringText ' + @StringText  PRINT 'StringInt ' + @StringInt  PRINT 'Tablename ' + @TableName
+	--PRINT 'StringText ' + @StringText  PRINT 'StringInt ' + @StringInt  PRINT 'Tablename ' + @TableName
 
 -------------------------------------------------------------------------------------------------------------------
 -- ##### FLAG ###########
@@ -124,6 +124,10 @@ BEGIN
 
 		EXECUTE sp_executesql @SQLCreate
 	END
+
+	IF @StringText = '0' AND @StringInt = '0'
+		SET @Comment = 'No table has been created'
+
 END
 
 -------------------------------------------------------------------------------------------------------------------	
