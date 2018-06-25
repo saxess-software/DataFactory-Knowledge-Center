@@ -50,12 +50,6 @@ BEGIN TRY
 			SET @ResultCode = 403;
 			RAISERROR('Transaction user don`t exists', 16, 10);
 		END;
-
-	-- Check rights
-	EXEC @ResultCode = dbo.sx_pf_pGET_ClusterWriteRight @TransactUsername;
-
-		IF @ResultCode <> 200
-			RAISERROR('Invalid rights', 16, 10);
 													
 -------------------------------------------------------------------------------------------------------------------
 -- ##### TEMPORARY TABLES ###########
