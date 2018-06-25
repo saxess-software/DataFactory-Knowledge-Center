@@ -81,7 +81,9 @@ BEGIN TRY
 	FROM 	#tmp t
 		LEFT JOIN dbo.sx_pf_fValues fV		-- this join is needed for something
 			ON	t.ColumnText1 = fV.FactoryID
-	WHERE	fV.FactoryID <> 'ZT' 		
+	WHERE	fV.FactoryID <> 'ZT' 	
+		AND	(@FactoryID = '' OR tdPL.FactoryID = @FactoryID)
+		AND   	(@ProductLineID = '' OR tdPL.ProductLineID = @ProductLineID)
 			
 -------------------------------------------------------------------------------------------------------------------
 -- ##### COMMIT & API LOG ###########
