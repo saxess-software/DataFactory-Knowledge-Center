@@ -7,6 +7,10 @@ Summary:	This template provides the layout used for creating or altering views
 	SELECT * FROM [dbo].[ViewName]
 */
 
+IF EXISTS (SELECT * FROM sys.views WHERE OBJECT_ID = OBJECT_ID(N'[dbo].[ViewName]'))
+DROP VIEW [dbo].[ViewName]
+GO
+
 CREATE VIEW [dbo].[ViewName] AS
 
 -------------------------------------------------------------------------------------------------------------------
@@ -41,5 +45,7 @@ FROM Hilfsview1 Hv1
 
 -------------------------------------------------------------------------------------------------------------------
 GO
-
+GRANT SELECT ON OBJECT:: [dbo].[ViewName] TO pf_PlanningFactoryUser;
+GRANT SELECT ON OBJECT:: [dbo].[ViewName] TO pf_PlanningFactoryService;
+GO
 
