@@ -1,0 +1,83 @@
+﻿Nachteile:
+***********
+
+- Kein echtes OAuth, Wordpress erhält Username / PW
+
+TODO
+*************
+Passwort des Active Directory Readers härten
+Test um Seiten nur für Subscriber freizugeben
+Testuser löschen
+
+Einrichtung NADI
+*****************
+
+In Wordpress
+
+1. WordPress installieren
+2. Plugin NADI in Workpress installieren
+3. PHP ldap aktivieren (s. MS, Kundu Konsole)
+4. Plugin NADI aktivieren
+
+Auf irgendeinem Windows PC: 
+1. Self Sign Certifikat über powershell kommando erstellen auf *.saxess.onmicrosoft.com
+2. Zertifikatsverwaltung öffnen (cmd als Admin -> mmc -> öffnen Zertifikate -> eigene)
+3. Zertifikat als privates Zertifikat exportieren (incl. Passwort)
+4. Zertifikat als öffentliches Zertifikat exportieren
+
+In Azure
+1. Secure LDAP in Azure AD Domain Services aktivieren, IP Adresse merken
+2. privates Zertifikat importieren
+3. User als ActiveDirectoryReader einrichten (normaler User)
+
+In Wordpress Verzeichnis
+1. öffentliches Zertifikat nach ../wp-admin und in Ordner darüber kopieren
+2. Datei ldaprc erstellen mit Inhalt
+
+	TLS_REQCERT never
+	TLS_CACERT cert_saxess_public.cer (Name des öffentlichen Zertifikates)
+3. diese auch nach .../wp-admin und darüber kopieren
+
+In Wordpress:
+1. IP Adresse des Secure LDAP in NADI hinterlegen
+2. Logindaten des ActiveDirectoryReader hinterlegen
+3. Sicherheitesgruppen in Synchronisierung aufnehmen
+4. Sicherheitsgruppen auf Wordpress Gruppen mappen
+5. Synchronisierung bei jedem neuen Benutzer auslösen
+
+
+
+AD:
+***
+saxess.onmicrosoft.com
+
+
+Wordpress Login
+****************
+sxAdmin
+
+PW: Neu Setzen
+
+Gruppe für Administration
+************************
+sxMarketing -> Mitglied: Tester.sxMarketing@saxess.onmicrosoft.com 
+
+6397ff7b-7504-4e96-bbd2-110174f55d84
+
+PW: Neu Setzen
+
+
+Gruppe für User
+************************
+sxMitarbeiterFest -> Mitglied: Tester.sxMitarbeiterFest@saxess.onmicrosoft.com
+
+1179e3da-4626-4c4e-9eab-c24d7ae7be71
+
+PW: neu setzen
+
+
+AD Abfrage
+***********
+ActiveDirectoryReader@saxess.onmicrosoft.com
+
+PW: Neu Setzen
