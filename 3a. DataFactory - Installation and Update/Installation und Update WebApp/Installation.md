@@ -14,6 +14,23 @@
 * Installationsdatei ausführen
 * im schwarzen cmd Dialog User FactoryService MIT DOMÄNDE angeben (Domäne\User) und Passwort
 * jetzt muss der Dienst unter http://localhost:5000 erreichbar sein
+* LogService konfigurieren in Datei appsettings.user.json
+
+   * Liste der zu loggenden Cluster
+   * Username = der vom FactoryService
+   * Hub URL wie im Beispiel
+   * ServerID = Kundennummer_ + [Kennzeichen für Server beim Kunden]
+   * TimeInterval = 5 (Minuten)
+
+           "LoggingServiceOptions": {
+             "Clusters": [
+                   "DataFactory_BFW_2018"
+                  ,"DataFactory_proDi_2018"
+                  ],
+             "Username": "coplan\\FactoryService",
+             "DataFactoryHubURL": "https://datafactory-hub.azurewebsites.net",
+             "DataFactoryServerID": "AD01513_Productive",
+             "TimeIntervalOfExecute": 5
 
 ### Test auf Installationsserver 
 *  zunächst muss der Dienst unter http://localhost:5000 erreichbar sein 
