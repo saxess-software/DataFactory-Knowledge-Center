@@ -1,11 +1,34 @@
-## Voraussetzung für die Nutzung von DataFactory
+## Informationen für Systemadministratoren
+### Überblick
+DataFactory ist eine Client-Server Applikation auf Basis von Microsoft SQL Server und .NET. Sie ermöglicht die Erfassung von Daten zur Unternehmensplanung und Organisation verschiedener Fachbereiche.
+Wir unterscheiden dabei User mit Design- und Strukturbearbeitungsrechten (genannt Poweruser - meist aus Controlling- oder IT Abteilung) und reine Datenerfasser. Die Poweruser nutzen einen Excel Client, die Erfasser einen Webclient.
+Das System erlaubt über ERP Schnittstellen etc. eine Vielzahl von Automatisierungsprozessen, so dass auch wir als Hersteller oft intensiv an der Konfiguration und Wartung eines des Systems mitarbeiten. 
+
+
+DataFactory nutzt zum Betrieb folgende serverseitigen Kompoenten:
+- eine SQL Server Datenbank Version 2012+
+- einen eigenen Webserver 
+
+Die Clients der Poweruser benötigen:
+- Excel 2013+ zum starten des Excel Clients
+- aktueller Browser
+
+Die Clients der Datenerfasser benötigen:
+- aktueller Browser
+
+Der Excel Client ist als "Portable Software" erstellt. Es ist somit keinerlei Installation auf Clients notwendig, der Excel Client benötigt keine Adminrechte und kann auch von einem Netzlauf etc. gestartet werden. 
+Das System kann im Intranet betrieben werden werden oder mit https Absicherung etc. auch im Internet. Auch eine Installation oder Bereitstellung auf Micrsoft Azure als Plattform as a Service Applikation ist möglich.
+
+
+
 
 ### Systemvoraussetzungen Server:
 		
+		
 - SQL Server 2012 oder höher. Wir empfehlen: 
-  - bis zu 25 Benutzer Microsoft SQL Server Express
+  - bis zu 10 Benutzer Microsoft SQL Server Express
   - bis zu 2.000 Benutzer Microsoft SQL Server Standard
-  - über 2.000 Benutzer Microsoft SQL Enterprise 2016 
+  
 - Empfehlung bei Lizenzverfügbarkeit: SQL Server 2017 Enterprise
 - Windows 2012 R2 Server 
 - Admin Rechte auf dem SQL Server für die Nutzung von SQL Agent, SQL Profiler, SQL Debugger
