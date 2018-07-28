@@ -50,6 +50,18 @@ IF  DB_NAME() != 'master'
 	END
 
 
+-- You can grant Access to groups or persons of Azure ActiveDirectory
+-- You don't need to create an User in the master database for them
+-- You must grant this access to each database
+
+CREATE USER [sxMitarbeiterFest] FROM EXTERNAL PROVIDER;
+
+DROP USER [sxMitarbeiterFest];
+
+CREATE USER [gerd.tautenhahn@saxess.onmicrosoft.com] FROM EXTERNAL PROVIDER;
+
+DROP USER [gerd.tautenhahn@saxess.onmicrosoft.com];
 
 
 
+GRANT SELECT ON OBJECT ::[result].[vZeit] TO [sxPersonal];
