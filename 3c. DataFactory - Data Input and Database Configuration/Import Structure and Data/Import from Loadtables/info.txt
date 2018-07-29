@@ -1,0 +1,1 @@
+Procedures integrated in Standard API from 4.0.75 on - now to find there or in T-SQL API Repo
