@@ -59,26 +59,42 @@ IIF(Datepart(weekday,CONVERT(Datetime,CAST(TimeID AS NVARCHAR(10))))<=5,1,0)  AS
 ````
 
 
-## List of Month
-Liste of TimeIDs per Month for given Years 2017-2018
-````SQL
--- Helper for Timeline
+## List of Month based on Products of a given template
+-- MAX / MIN Jahre aller Investitionen ermitteln
+DECLARE @Jahr_Min	INT
+DECLARE @Jahr_Max	INT
+DECLARE @Jahr		INT
+
+SELECT
+	 @Jahr_Min = MIN(ValueInt) -- SET Scale if Scale is not 1 !!
+	,@Jahr_Max = MAX(ValueInt)
+
+FROM dbo.sx_pf_fValues fV 
+		LEFT JOIN dbo.sx_pf_dProducts dP
+			ON fV.ProductKey = dP.ProductKey
+WHERE 
+		fV.ValueSeriesID	= 'J_ZAHL'
+	AND dP.Template			= 'Investliste_VM'
+	
+-- Kalenderhilfstabellen
 IF OBJECT_ID('tempdb..#Jahre') IS NOT NULL DROP TABLE #Jahre
-CREATE TABLE #Jahre (Jahr INT) 
-	INSERT INTO #Jahre VALUES (2017),(2018)
+CREATE TABLE #Jahre (Jahr INT NOT NULL) 
+SET @Jahr = @Jahr_Min
+
+WHILE @Jahr <= @Jahr_Max
+BEGIN
+	INSERT INTO #Jahre VALUES (@Jahr)
+	SET @Jahr = @Jahr + 1;
+END;
 
 IF OBJECT_ID('tempdb..#Monate') IS NOT NULL DROP TABLE #Monate
-CREATE TABLE #Monate (Monat INT) 
+CREATE TABLE #Monate (Monat INT NOT NULL) 
 	INSERT INTO #Monate VALUES (1),(2),(3),(4),(5),(6),(7),(8),(9),(10),(11),(12)
 
-IF OBJECT_ID('tempdb..#Monatsliste') IS NOT NULL DROP TABLE #Monatsliste;
-
-CREATE TABLE #Monatsliste (
-	TimeID BIGINT NOT NULL
-	)
-
-INSERT INTO #Monatsliste
-	SELECT Jahr * 10000 + Monat*100 + 15 AS TimeID FROM #Jahre LEFT JOIN #Monate ON 1=1
+IF OBJECT_ID('tempdb..#Time') IS NOT NULL DROP TABLE #Time
+CREATE TABLE #Time (Jahr INT NOT NULL, Monat INT NOT NULL, Periode INT NOT NULL)
+INSERT INTO #Time 
+	SELECT j.Jahr, m.Monat, j.Jahr * 100 + m.Monat AS Periode FROM #Jahre j LEFT JOIN #Monate m ON 1=1
 ````
 
 ## List of Days as static table
