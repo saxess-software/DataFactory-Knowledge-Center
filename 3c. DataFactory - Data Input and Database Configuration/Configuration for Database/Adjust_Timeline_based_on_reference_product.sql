@@ -4,11 +4,12 @@ Script to fill the Products in a Target Productline with all the TimeIDs accordi
 */
 
 
-DECLARE @SourceFactoryID NVARCHAR(255) ='ZT'
-DECLARE @SourceProductlineID NVARCHAR(255) ='1'
-DECLARE @SourceProductID NVARCHAR(255) ='10'
-DECLARE	@TargetFactoryID NVARCHAR (255) ='AK_S'
-DECLARE @TargetProductLineID NVARCHAR(255) ='1'
+DECLARE @SourceFactoryID		NVARCHAR(255) = 'ZT'
+DECLARE @SourceProductlineID	NVARCHAR(255) = 'U'
+DECLARE @SourceProductID		NVARCHAR(255) = '1'
+DECLARE	@TargetFactoryID		NVARCHAR(255) = 'I'
+DECLARE @TargetProductLineID	NVARCHAR(255) = '2'
+DECLARE @TargetTemplate			NVARCHAR(255) = 'Unikum_VM'		
 
 -- Runtime, keep empty
 DECLARE @ProductID NVARCHAR(255) = ''
@@ -18,7 +19,7 @@ DECLARE @TimeID BIGINT
 IF OBJECT_ID('tempdb..#TargetTimeIDSet') IS NOT NULL DROP TABLE #TargetTimeIDSet
 CREATE TABLE #TargetTimeIDSet
 	(
-	 TimeID BIGINT
+	 TimeID BIGINT NOT NULL
 	)
 
 INSERT INTO #TargetTimeIDSet
@@ -28,16 +29,16 @@ INSERT INTO #TargetTimeIDSet
 	FROM dbo.sx_pf_dTime dT 
 
 	WHERE 
-		dT.FactoryID = @SourceFactoryID AND
-		dT.ProductLineID = @SourceProductlineID AND
-		dT.ProductID = @SourceProductID
+			dT.FactoryID		= @SourceFactoryID 
+		AND	dT.ProductLineID	= @SourceProductlineID 
+		AND	dT.ProductID		= @SourceProductID
 
 -- The List of Target Products
 IF OBJECT_ID('tempdb..#TargetProducts') IS NOT NULL DROP TABLE #TargetProducts
 CREATE TABLE #TargetProducts
 	(
-		 ProductKey BIGINT
-		,ProductID NVARCHAR (255)
+		 ProductKey BIGINT			NOT	NULL
+		,ProductID	NVARCHAR (255)	NOT NULL
 	)
 
 INSERT INTO #TargetProducts
@@ -47,26 +48,29 @@ INSERT INTO #TargetProducts
 	FROM 
 		dbo.sx_pf_dProducts dP
 	WHERE 
-		dP.FactoryID = @TargetFactoryID AND
-		dP.ProductLineID = @TargetProductLineID
+			dP.FactoryID		= @TargetFactoryID 
+		AND	dP.ProductLineID	= @TargetProductLineID
+		AND dP.Template			= @TargetTemplate
 
 -- The List of already existing TimeIDs
 IF OBJECT_ID('tempdb..#NotToDoListe') IS NOT NULL DROP TABLE #NotToDoListe
 CREATE TABLE #NotToDoListe
 	(
-	  ProductKey BIGINT
-	 ,TimeID BIGINT
+	  ProductKey	BIGINT NOT NULL
+	 ,TimeID		BIGINT NOT NULL
 	)
 INSERT INTO #NotToDoListe
 	SELECT 
-		 ProductKey
+		 dT.ProductKey
 		,dT.TimeID
 	FROM 
-		dbo.sx_pf_dTime dT
+		dbo.sx_pf_dTime dT 
+			LEFT JOIN dbo.sx_pf_dProducts dP
+				ON dT.ProductKey = dP.ProductKey
 	WHERE 
-		dT.FactoryID = @TargetFactoryID AND
-		dT.ProductLineID = @TargetProductLineID
-
+			dT.FactoryID		= @TargetFactoryID 
+		AND	dT.ProductLineID	= @TargetProductLineID
+		AND dP.Template			= @TargetTemplate
 
 DECLARE MyCursor CURSOR FOR
 
@@ -88,7 +92,7 @@ FETCH MyCursor INTO @ProductID, @TimeID
 WHILE @@FETCH_STATUS = 0
 BEGIN
 
-	EXEC sx_pf_POST_TimeID 'SQL',@ProductID,@TargetProductLineID, @TargetFactoryID,@TimeID
+	EXEC dbo.sx_pf_POST_TimeID 'SQL',@ProductID,@TargetProductLineID, @TargetFactoryID,@TimeID
 
 	FETCH MyCursor INTO @ProductID, @TimeID
 END

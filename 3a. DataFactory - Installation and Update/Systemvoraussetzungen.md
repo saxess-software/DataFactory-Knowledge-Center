@@ -1,8 +1,14 @@
-## Informationen für Systemadministratoren
+## Informationen zu DataFactory für Systemadministratoren
 ### Überblick
-DataFactory ist eine Client-Server Applikation auf Basis von Microsoft SQL Server und .NET. Sie ermöglicht die Erfassung von Daten zur Unternehmensplanung und Organisation verschiedener Fachbereiche.
-Wir unterscheiden dabei User mit Design- und Strukturbearbeitungsrechten (genannt Poweruser - meist aus Controlling- oder IT Abteilung) und reine Datenerfasser. Die Poweruser nutzen einen Excel Client, die Erfasser einen Webclient.
-Das System erlaubt über ERP Schnittstellen etc. eine Vielzahl von Automatisierungsprozessen, so dass auch wir als Hersteller oft intensiv an der Konfiguration und Wartung eines des Systems mitarbeiten. 
+DataFactory ist eine Client-Server Applikation auf Basis von Microsoft SQL Server und .NET Komponenten. DataFactory ermöglicht die Erfassung von Daten zur Unternehmensplanung und Organisation verschiedener Fachbereiche. Zumeist erfolgt die Erfassung von Daten für viele operative Bereiche, so das größere Benutzerzahlen zu erwarten sind.
+
+Das System erlaubt über ERP Schnittstellen etc. eine Vielzahl von Automatisierungsprozessen zu vor- oder nachgelagerten Systemen.
+
+Bei den Benutzern unterscheiden wir
+- Poweruser (mit Design- und Strukturbearbeitungsrechten) 
+- Datenerfasser. 
+Die Poweruser kommen meist aus der Controlling- oder IT Abteilung. 
+
 
 
 DataFactory nutzt zum Betrieb folgende serverseitigen Kompoenten:
@@ -11,10 +17,10 @@ DataFactory nutzt zum Betrieb folgende serverseitigen Kompoenten:
 
 Die Clients der Poweruser benötigen:
 - Excel 2013+ zum starten des Excel Clients
-- aktueller Browser
+- aktueller Webbrowser
 
 Die Clients der Datenerfasser benötigen:
-- aktueller Browser
+- aktueller WebbrowserBrowser
 
 Der Excel Client ist als "Portable Software" erstellt. Es ist somit keinerlei Installation auf Clients notwendig, der Excel Client benötigt keine Adminrechte und kann auch von einem Netzlauf etc. gestartet werden. 
 Das System kann im Intranet betrieben werden werden oder mit https Absicherung etc. auch im Internet. Auch eine Installation oder Bereitstellung auf Micrsoft Azure als Plattform as a Service Applikation ist möglich.
