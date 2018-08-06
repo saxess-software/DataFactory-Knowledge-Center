@@ -62,6 +62,12 @@ CREATE USER [gerd.tautenhahn@saxess.onmicrosoft.com] FROM EXTERNAL PROVIDER;
 
 DROP USER [gerd.tautenhahn@saxess.onmicrosoft.com];
 
-
+-- Rights for Tables / Views
 
 GRANT SELECT ON OBJECT ::[result].[vZeit] TO [sxPersonal];
+
+-- Rights for schema
+GRANT SELECT ON SCHEMA :: sxDWH TO [sxMitarbeiterFest]
+
+-- Right to create Views
+GRANT CREATE VIEW TO [sxMitarbeiterFest]
