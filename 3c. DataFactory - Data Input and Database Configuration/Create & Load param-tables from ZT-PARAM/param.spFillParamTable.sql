@@ -99,7 +99,7 @@ SET @Table =  @TableSchema + '[' + @TablePreName + @TemplateProductID + ']'
 	WHERE	dVS.FactoryID = 'ZT' AND dVS.IsNumeric = 1 AND dVS.ProductLineID LIKE '%PARAM%' AND dVS.ProductID = @TemplateProductID
 
 	-- Get string for dynamic SQL used in INSERT command
-	SELECT @STRINGInt3 = COALESCE(@STRINGInt3 + ',', '') +  'COALESCE(CAST(tI.[' + CONVERT(NVARCHAR(400),dVS.ValueSeriesID) + '] AS MONEY) / ' + CONVERT(NVARCHAR(4000),dVS.Scale) + ','''') '
+	SELECT @STRINGInt3 = COALESCE(@STRINGInt3 + ',', '') +  'COALESCE(CAST(tI.[' + CONVERT(NVARCHAR(4000),dVS.ValueSeriesID) + '] AS MONEY) / ' + CONVERT(NVARCHAR(4000),dVS.Scale) + ','''') '
 	FROM sx_pf_dValueSeries dVS
 	WHERE	dVS.FactoryID = 'ZT' AND dVS.IsNumeric = 1  AND dVS.ProductLineID LIKE '%PARAM%' AND dVS.ProductID = @TemplateProductID
 

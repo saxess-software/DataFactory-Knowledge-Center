@@ -80,7 +80,7 @@ BEGIN
 	WHERE dP.FactoryID = 'ZT' AND dVS.FactoryID = 'ZT' AND dVS.ProductLIneID LIKE '%PARAM%' AND dVS.[IsNumeric] = 0
 			AND dP.ProductID = @TemplateProductID  AND dP.ProductLIneID LIKE '%PARAM%'
 
-	SELECT @StringInt = COALESCE(@StringInt + ',', '') +  '[' + CONVERT(NVARCHAR(MAX),dVS.ValueSeriesID) + '] MONEY'
+	SELECT @StringInt = COALESCE(@StringInt + ',', '') +  '[' + CONVERT(NVARCHAR(4000),dVS.ValueSeriesID) + '] MONEY'
 	FROM [dbo].[sx_pf_dProducts] dP
 		LEFT JOIN sx_pf_dValueseries dVS ON dP.ProductKey = dVS.ProductKey
 	WHERE dP.FactoryID = 'ZT' AND dVS.FactoryID = 'ZT' AND dVS.ProductLIneID LIKE '%PARAM%' AND dVS.[IsNumeric] = 1
