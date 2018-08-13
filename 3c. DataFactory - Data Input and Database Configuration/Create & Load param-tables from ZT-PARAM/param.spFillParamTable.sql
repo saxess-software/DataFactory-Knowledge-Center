@@ -1,6 +1,6 @@
 /*
 DYNAMIC PIVOT | Ausgabe der Werte aus Tabelle sx_pf_fValues als Pivot-Tabelle und schreiben in eine Zieltabelle/ Transponieren der Zeilen in Spalten
-	EXEC [param].[spFillParamTable]  'SQL','TAB'
+	EXEC [param].[spFillParamTable]  'SQL','KST'
 */
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[param].[spFillParamTable]') AND type in (N'P', N'PC'))
 DROP PROCEDURE [param].[spFillParamTable]
@@ -14,7 +14,8 @@ SET NOCOUNT ON
 -- ##### VARIABLES ###########
 -- Procedure Variables
 DECLARE @Table								NVARCHAR(MAX)
-DECLARE @TablePreName						NVARCHAR(MAX)	= 'param.t'
+DECLARE	@TableSchema						NVARCHAR(255)	= 'param.'
+DECLARE	@TablePreName						NVARCHAR(255)	= 'tPivot'																						-- standard TablePreName
 DECLARE @STRINGText1						NVARCHAR(MAX)	
 DECLARE @STRINGText2						NVARCHAR(MAX)
 DECLARE @STRINGText3						NVARCHAR(MAX)
@@ -29,14 +30,14 @@ DECLARE @SQLInsert							NVARCHAR(MAX)
 -- API Variables
 DECLARE @TransactUsername		NVARCHAR(255)	= N'';
 DECLARE @ProcedureName			NVARCHAR (255)	= OBJECT_SCHEMA_NAME(@@PROCID) + N'.' + OBJECT_NAME(@@PROCID);
-DECLARE @EffectedRows			INT = 0;						
-DECLARE @ResultCode				INT = 501;						
-DECLARE @TimestampCall			DATETIME = CURRENT_TIMESTAMP;
-DECLARE @Comment				NVARCHAR (2000) = N'';
-DECLARE @ParameterString		NVARCHAR (MAX)	= N''''
-											+ ISNULL(@Username				, N'NULL')		+ N''','''
-											+ ISNULL(@TemplateProductID		, N'NULL')		+ N''','''
-											+ N'''';	
+DECLARE @EffectedRows			INT				= 0;						
+DECLARE @ResultCode				INT				= 501;						
+DECLARE @TimestampCall			DATETIME		= CURRENT_TIMESTAMP;
+DECLARE @Comment				NVARCHAR(2000)	= N'';
+DECLARE @ParameterString		NVARCHAR(MAX)	= N''''
+													+ ISNULL(@Username				, N'NULL')		+ N''','''
+													+ ISNULL(@TemplateProductID		, N'NULL')		+ N''','''
+													+ N'''';	
 
 -------------------------------------------------------------------------------------------------------------------
 -- ##### GENERAL CHECKS ###########
@@ -66,59 +67,51 @@ IF @TransactUsername  = N'403'
 		RAISERROR('Transaction user don`t exists', 16, 10);
 	END;
 
--- Check rights
-EXEC @ResultCode = dbo.sx_pf_pGET_ClusterWriteRight @TransactUsername;
+-- Check if Transactionuser has write rights for Factory 'ZT'
+EXEC @ResultCode = dbo.sx_pf_pGET_FactoryWriteRight @TransactUsername,'ZT'
 
 	IF @ResultCode <> 200
 		RAISERROR('Invalid rights', 16, 10);
 		
 -------------------------------------------------------------------------------------------------------------------
 -- ##### IF EXISTS tmp ###########
+-- Check, if tmp tables exists and drops them
 IF OBJECT_ID('dbo.tmpText', 'U') IS NOT NULL	DROP TABLE dbo.tmpText
 IF OBJECT_ID('dbo.tmpInt', 'U') IS NOT NULL		DROP TABLE dbo.tmpInt
 
 -------------------------------------------------------------------------------------------------------------------
 -- ##### SET @Table ###########
-SET @Table =  @TablePreName + @TemplateProductID
+-- Construct table name
+SET @Table =  @TableSchema + '[' + @TablePreName + @TemplateProductID + ']'
 
 -------------------------------------------------------------------------------------------------------------------
 -- ##### SET ###########
 -- STRING
-	SELECT @STRINGText1 = COALESCE(@STRINGText1 + ',', '') +  '[' + CONVERT(NVARCHAR(MAX),ValueSeriesID) + ']'
+	-- Get string for dynamic SQL used in PIVOT command (...ValueSeriesID IN ([...]))
+	SELECT @STRINGText1 = COALESCE(@STRINGText1 + ',', '') +  '[' + CONVERT(NVARCHAR(4000),ValueSeriesID) + ']'
 	FROM sx_pf_dValueSeries dVS
-	WHERE	dVS.FactoryID = 'ZT' AND dVS.IsNumeric = 0 AND dVS.ProductLineID = 'PARAM' AND dVS.ProductID = @TemplateProductID
-
-	SELECT @STRINGText2 = COALESCE(@STRINGText2 + ',', '') +  'COALESCE([' + CONVERT(NVARCHAR(MAX),ValueSeriesID) + '],'''') AS [' + convert(NVARCHAR(MAX),NameShort) + ']'
-	FROM sx_pf_dValueSeries dVS
-	WHERE	dVS.FactoryID = 'ZT' AND dVS.IsNumeric = 0  AND dVS.ProductLineID = 'PARAM' AND dVS.ProductID = @TemplateProductID
-
-	SELECT @STRINGText3 = COALESCE(@STRINGText3 + ',', '') +  'tT.[' + CONVERT(NVARCHAR(MAX),NameShort) + ']'
-	FROM sx_pf_dValueSeries dVS
-	WHERE	dVS.FactoryID = 'ZT' AND dVS.IsNumeric = 0  AND dVS.ProductLineID = 'PARAM' AND dVS.ProductID = @TemplateProductID
+	WHERE	dVS.FactoryID = 'ZT' AND dVS.IsNumeric = 0 AND dVS.ProductLineID LIKE '%PARAM%' AND dVS.ProductID = @TemplateProductID
 
 -- INT
-	SELECT @STRINGInt1 = COALESCE(@STRINGInt1 + ',', '') +  '[' + CONVERT(NVARCHAR(MAX),ValueSeriesID) + ']'
+	-- Get string for dynamic SQL used in PIVOT command (...ValueSeriesID IN ([...]))
+	SELECT @STRINGInt1 = COALESCE(@STRINGInt1 + ',', '') +   '[' + CONVERT(NVARCHAR(4000),ValueSeriesID) + ']'
 	FROM sx_pf_dValueSeries dVS
-	WHERE	dVS.FactoryID = 'ZT' AND dVS.IsNumeric = 1 AND dVS.ProductLineID = 'PARAM' AND dVS.ProductID = @TemplateProductID
+	WHERE	dVS.FactoryID = 'ZT' AND dVS.IsNumeric = 1 AND dVS.ProductLineID LIKE '%PARAM%' AND dVS.ProductID = @TemplateProductID
 
-	SELECT @STRINGInt2 = COALESCE(@STRINGInt2 + ',', '') +  'COALESCE([' + CONVERT(NVARCHAR(MAX),ValueSeriesID) + '],'''') AS [' + convert(NVARCHAR(MAX),NameShort) + ']'
+	-- Get string for dynamic SQL used in INSERT command
+	SELECT @STRINGInt3 = COALESCE(@STRINGInt3 + ',', '') +  'COALESCE(CAST(tI.[' + CONVERT(NVARCHAR(400),dVS.ValueSeriesID) + '] AS MONEY) / ' + CONVERT(NVARCHAR(4000),dVS.Scale) + ','''') '
 	FROM sx_pf_dValueSeries dVS
-	WHERE	dVS.FactoryID = 'ZT' AND dVS.IsNumeric = 1  AND dVS.ProductLineID = 'PARAM' AND dVS.ProductID = @TemplateProductID
+	WHERE	dVS.FactoryID = 'ZT' AND dVS.IsNumeric = 1  AND dVS.ProductLineID LIKE '%PARAM%' AND dVS.ProductID = @TemplateProductID
 
-	SELECT @STRINGInt3 = COALESCE(@STRINGInt3 + ',', '') +  'COALESCE(CAST(tI.[' + CONVERT(NVARCHAR(MAX),NameShort) + '] AS MONEY) / ' + CONVERT(NVARCHAR(MAX),dVS.Scale) + ','''') '
-	FROM sx_pf_dValueSeries dVS
-	WHERE	dVS.FactoryID = 'ZT' AND dVS.IsNumeric = 1  AND dVS.ProductLineID = 'PARAM' AND dVS.ProductID = @TemplateProductID
-
-	PRINT 'STRINGText1 ' + @STRINGText1 PRINT 'STRINGText2 ' +  @STRINGText2 PRINT 'STRINGText3 ' +  @STRINGText3 
-	PRINT 'STRINGInt1 ' + @STRINGInt1 PRINT 'STRINGInt2 ' + @STRINGInt2 PRINT 'STRINGInt3 ' + @STRINGInt3
 -------------------------------------------------------------------------------------------------------------------
 -- ##### SELECT ###########
+-- Create and Fill tmp tables, depending on availability of content in string-variables
 -- STRING
 	IF @STRINGText1 != ''
 	BEGIN
 		DECLARE @SQLText	NVARCHAR(MAX) = '
 			SELECT	 PivotT.FactoryID,PivotT.ProductLineID,PivotT.ProductID,PivotT.TimeID
-					,' + @STRINGText2 + '
+					,' + @STRINGText1 + '
 			INTO dbo.tmpText
 			FROM 
 				(	SELECT fV.FactoryID,fV.ProductLineID,fV.ProductID,fV.ValueSeriesID,fV.TimeID,fV.ValueText
@@ -126,7 +119,7 @@ SET @Table =  @TablePreName + @TemplateProductID
 						LEFT JOIN sx_pf_dValueSeries dVS
 							ON fV.ValueSeriesKey = dVS.ValueSeriesKey
 						LEFT JOIN sx_pf_dProducts	dP ON fV.ProductKey = dP.ProductKey
-					WHERE fV.FactoryID = ''ZT'' AND fV.ProductLineID = ''PARAM'' AND dP.ProductID =''' + @TemplateProductID + ''' AND fV.ValueText != ''''	) AS Source
+					WHERE fV.FactoryID = ''ZT'' AND fV.ProductLineID LIKE ''PARAM%'' AND dP.ProductID =''' + @TemplateProductID + ''' AND fV.ValueText != ''''	) AS Source
 			PIVOT
 				(	MAX(ValueText) FOR ValueSeriesID IN (' + @STRINGText1 + ')	) AS PivotT'
 
@@ -139,7 +132,7 @@ SET @Table =  @TablePreName + @TemplateProductID
 	BEGIN
 		DECLARE @SQLInt	NVARCHAR(MAX) = '
 			SELECT	 PivotT.FactoryID,PivotT.ProductLineID,PivotT.ProductID,PivotT.TimeID
-					,' + @STRINGInt2 + '
+					,' + @STRINGInt1 + '
 			INTO dbo.tmpInt
 			FROM 
 				(	SELECT fV.FactoryID,fV.ProductLineID,fV.ProductID,fV.ValueSeriesID,fV.TimeID,fV.ValueInt
@@ -147,7 +140,7 @@ SET @Table =  @TablePreName + @TemplateProductID
 						LEFT JOIN sx_pf_dValueSeries dVS
 							ON fV.ValueSeriesKey = dVS.ValueSeriesKey
 							LEFT JOIN sx_pf_dProducts	dP ON fV.ProductKey = dP.ProductKey
-					WHERE fV.FactoryID = ''ZT'' AND fV.ProductLineID = ''PARAM'' AND dP.ProductID =''' + @TemplateProductID + ''' AND fV.ValueInt != ''''	) AS Source
+					WHERE fV.FactoryID = ''ZT'' AND fV.ProductLineID LIKE ''PARAM%'' AND dP.ProductID =''' + @TemplateProductID + ''' AND fV.ValueInt != ''''	) AS Source
 			PIVOT
 				(	MAX(ValueInt) FOR ValueSeriesID IN (' + @STRINGInt1 + ')	) AS PivotT'
 
@@ -158,24 +151,29 @@ SET @Table =  @TablePreName + @TemplateProductID
 		
 -------------------------------------------------------------------------------------------------------------------
 -- ##### FLAG ###########
+-- Check if tmp tables have been created and sets flag
 IF OBJECT_ID('dbo.tmpText', 'U') IS NOT NULL	SET @FLAGText = '1'	
 IF OBJECT_ID('dbo.tmpInt', 'U') IS NOT NULL		SET @FLAGInt = '1'	
 
 -------------------------------------------------------------------------------------------------------------------
 -- ##### INSERT ###########
+-- param.tPivot-table is filled with content from tmp table depending on flags
 IF @FLAGText = '1' AND @FLAGInt = '1'		-- Sowohl Text- als auch Int-Werte sind vorhanden
 	BEGIN
 		SET @SQLInsert  = 'INSERT INTO ' + @Table + '
 			SELECT DISTINCT	dVS.FactoryID,dVS.ProductLineID,dVS.ProductID,COALESCE(tT.TimeID,tI.TimeID)
-					,' + @STRINGText3 + '
+					,' + @STRINGText1 + '
 					,' + @STRINGInt3 + '
 			FROM sx_pf_dValueSeries dVS
 				LEFT JOIN dbo.sx_pf_dTime spdt ON dVS.ProductKey = spdt.ProductKey
 				LEFT JOIN dbo.tmpText tT	ON dVS.FactoryID = tT.FactoryID AND dVS.ProductLineID = tT.ProductLineID AND dVS.ProductID = tT.ProductID AND tT.TimeID = spdt.TimeID
 				LEFT JOIN dbo.tmpInt tI		ON dVS.FactoryID = tI.FactoryID AND dVS.ProductLineID = tI.ProductLineID AND dVS.ProductID = tI.ProductID AND tI.TimeID = spdt.TimeID
-			WHERE dVS.FactoryID = ''ZT'' AND dVS.ProductLineID = ''PARAM'' AND (tT.TimeID IS NOT NULL OR tI.TimeID IS NOT NULL) AND dVS.ProductID =''' + @TemplateProductID + '''	'
+			WHERE dVS.FactoryID = ''ZT'' AND dVS.ProductLineID LIKE ''PARAM%'' AND (tT.TimeID IS NOT NULL OR tI.TimeID IS NOT NULL) AND dVS.ProductID =''' + @TemplateProductID + '''	'
 
 		EXECUTE sp_executesql @SQLInsert
+
+		SET @Comment = 'Table has been filled with Int & Text values'
+		SET @ResultCode = 200
 	END
 
 
@@ -183,13 +181,16 @@ IF @FLAGText = '1' AND @FLAGInt = '0'		-- Es sind nur Textwerte vorhanden
 	BEGIN
 		SET @SQLInsert = 'INSERT INTO ' + @Table + '
 			SELECT DISTINCT	dVS.FactoryID,dVS.ProductLineID,dVS.ProductID,tT.TimeID
-					,' + @STRINGText3 + '
+					,' + @STRINGText1 + '
 			FROM sx_pf_dValueSeries dVS
 				LEFT JOIN dbo.sx_pf_dTime spdt ON dVS.ProductKey = spdt.ProductKey
 				LEFT JOIN dbo.tmpText tT	ON dVS.FactoryID = tT.FactoryID AND dVS.ProductLineID = tT.ProductLineID AND dVS.ProductID = tT.ProductID AND tT.TimeID = spdt.TimeID
-			WHERE dVS.FactoryID = ''ZT'' AND dVS.ProductLineID = ''PARAM'' AND tT.TimeID IS NOT NULL AND dVS.ProductID =''' + @TemplateProductID + '''	'
+			WHERE dVS.FactoryID = ''ZT'' AND dVS.ProductLineID LIKE ''PARAM%'' AND tT.TimeID IS NOT NULL AND dVS.ProductID =''' + @TemplateProductID + '''	'
 
 		EXECUTE sp_executesql @SQLInsert
+
+		SET @Comment = 'Table has been filled with Text values'
+		SET @ResultCode = 200
 	END
 
 IF @FLAGText = '0' AND @FLAGInt = '1'		-- Es sind nur Intwerte vorhanden
@@ -200,13 +201,17 @@ IF @FLAGText = '0' AND @FLAGInt = '1'		-- Es sind nur Intwerte vorhanden
 			FROM sx_pf_dValueSeries dVS
 				LEFT JOIN dbo.sx_pf_dTime spdt ON dVS.ProductKey = spdt.ProductKey
 				LEFT JOIN dbo.tmpInt tI		ON dVS.FactoryID = tI.FactoryID AND dVS.ProductLineID = tI.ProductLineID AND dVS.ProductID = tI.ProductID AND tI.TimeID = spdt.TimeID
-			WHERE dVS.FactoryID = ''ZT'' AND dVS.ProductLineID = ''PARAM'' AND tI.TimeID IS NOT NULL AND dVS.ProductID =''' + @TemplateProductID + '''	'
+			WHERE dVS.FactoryID = ''ZT'' AND dVS.ProductLineID LIKE ''PARAM%'' AND tI.TimeID IS NOT NULL AND dVS.ProductID =''' + @TemplateProductID + '''	'
 
 		EXECUTE sp_executesql @SQLInsert
+
+		SET @Comment = 'Table has been filled with Int values'
+		SET @ResultCode = 200
 	END
 
 -------------------------------------------------------------------------------------------------------------------
 -- ##### DROP ###########
+-- DROP tmp tables
 IF OBJECT_ID('dbo.tmpText', 'U') IS NOT NULL	DROP TABLE dbo.tmpText
 IF OBJECT_ID('dbo.tmpInt', 'U') IS NOT NULL		DROP TABLE dbo.tmpInt
 

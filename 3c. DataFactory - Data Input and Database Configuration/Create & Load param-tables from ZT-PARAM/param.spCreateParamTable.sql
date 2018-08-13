@@ -1,6 +1,6 @@
 /*
 Creates table from Parameter-Product in Factory 'ZT' and ProductLine 'PARAM'
-		EXEC [param].[spCreateParamTable] 'SQL','TAB'
+		EXEC [param].[spCreateParamTable] 'SQL','KTO-HGB'
 */
 
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[param].[spCreateParamTable]') AND type in (N'P', N'PC'))
@@ -14,12 +14,14 @@ SET NOCOUNT ON
 -------------------------------------------------------------------------------------------------------------------
 -- ##### VARIABLES ###########
 -- Procedure Variables
-DECLARE	@TablePreName			NVARCHAR(MAX)	= 'param.t'
-DECLARE @StringBasic			NVARCHAR(MAX)	= 'FactoryID_PARAM NVARCHAR(255),ProductLineID_PARAM NVARCHAR(255),ProductID_PARAM NVARCHAR(255),TimeID_PARAM INT'
+DECLARE	@TableSchema			NVARCHAR(255)	= 'param.'
+DECLARE	@TablePreName			NVARCHAR(255)	= 'tPivot'																						-- standard TablePreName
+DECLARE @StringBasic			NVARCHAR(MAX)	= 'FactoryID NVARCHAR(255),ProductLineID NVARCHAR(255),ProductID NVARCHAR(255),TimeID INT'		-- standard columns included in each table
 DECLARE @StringText				NVARCHAR(MAX)	
 DECLARE @StringInt				NVARCHAR(MAX)	
 DECLARE @SQLCreate				NVARCHAR(MAX)
 DECLARE	@TableName				NVARCHAR(MAX)
+DECLARE @SQLGrant				NVARCHAR(MAX)	
 
 -- API Variables
 DECLARE @TransactUsername		NVARCHAR(255)	= N'';
@@ -42,7 +44,7 @@ IF @TemplateProductID			IS NULL SET @TemplateProductID			 = N'';
 BEGIN TRY
 	BEGIN TRANSACTION [spCreateParamTable];
 
--- Protect input parameters
+---- Protect input parameters
 SET @TemplateProductID			 = dbo.sx_pf_pProtectID		(@TemplateProductID);
 
 -- Error message for null input parameters
@@ -61,74 +63,92 @@ IF @TransactUsername  = N'403'
 		RAISERROR('Transaction user don`t exists', 16, 10);
 	END;
 
--- Check rights
-EXEC @ResultCode = dbo.sx_pf_pGET_ClusterWriteRight @TransactUsername;
+-- Check if Transactionuser has write rights for Factory 'ZT'
+EXEC @ResultCode = dbo.sx_pf_pGET_FactoryWriteRight @TransactUsername,'ZT'
 
 	IF @ResultCode <> 200
 		RAISERROR('Invalid rights', 16, 10);
 
 -------------------------------------------------------------------------------------------------------------------
 -- ##### SET ###########
+-- Gets all ValueSeriesIDs from a Product in ProductlLine 'PARAM' in Factory 'ZT', ValueSeriesIDs will become column headers
+-- Puts them in one String separated by comma and adds value format NVACRCHAR(MAX) for ValueText ValueSeries and MONEY for ValueInt ValueSeries
 BEGIN
-	SELECT @STRINGText = COALESCE(@STRINGText + ',', '') +  '[' + CONVERT(NVARCHAR(MAX),dVS.ValueSeriesID) + '] NVARCHAR(MAX)'
+	SELECT @STRINGText = COALESCE(@STRINGText + ',', '') +  '[' + CONVERT(NVARCHAR(4000),dVS.ValueSeriesID) + '] NVARCHAR(4000)'
 	FROM [dbo].[sx_pf_dProducts] dP
 		LEFT JOIN sx_pf_dValueseries dVS ON dP.ProductKey = dVS.ProductKey
-	WHERE dP.FactoryID = 'ZT' AND dVS.FactoryID = 'ZT' AND dVS.ProductLIneID = 'PARAM' AND dVS.[IsNumeric] = 0
-			AND dP.ProductID = @TemplateProductID  AND dP.ProductLIneID = 'PARAM'
+	WHERE dP.FactoryID = 'ZT' AND dVS.FactoryID = 'ZT' AND dVS.ProductLIneID LIKE '%PARAM%' AND dVS.[IsNumeric] = 0
+			AND dP.ProductID = @TemplateProductID  AND dP.ProductLIneID LIKE '%PARAM%'
 
 	SELECT @StringInt = COALESCE(@StringInt + ',', '') +  '[' + CONVERT(NVARCHAR(MAX),dVS.ValueSeriesID) + '] MONEY'
 	FROM [dbo].[sx_pf_dProducts] dP
 		LEFT JOIN sx_pf_dValueseries dVS ON dP.ProductKey = dVS.ProductKey
-	WHERE dP.FactoryID = 'ZT' AND dVS.FactoryID = 'ZT' AND dVS.ProductLIneID = 'PARAM' AND dVS.[IsNumeric] = 1
-			AND dP.ProductID = @TemplateProductID  AND dP.ProductLIneID = 'PARAM'
+	WHERE dP.FactoryID = 'ZT' AND dVS.FactoryID = 'ZT' AND dVS.ProductLIneID LIKE '%PARAM%' AND dVS.[IsNumeric] = 1
+			AND dP.ProductID = @TemplateProductID  AND dP.ProductLIneID LIKE '%PARAM%'
 
-	SELECT @TableName = @TemplateProductID
+	SELECT @TableName = @TableSchema + '[' + @TablePreName + @TemplateProductID + ']'
 END
-
-	--PRINT 'StringText ' + @StringText  PRINT 'StringInt ' + @StringInt  PRINT 'Tablename ' + @TableName
 
 -------------------------------------------------------------------------------------------------------------------
 -- ##### FLAG ###########
+-- Check if table will have text and/or int columns
 BEGIN
-	IF 	@StringText IS NULL		SET @StringText = '0'
-	IF 	@StringInt IS NULL		SET @StringInt = '0'
+	IF 	@StringText IS NULL		SET @StringText	= '0'
+	IF 	@StringInt IS NULL		SET @StringInt	= '0'
 END
 
 -------------------------------------------------------------------------------------------------------------------
 -- ##### CREATE Table ###########
+-- Table is created, depending on flags text and int columns are added in dynamic sql string
 BEGIN
 	IF @StringText != '0' AND @StringInt != '0'
 	BEGIN
-		SET @SQLCreate = 'CREATE TABLE ' + @TablePreName + @TableName + '(' + @StringBasic + ','
+		SET @SQLCreate = 'CREATE TABLE ' + @TableName + '(' + @StringBasic + ','
 					+ @StringText	+ ','
 					+ @StringInt
 					+ ')'
 
 		EXECUTE sp_executesql @SQLCreate
+
+		SET @Comment = 'Table has been created containing Int & Text columns'
+		SET @ResultCode = 200
 	END
 
 	IF @StringText != '0' AND @StringInt = '0'
 	BEGIN
-		SET @SQLCreate = 'CREATE TABLE ' + @TablePreName + @TableName + '(' + @StringBasic + ','
+		SET @SQLCreate = 'CREATE TABLE ' + @TableName + '(' + @StringBasic + ','
 					+ @StringText	
 					+ ')'
-
+					
 		EXECUTE sp_executesql @SQLCreate
+
+		SET @Comment = 'Table has been created containing only Text columns'
+		SET @ResultCode = 200
 	END
 
 	IF @StringText = '0' AND @StringInt != '0'
 	BEGIN
-		SET @SQLCreate = 'CREATE TABLE ' + @TablePreName + @TableName + '(' + @StringBasic + ','
+		SET @SQLCreate = 'CREATE TABLE ' + @TableName + '(' + @StringBasic + ','
 					+ @StringInt	
 					+ ')'
 
 		EXECUTE sp_executesql @SQLCreate
+
+		SET @Comment = 'Table has been created containing only Int columns'
+		SET @ResultCode = 200
 	END
 
 	IF @StringText = '0' AND @StringInt = '0'
+
 		SET @Comment = 'No table has been created'
+		SET @ResultCode = 200
 
 END
+
+-------------------------------------------------------------------------------------------------------------------
+-- ##### GRANT Select ###########
+SET @SQLGrant = 'GRANT SELECT, CONTROL,ALTER, INSERT, DELETE, UPDATE ON ' + @TableName + ' TO pf_PlanningFactoryUser; GRANT SELECT, CONTROL, ALTER, INSERT, DELETE, UPDATE ON ' + @TableName + ' TO pf_PlanningFactoryService;'
+EXECUTE sp_executesql @SQLGrant
 
 -------------------------------------------------------------------------------------------------------------------	
 -- ##### API log entry or rollback ###########
