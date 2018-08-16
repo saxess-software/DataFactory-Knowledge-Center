@@ -26,6 +26,7 @@ DECLARE @FLAGText							NVARCHAR(255)	= '0'
 DECLARE @FLAGInt							NVARCHAR(255)	= '0'
 DECLARE @SQLDelete							NVARCHAR(MAX)
 DECLARE @SQLInsert							NVARCHAR(MAX)
+--DECLARE @TemplateProductID						NVARCHAR(MAX) = 'KST'
 
 -- API Variables
 DECLARE @TransactUsername		NVARCHAR(255)	= N'';
@@ -92,16 +93,45 @@ SET @Table =  @TableSchema + '[' + @TablePreName + @TemplateProductID + ']'
 	FROM sx_pf_dValueSeries dVS
 	WHERE	dVS.FactoryID = 'ZT' AND dVS.IsNumeric = 0 AND dVS.ProductLineID LIKE '%PARAM%' AND dVS.ProductID = @TemplateProductID
 
+	--PRINT @STRINGText1
+
+-- Get string for dynamic SQL for inserting into dbo.tmpText
+	SELECT @STRINGText2 = COALESCE(@STRINGText2 + ',', '') +  'COALESCE([' + CONVERT(NVARCHAR(4000),ValueSeriesID) + '],'''') AS [' + convert(NVARCHAR(4000),ValueSeriesID) + ']'
+	FROM sx_pf_dValueSeries dVS
+	WHERE	dVS.FactoryID = 'ZT' AND dVS.IsNumeric = 0  AND dVS.ProductLineID LIKE '%PARAM%' AND dVS.ProductID = @TemplateProductID
+
+	--PRINT @STRINGText2
+
+	-- Get string for dynamic SQL used in INSERT command
+	SELECT @STRINGText3 = COALESCE(@STRINGText3 + ',', '') +  'tT.[' + CONVERT(NVARCHAR(4000),ValueSeriesID) + ']'
+	FROM sx_pf_dValueSeries dVS
+	WHERE	dVS.FactoryID = 'ZT' AND dVS.IsNumeric = 0  AND dVS.ProductLineID LIKE '%PARAM%' AND dVS.ProductID = @TemplateProductID
+
+		--PRINT @STRINGText3
+
 -- INT
 	-- Get string for dynamic SQL used in PIVOT command (...ValueSeriesID IN ([...]))
 	SELECT @STRINGInt1 = COALESCE(@STRINGInt1 + ',', '') +   '[' + CONVERT(NVARCHAR(4000),ValueSeriesID) + ']'
 	FROM sx_pf_dValueSeries dVS
 	WHERE	dVS.FactoryID = 'ZT' AND dVS.IsNumeric = 1 AND dVS.ProductLineID LIKE '%PARAM%' AND dVS.ProductID = @TemplateProductID
 
+--PRINT @STRINGInt1
+
+	-- Get string for dynamic SQL for inserting into dbo.tmpInt
+	SELECT @STRINGInt2 = COALESCE(@STRINGInt2 + ',', '') +  'COALESCE([' + CONVERT(NVARCHAR(4000),ValueSeriesID) + '],'''') AS [' + convert(NVARCHAR(4000),ValueSeriesID) + ']'
+	FROM sx_pf_dValueSeries dVS
+	WHERE	dVS.FactoryID = 'ZT' AND dVS.IsNumeric = 1  AND dVS.ProductLineID LIKE '%PARAM%' AND dVS.ProductID = @TemplateProductID
+
+--PRINT @STRINGInt2
+
+
 	-- Get string for dynamic SQL used in INSERT command
 	SELECT @STRINGInt3 = COALESCE(@STRINGInt3 + ',', '') +  'COALESCE(CAST(tI.[' + CONVERT(NVARCHAR(4000),dVS.ValueSeriesID) + '] AS MONEY) / ' + CONVERT(NVARCHAR(4000),dVS.Scale) + ','''') '
 	FROM sx_pf_dValueSeries dVS
 	WHERE	dVS.FactoryID = 'ZT' AND dVS.IsNumeric = 1  AND dVS.ProductLineID LIKE '%PARAM%' AND dVS.ProductID = @TemplateProductID
+
+--PRINT @STRINGInt3
+
 
 -------------------------------------------------------------------------------------------------------------------
 -- ##### SELECT ###########
@@ -111,7 +141,7 @@ SET @Table =  @TableSchema + '[' + @TablePreName + @TemplateProductID + ']'
 	BEGIN
 		DECLARE @SQLText	NVARCHAR(MAX) = '
 			SELECT	 PivotT.FactoryID,PivotT.ProductLineID,PivotT.ProductID,PivotT.TimeID
-					,' + @STRINGText1 + '
+					,' + @STRINGText2 + '
 			INTO dbo.tmpText
 			FROM 
 				(	SELECT fV.FactoryID,fV.ProductLineID,fV.ProductID,fV.ValueSeriesID,fV.TimeID,fV.ValueText
@@ -132,7 +162,7 @@ SET @Table =  @TableSchema + '[' + @TablePreName + @TemplateProductID + ']'
 	BEGIN
 		DECLARE @SQLInt	NVARCHAR(MAX) = '
 			SELECT	 PivotT.FactoryID,PivotT.ProductLineID,PivotT.ProductID,PivotT.TimeID
-					,' + @STRINGInt1 + '
+					,' + @STRINGInt2 + '
 			INTO dbo.tmpInt
 			FROM 
 				(	SELECT fV.FactoryID,fV.ProductLineID,fV.ProductID,fV.ValueSeriesID,fV.TimeID,fV.ValueInt
@@ -162,7 +192,7 @@ IF @FLAGText = '1' AND @FLAGInt = '1'		-- Sowohl Text- als auch Int-Werte sind v
 	BEGIN
 		SET @SQLInsert  = 'INSERT INTO ' + @Table + '
 			SELECT DISTINCT	dVS.FactoryID,dVS.ProductLineID,dVS.ProductID,COALESCE(tT.TimeID,tI.TimeID)
-					,' + @STRINGText1 + '
+					,' + @STRINGText3 + '
 					,' + @STRINGInt3 + '
 			FROM sx_pf_dValueSeries dVS
 				LEFT JOIN dbo.sx_pf_dTime spdt ON dVS.ProductKey = spdt.ProductKey
@@ -181,7 +211,7 @@ IF @FLAGText = '1' AND @FLAGInt = '0'		-- Es sind nur Textwerte vorhanden
 	BEGIN
 		SET @SQLInsert = 'INSERT INTO ' + @Table + '
 			SELECT DISTINCT	dVS.FactoryID,dVS.ProductLineID,dVS.ProductID,tT.TimeID
-					,' + @STRINGText1 + '
+					,' + @STRINGText3 + '
 			FROM sx_pf_dValueSeries dVS
 				LEFT JOIN dbo.sx_pf_dTime spdt ON dVS.ProductKey = spdt.ProductKey
 				LEFT JOIN dbo.tmpText tT	ON dVS.FactoryID = tT.FactoryID AND dVS.ProductLineID = tT.ProductLineID AND dVS.ProductID = tT.ProductID AND tT.TimeID = spdt.TimeID
