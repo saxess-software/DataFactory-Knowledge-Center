@@ -16,7 +16,7 @@ SET NOCOUNT ON
 -- Procedure Variables
 DECLARE	@TableSchema			NVARCHAR(255)	= 'param.'
 DECLARE	@TablePreName			NVARCHAR(255)	= 'tPivot'																						-- standard TablePreName
-DECLARE @StringBasic			NVARCHAR(MAX)	= 'FactoryID NVARCHAR(255),ProductLineID NVARCHAR(255),ProductID NVARCHAR(255),TimeID INT'		-- standard columns included in each table
+DECLARE @StringBasic			NVARCHAR(MAX)	= 'RowKey BIGINT IDENTITY(1,1),FactoryID NVARCHAR(255),ProductLineID NVARCHAR(255),ProductID NVARCHAR(255),TimeID INT'		-- standard columns included in each table
 DECLARE @StringText				NVARCHAR(MAX)	
 DECLARE @StringInt				NVARCHAR(MAX)	
 DECLARE @SQLCreate				NVARCHAR(MAX)
