@@ -1,0 +1,9 @@
+Dieses Snipptet an das Ende (vor Commit Transaction POST_PDT)
+in der Prozedure sx_pf_POST_ProductDataTableValues einfügen
+
+	
+--- API Erweiterung
+IF	@FactoryID = 'ZT' AND @ProductLineID LIKE 'PARAM%'
+		BEGIN
+			EXEC control.spParamTables @ProductID
+		END
