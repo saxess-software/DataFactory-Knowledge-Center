@@ -54,3 +54,5 @@ FAQ:
 #### I see a Tab with the name, but no empty PivotTable
 * You forgot to GRANT Rights
 * The SP brings no data for the current user - check it by returing static query values without security
+* There are two columns with the same name
+* The Procedure runs into an error on database, when executed for this Factory
