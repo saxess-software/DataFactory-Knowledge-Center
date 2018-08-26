@@ -56,3 +56,35 @@ FAQ:
 * The SP brings no data for the current user - check it by returing static query values without security
 * There are two columns with the same name
 * The Procedure runs into an error on database, when executed for this Factory
+
+
+## Tabs of Type HTML
+
+They must be placed anywhere on the Server (on Azure you need FTP Connection) and can then be referenced with a path relative to wwwroot.
+You can create and edit them with the editor on Start page and then move them somewhere else to get the right css classes.
+
+```` SQL
+DECLARE @RC					INT
+DECLARE @Username 			NVARCHAR(255) = 'SQL'
+DECLARE @FactoryID			NVARCHAR(255) = 'SM'
+
+-- Tab 1 mit Startseite
+DECLARE @TabID				NVARCHAR(255) = 'Tab01'
+DECLARE @Label				NVARCHAR(255) = 'Info'
+DECLARE @CommentUser		NVARCHAR(MAX) = 'Analytic Overview'
+DECLARE @PresentationType	NVARCHAR(255) = 'HTML_URL'	
+DECLARE @Source				NVARCHAR(MAX) = 'assets/html/info.html'		
+DECLARE @Layout				NVARCHAR(MAX) = ''
+
+EXECUTE @RC = dbo.sx_pf_POST_FactoryTab 
+		@Username,
+		@FactoryID,
+		@TabID,
+		@Label,
+		@CommentUser,
+		@PresentationType,
+		@Source,
+		@Layout
+
+PRINT @RC
+````
