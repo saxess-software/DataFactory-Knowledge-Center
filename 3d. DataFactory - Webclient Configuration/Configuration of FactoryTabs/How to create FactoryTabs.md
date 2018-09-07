@@ -49,9 +49,7 @@ After that you will get a Tab with this name and an empty Pivottable. You can th
 If you have the same Tab in many Factories, you must rollout the Layout String to all Tabs. Best way is to set up a master factory and rollout its configuration by script.
 
 
-FAQ:
-
-#### I see a Tab with the name, but no empty PivotTable
+#### FAQ 1: I see a Tab with the name, but no empty PivotTable
 * You forgot to GRANT Rights
 * The SP brings no data for the current user - check it by returing static query values without security
 * There are two columns with the same name
@@ -87,4 +85,54 @@ EXECUTE @RC = dbo.sx_pf_POST_FactoryTab
 		@Layout
 
 PRINT @RC
+````
+
+
+## Rollout of Tabs from a Masterfactory to all Factories
+
+```` SQL
+DECLARE @MasterFactoryID	NVARCHAR(255) = 'SM'  -- SET ID of MasterFactory !
+DECLARE @FactoryID			NVARCHAR(255) = ''
+DECLARE @TabID				NVARCHAR(255) = ''
+DECLARE @Label				NVARCHAR(255) = ''
+DECLARE @CommentUser		NVARCHAR(MAX) = ''
+DECLARE @PresentationType	NVARCHAR(255) = ''	
+DECLARE @Source				NVARCHAR(MAX) = ''		
+DECLARE @Layout				NVARCHAR(MAX) = ''
+
+
+DECLARE MyCursor CURSOR FOR
+
+	-- Query fills the Cursor
+	SELECT 
+		 dF.FactoryID
+		,gF.PropertyID		AS TabID
+		,gF.PropertyName	AS Label
+		,gF.CommentUser	AS CommentUser
+		,gF.Unit			AS PresentationType
+		,gF.ValueText		AS [Source]
+		,gF.CommentDev		AS Layout
+	FROM dbo.sx_pf_gFactories gF
+		LEFT JOIN (	
+					SELECT FactoryID FROM dbo.sx_pf_dFactories
+					WHERE FactoryID NOT IN (@MasterFactoryID,'ZT')
+					) dF
+						ON 1=1
+	WHERE 
+			gF.FactoryID = @MasterFactoryID
+		AND gF.PropertyID IN ('Tab01','Tab02','Tab03')   -- Maybe change Tabs
+
+OPEN MyCursor
+	-- Stuff the columns of the first row into the Cursor
+	FETCH MyCursor INTO @FactoryID,@TabID,@Label,@CommentUser,@PresentationType,@Source,@Layout
+	WHILE @@FETCH_STATUS = 0
+		BEGIN
+     	 		EXEC dbo.sx_pf_POST_FactoryTab  'SQL', @FactoryID,@TabID,@Label,@CommentUser,@PresentationType,@Source,@Layout
+
+			-- Stuff the columns of the next row into the Cursor
+      		FETCH MyCursor INTO @FactoryID,@TabID,@Label,@CommentUser,@PresentationType,@Source,@Layout
+		END
+CLOSE MyCursor
+DEALLOCATE MyCursor
+
 ````
