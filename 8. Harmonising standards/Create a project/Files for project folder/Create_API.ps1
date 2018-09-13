@@ -2,17 +2,18 @@
 # The script can't have empty Folders
 
 
-#Object for Encoding
+# Object for Encoding
 $Utf8NoBomEncoding = New-Object System.Text.UTF8Encoding($False)
 
-# Datei löschen
+# Datei lÃ¶schen
 $strScriptName = "Custom_API.sql"
 
 If (Test-Path $strScriptName) {
                                 Remove-Item $strScriptName
                                }
 
-cat '1. Standard API\*.sql',
+cat '9. Header\*.sql',
+    '1. Standard API\*.sql',
     '2. API Modifikation\*.sql',
     '3. Kundenerweiterungen\*.sql'  > $strScriptName -Encoding "UTF8"
 
