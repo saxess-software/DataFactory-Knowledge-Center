@@ -68,6 +68,45 @@ Workflow AD00487_SternWywiol_Invest_2018
 }
 ````
 
+### FAQ - Runbook is not running
+* try to execute the procedure in Management Studio with the credentials of the runbook user
+* did you give the procedure in the runbook all parameters ?
+
 
 ### Other ways
 * still an SQL Agent on a local computer can automate azure - just create the azure database as linked server
+* you can execute the runbook also as local powershell script - without changes
+* create the procedure TestEntry (see downwards) and call it at first in your procedure - to see if your procedure is called
+
+-- Testcall
+-- EXEC TestEntry
+
+````SQL
+DROP PROCEDURE IF EXISTS dbo.TestEntry;
+GO
+
+CREATE PROCEDURE TestEntry
+
+AS
+
+DECLARE @Username			NVARCHAR(255) = 'Test'
+DECLARE @TransactUsername	NVARCHAR(255) = 'Test'
+DECLARE @ProcedureName		NVARCHAR(255) = 'Test'
+DECLARE @Parameterstring	NVARCHAR(255) = 'Test'
+DECLARE @EffectedRows		INT = 0
+DECLARE @Resultcode			INT = 0
+DECLARE @Timestampcall		DATETIME = GETDATE()
+DECLARE @Comment			NVARCHAR(255) = 'Test'
+
+EXEC dbo.sx_pf_pPOST_API_LogEntry @Username, @TransactUsername, @ProcedureName, @ParameterString, @EffectedRows, @ResultCode, @TimestampCall, @Comment;
+
+RETURN @ResultCode
+
+GO
+
+GRANT EXECUTE ON OBJECT ::TestEntry TO pf_PlanningFactoryUser;
+GRANT EXECUTE ON OBJECT ::TestEntry TO pf_PlanningFactoryService;
+GO
+
+
+````
