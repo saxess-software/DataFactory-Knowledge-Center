@@ -16,8 +16,8 @@
 * jetzt muss der Dienst unter http://localhost:5000 erreichbar sein
 * LogService konfigurieren in Datei appsettings.user.json
 
-   * Liste der zu loggenden Cluster
-   * Username = der vom FactoryService
+   * Liste der zu loggenden Cluster - in Ausführungszeichen, kommagetrennt, gesamte Liste in eckigen Klammern
+   * Username = der von einen Clusteradmin -> meist dem User Server\\saxess (zwei Backslah zum maskieren)
    * Hub URL wie im Beispiel
    * ServerID = Kundennummer_ + [Kennzeichen für Server beim Kunden]
    * TimeInterval = 5 (Minuten)
@@ -27,7 +27,7 @@
                    "DataFactory_BFW_2018"
                   ,"DataFactory_proDi_2018"
                   ],
-             "Username": "coplan\\FactoryService",
+             "Username": "coplan\\saxess",
              "DataFactoryHubURL": "https://datafactory-hub.azurewebsites.net",
              "DataFactoryServerID": "AD01513_Productive",
              "TimeIntervalOfExecute": 5

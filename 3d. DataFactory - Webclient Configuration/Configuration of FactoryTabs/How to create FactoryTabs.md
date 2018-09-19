@@ -49,11 +49,13 @@ After that you will get a Tab with this name and an empty Pivottable. You can th
 If you have the same Tab in many Factories, you must rollout the Layout String to all Tabs. Best way is to set up a master factory and rollout its configuration by script.
 
 
-#### FAQ 1: I see a Tab with the name, but no empty PivotTable
+#### FAQ 1: I see a Tab with the name, but no empty PivotTable - anything runs into an Error
 * You forgot to GRANT Rights
 * The SP brings no data for the current user - check it by returing static query values without security
 * There are two columns with the same name
+* There is a column with a reserverd name e.g. "Right" or "Left"
 * The Procedure runs into an error on database, when executed for this Factory
+
 
 
 ## Tabs of Type HTML

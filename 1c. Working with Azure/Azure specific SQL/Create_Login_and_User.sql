@@ -70,4 +70,11 @@ GRANT SELECT ON OBJECT ::[result].[vZeit] TO [sxPersonal];
 GRANT SELECT ON SCHEMA :: sxDWH TO [sxMitarbeiterFest]
 
 -- Right to create Views
-GRANT CREATE VIEW TO [sxMitarbeiterFest]
+GRANT CREATE VIEW TO [DataFactory_Developer]
+
+
+
+-- Give UserRights to AD Group
+CREATE USER [DataFactory_Developer] FROM EXTERNAL PROVIDER;
+
+EXEC sp_addrolemember 'db_owner', [DataFactory_Developer];
