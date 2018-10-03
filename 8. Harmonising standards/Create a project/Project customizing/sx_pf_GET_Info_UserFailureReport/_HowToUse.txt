@@ -1,0 +1,12 @@
+1. Create or use existing folders add a test to a test group
+2. Copy an existing test oder the "SampleFailureSnippet.txt" and create an  anything.sql file from
+3. Create the test and check its result in FAILURE case by isolated execution (comment out the @ lines in the SELECT)
+3. Execute "Build_Fehlerreport", which UNIONS all Tests and adds header and footer
+4. Open, Execute and test the builded "control.spSystemFailureReport.sql"
+
+
+
+-- Every Check must perform the following three Actions
+	-- write one or more entries in case of failure
+	-- write one entry in case of no failure
+	-- write one entry in case of failure check is crashed

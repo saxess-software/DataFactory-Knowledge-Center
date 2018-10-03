@@ -1,0 +1,66 @@
+﻿
+SET @TestSource = 'ProductDataTable'	-- usually the name of the folder this snippet is in
+SET @TestName	= 'Test for ..'			-- an friendly description of the test
+
+	BEGIN TRY
+	
+		INSERT INTO control.tCustomFailureReport
+			SELECT 
+				 @Timestamp,
+				 fV.FactoryID
+				,fV.ProductlineID
+				,fV.ProductID
+				,@TestSource
+				,@TestName
+				,'FAILURE' AS ResultType -- or WARNING
+
+				,'Jahr ' 
+					+ CAST(fV.ValueInt AS NVARCHAR(255)) 
+					+ ' der Zeile ' 
+					+ CAST(fV.TimeID AS NVARCHAR(255)) + ' gehört nicht zu Planungszeitraum.' AS ResultText
+
+				,ValueInt AS ResultNumeric
+
+			FROM dbo.sx_pf_fValues fV
+
+			WHERE 
+					fV.FactoryID <> 'ZT' 
+				AND	fV.ValueSeriesID IN ('J_ZAHL','J_AfA')
+				AND (
+					fV.ValueInt < 2017 
+					OR
+					fV.ValueInt > 2030
+					)
+
+	-- #### STANDARD HANDLING FOR SUCCESS / ERROR - KEEP THIS ########################################################
+			IF @@ROWCOUNT = 0
+				BEGIN
+					INSERT INTO control.tCustomFailureReport
+						SELECT 
+							 @Timestamp
+							,'AllFID' 
+							,'AllPLID'
+							,'AllPID'
+							,@TestSource
+							,@TestName
+							,'OK' AS ResultType
+							,'No problems found.'
+							, 0 
+					END
+	END TRY
+
+	BEGIN CATCH
+		INSERT INTO control.tCustomFailureReport
+			SELECT
+				 @Timestamp 
+				,'ErrorFID'
+				,'ErrorPLID'
+				,'ErrorPID'
+				,@TestSource
+				,@TestName
+				,'ERROR' AS ResultType
+				,'Test crashed itself.'
+				,-1 AS Wert
+
+	END CATCH
+
