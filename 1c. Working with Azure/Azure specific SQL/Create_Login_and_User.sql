@@ -12,8 +12,8 @@
   DataFactory Right system to get access.
 */
 
-DECLARE  @LoginUser			NVARCHAR(255)	= 'sxad.HansSommer';   -- give enduser the prefix "sxad" to signalize the this is a User from SX Active Directory B2C
-DECLARE  @Password			NVARCHAR(255)	= 'qx7uOh3d';
+DECLARE  @LoginUser			NVARCHAR(255)	= 'service_vsb_sync';   -- give enduser the prefix "sxad" to signalize the this is a User from SX Active Directory B2C
+DECLARE  @Password			NVARCHAR(255)	= 'qruOhdfd3d';
 DECLARE  @SQL				NVARCHAR(MAX)	= '';
 DECLARE  @ChangePassword	INT				= 0;						-- set this to 1 if you want to change the password of an existing user
 
@@ -78,3 +78,23 @@ GRANT CREATE VIEW TO [DataFactory_Developer]
 CREATE USER [DataFactory_Developer] FROM EXTERNAL PROVIDER;
 
 EXEC sp_addrolemember 'db_owner', [DataFactory_Developer];
+
+
+-- INFORMATIONS
+-- Excecute on master database
+-- See all logins -> this are the logins you see also in SSMS under security -> a login enable to log in on server or database level
+SELECT * FROM sys.sql_logins
+
+-- See all User of Master -> People who can login on Server level (and maybe in many databases) - but you see not the user from external provider (Azure) here !
+SELECT * FROM sys.sysusers WHERE islogin = 1 AND hasdbaccess = 1
+
+-- Excectute on any database -> People who can login right on this database
+SELECT * FROM sys.sysusers WHERE islogin = 1 AND hasdbaccess = 1 -- but you see not the user from external provider (Azure) here !
+
+
+-- alle Datenbankprinzipale
+SELECT pr.principal_id, pr.name, pr.type_desc,   
+    pr.authentication_type_desc, pe.state_desc, pe.permission_name  
+FROM sys.database_principals AS pr  
+LEFT JOIN sys.database_permissions AS pe  
+    ON pe.grantee_principal_id = pr.principal_id;  
