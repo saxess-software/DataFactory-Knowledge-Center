@@ -13,6 +13,8 @@
 
 * a runbook is mosly a powershell script
 
+* we take "Powershell Workflow" - our samples work only with this
+
 * The Workflow must be named the same than the runbook - it is the runbook ?
 
 ````Powershell
