@@ -101,13 +101,13 @@ DECLARE MyCursor CURSOR FOR
 	WHERE ntd.TimeID IS NULL
 
 OPEN MyCursor
-FETCH MyCursor INTO @ProductID, @ProductLineID, @FactoryID, @TimeID
+FETCH MyCursor INTO @FactoryID, @ProductLineID, @ProductID, @TimeID
 WHILE @@FETCH_STATUS = 0
 BEGIN
 
 	EXEC dbo.sx_pf_POST_TimeID 'SQL',@ProductID,@ProductLineID, @FactoryID,@TimeID
 
-	FETCH MyCursor INTO  @ProductID, @ProductLineID, @FactoryID, @TimeID
+	FETCH MyCursor INTO  @FactoryID, @ProductLineID, @ProductID, @TimeID
 END
 CLOSE MyCursor
 DEALLOCATE MyCursor
