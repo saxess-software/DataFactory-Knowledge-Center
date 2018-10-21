@@ -7,15 +7,17 @@ Script to fill the Products in a Target Productline with all the TimeIDs accordi
 DECLARE @SourceFactoryID		NVARCHAR(255) = 'ZT'
 DECLARE @SourceProductlineID	NVARCHAR(255) = 'U'
 DECLARE @SourceProductID		NVARCHAR(255) = '1'
-DECLARE	@TargetFactoryID		NVARCHAR(255) = 'I'
-DECLARE @TargetProductLineID	NVARCHAR(255) = '2'
+DECLARE	@TargetFactoryID		NVARCHAR(255) = '' -- ID or empty for all
+DECLARE @TargetProductLineID	NVARCHAR(255) = '' -- ID or empty for all
 DECLARE @TargetTemplate			NVARCHAR(255) = 'Unikum_VM'		
 
 -- Runtime, keep empty
-DECLARE @ProductID NVARCHAR(255) = ''
-DECLARE @TimeID BIGINT
+DECLARE @ProductID		NVARCHAR(255) = ''
+DECLARE @ProductLineID	NVARCHAR(255) = ''
+DECLARE @FactoryID		NVARCHAR(255) = ''
+DECLARE @TimeID			BIGINT
 
--- The TimeIDs in the Source Product
+-- Collect the TimeIDs in the Source Product ###############################################
 IF OBJECT_ID('tempdb..#TargetTimeIDSet') IS NOT NULL DROP TABLE #TargetTimeIDSet
 CREATE TABLE #TargetTimeIDSet
 	(
@@ -33,26 +35,31 @@ INSERT INTO #TargetTimeIDSet
 		AND	dT.ProductLineID	= @SourceProductlineID 
 		AND	dT.ProductID		= @SourceProductID
 
--- The List of Target Products
+-- Collect the List of Target Products ############################################################
 IF OBJECT_ID('tempdb..#TargetProducts') IS NOT NULL DROP TABLE #TargetProducts
 CREATE TABLE #TargetProducts
 	(
-		 ProductKey BIGINT			NOT	NULL
-		,ProductID	NVARCHAR (255)	NOT NULL
+		 ProductKey		BIGINT			NOT	NULL
+		,ProductID		NVARCHAR (255)	NOT NULL
+		,ProductLineID	NVARCHAR (255)	NOT NULL
+		,FactoryID		NVARCHAR (255)	NOT NULL
 	)
 
 INSERT INTO #TargetProducts
 	SELECT 
 		  ProductKey
 		 ,dP.ProductID
+		 ,dP.ProductLineID
+		 ,dP.FactoryID
 	FROM 
 		dbo.sx_pf_dProducts dP
 	WHERE 
-			dP.FactoryID		= @TargetFactoryID 
-		AND	dP.ProductLineID	= @TargetProductLineID
+			(dP.FactoryID		= @TargetFactoryID		OR @TargetFactoryID		= '')
+		AND	(dP.ProductLineID	= @TargetProductLineID	OR @TargetProductLineID = '')
 		AND dP.Template			= @TargetTemplate
+		AND dP.FactoryID		<> 'ZT'
 
--- The List of already existing TimeIDs
+-- Collect he List of already existing TimeIDs in the Products ############################################
 IF OBJECT_ID('tempdb..#NotToDoListe') IS NOT NULL DROP TABLE #NotToDoListe
 CREATE TABLE #NotToDoListe
 	(
@@ -68,15 +75,21 @@ INSERT INTO #NotToDoListe
 			LEFT JOIN dbo.sx_pf_dProducts dP
 				ON dT.ProductKey = dP.ProductKey
 	WHERE 
-			dT.FactoryID		= @TargetFactoryID 
-		AND	dT.ProductLineID	= @TargetProductLineID
+			(dT.FactoryID		= @TargetFactoryID		OR @TargetFactoryID		= '')
+		AND	(dT.ProductLineID	= @TargetProductLineID	OR @TargetProductLineID = '')
 		AND dP.Template			= @TargetTemplate
+		AND dP.FactoryID		<> 'ZT'
 
+
+
+-- POST all not existing TIME IDs ################################################
 DECLARE MyCursor CURSOR FOR
 
 	-- The TimeIDs to create
 	SELECT 
-		  tp.ProductID
+		  tp.FactoryID
+		 ,tp.ProductLineID  
+		 ,tp.ProductID
 		 ,tti.TimeID
 	FROM 
 		#TargetTimeIDSet tti
@@ -88,13 +101,13 @@ DECLARE MyCursor CURSOR FOR
 	WHERE ntd.TimeID IS NULL
 
 OPEN MyCursor
-FETCH MyCursor INTO @ProductID, @TimeID
+FETCH MyCursor INTO @FactoryID, @ProductLineID, @ProductID, @TimeID
 WHILE @@FETCH_STATUS = 0
 BEGIN
 
-	EXEC dbo.sx_pf_POST_TimeID 'SQL',@ProductID,@TargetProductLineID, @TargetFactoryID,@TimeID
+	EXEC dbo.sx_pf_POST_TimeID 'SQL',@ProductID,@ProductLineID, @FactoryID,@TimeID
 
-	FETCH MyCursor INTO @ProductID, @TimeID
+	FETCH MyCursor INTO  @FactoryID, @ProductLineID, @ProductID, @TimeID
 END
 CLOSE MyCursor
 DEALLOCATE MyCursor
