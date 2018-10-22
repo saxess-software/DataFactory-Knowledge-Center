@@ -1,0 +1,44 @@
+﻿1. Repo für den Kunden anlegen - mit Readme file sonst ist es nicht klonbar
+
+2. Script 01_Project organisation\02_Project Folder\01_Powershell\Create_ProjectFolderStructure.ps1 in Kundenordner kopieren
+
+3. Script dort einmalig ausführen, dann löschen
+
+4. Die Dateien 
+
+	- \01_Project organisation\02_Project Folder\01_Powershell\Create_ProjectAPI.ps1
+
+im Kundenordner nach 2. Projektumsetzung\API kopieren und API im Script passend bennenn
+
+5. Die Dateien 
+	- 01_Project organisation\02_Project Folder\02_SQL\* 
+
+	nach 
+	
+	2. Projektumsetzung\API\9. Header  
+ kopieren und Dummy.sql dort löschen
+ Im Header Datenbanknamen im USE Statement ändern, falls nicht "DataFactory"
+
+6. aktuelle Standard API (nicht die Update Version !) nach 
+
+	2. Projektumsetzung\API\1. Standard API
+
+	kopieren (diese API ist derzeit nur im Release enthalten, nicht im script Verzeichnis vom Client)
+
+	und Dummy.sql dort löschen
+
+
+7. Create API Script auführen
+
+8. Mappe Projektdokumentation von 01_Project organisation\03_Project Documentation ins Kundenverzeichnis kopieren
+
+9. Mappe Abrechnungsübersicht von S:\3_sxOrganisation\5_Ergebnisauswertung\Jira-Abrechnung in das Kundenverzeichnis kopieren
+
+10.Projektdokumentation im Hinblick auf die Installationsanforderungen konfigurieren
+
+11. Repo commiten und Installation bei Lars beauftragen
+
+
+	
+
+
