@@ -1,20 +1,17 @@
-﻿/*
-Cleanup Script für API Wechsel
-
-- ändert KEINE Tabellen 
-
-- löscht alle Views
-- löscht alle Prozeduren
-- löscht alle Funktionen
-
-
-Einzelne Batches, da am Ende immer noch ein Befehlsfragment hängt
+﻿
+/*
+Author: 	Mandy Hauck
+Created: 	2018/10
+Summary:	This script deletes all views, procedures and functions but does NOT delete any tables
+			Use this script to change your API
+			Einzelne Batches, da am Ende immer noch ein Befehlsfragment hängt
 
 */
 
 
+-------------------------------------------------------------------------------------------------------------------
+-- ##### PROCEDURES ###########
 
--- alle Prozeduren löschen
 DECLARE  @sql VARCHAR(MAX) = ''
         ,@crlf VARCHAR(2) = CHAR(13) + CHAR(10) ;
 
@@ -26,8 +23,9 @@ EXEC(@sql);
 
 GO
 
+-------------------------------------------------------------------------------------------------------------------
+-- ##### FUNCTIONS ###########
 
--- alle Funktionen löschen
 DECLARE  @sql VARCHAR(MAX) = ''
         ,@crlf VARCHAR(2) = CHAR(13) + CHAR(10) ;
 SELECT @sql = @sql + 'DROP FUNCTION ' + QUOTENAME(SCHEMA_NAME(schema_id)) + '.' + QUOTENAME(v.name) +';' + @crlf
@@ -38,8 +36,9 @@ EXEC(@sql)
 
 GO
 
+-------------------------------------------------------------------------------------------------------------------
+-- ##### VIEWS ###########
 
--- alle Views löschen
 DECLARE  @sql VARCHAR(MAX) = ''
         ,@crlf VARCHAR(2) = CHAR(13) + CHAR(10) ;
 
