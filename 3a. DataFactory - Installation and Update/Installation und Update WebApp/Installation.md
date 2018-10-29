@@ -17,10 +17,12 @@
 * LogService konfigurieren in Datei appsettings.user.json
 
    * Liste der zu loggenden Cluster - in Ausführungszeichen, kommagetrennt, gesamte Liste in eckigen Klammern
-   * Username = der von einen Clusteradmin -> meist dem User Server\\saxess (zwei Backslah zum maskieren)
+   * Username = der von einen Clusteradmin -> meist dem User Server\\saxess (zwei Backslash zum maskieren)
    * Hub URL wie im Beispiel
    * ServerID = Kundennummer_ + [Kennzeichen für Server beim Kunden]
    * TimeInterval = 5 (Minuten)
+   * ! Prüfung, ob Tabelle Process Log mit GRANT SELECT ON OBJECT::dbo.sx_pf_Process_Log TO pf_PlanningFactoryService;  angelegt wurde (in API 74 fehlte diese noch), sonst kann der FactoryService dieses nicht auslesen
+
 
            "LoggingServiceOptions": {
              "Clusters": [
