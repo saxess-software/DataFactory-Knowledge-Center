@@ -6,8 +6,13 @@ If you have any query, which returns long varchars, SQL Servermanagement Studio 
 
 
 ## 2. Export the Data
-You can export the data with the export wizard of SSMS, if:
-* you have not SQL Expess - it don't have this function
+You can export the data with the export wizard of SSMS:
+* Export to File - use unicode
+* write a Query like SELECT ParamterString FROM sx_pf_API_Log WHERE LogKey = 4444
+* change in Query mapping the field size to a very high number
+* you wil get an text file with the complete field content
+Restrictions
+* works not with SQL Express as there is no Export
 * you don't want to export the results of an Stored procedure, which uses internal an #table (not supported from SSMS)
 
 Use a custom query to export this data.
