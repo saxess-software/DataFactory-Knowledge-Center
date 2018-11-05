@@ -10,8 +10,18 @@
 
 #########################################################################
 
+#Folder Name
+$folder = "01_Projektordner Muster"
+
+#Deletion old file and creation new file
+If (Test-Path $folder) { Remove-Item $folder -Recurse; }
+
+
 # Project folder sample
 New-Item -ItemType directory -Name '01_Projektordner Muster'
+
+Copy-Item "..\\03_Project Documentation\Template Project Documentation.xlsx" -Destination "01_Projektordner Muster\Projektdokumentation.xlsx"
+
 
 # Folder for customer files
 New-Item -ItemType directory -Name '01_Projektordner Muster\01_Kundenunterlagen'
@@ -38,27 +48,41 @@ New-Item -ItemType File -Name '01_Projektordner Muster\02_Projektumsetzung\01_Pr
 
 New-Item -ItemType directory -Name '01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\02_CustomAPI'
 New-Item -ItemType directory -Name '01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\02_CustomAPI\01_Header, CleanUp'
-New-Item -ItemType File -Name '01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\02_CustomAPI\01_Header, CleanUp\dummy.sql'
+Copy-Item "..\..\..\\3c. DataFactory - Data Input and Database Configuration\Configuration for Database\InitialisiereDataFactory\01_Header for API script.sql" -Destination "01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\02_CustomAPI\01_Header, CleanUp"
+Copy-Item "..\..\..\\3c. DataFactory - Data Input and Database Configuration\Configuration for Database\InitialisiereDataFactory\CleanUp script Views,Procedures and Functions.sql" -Destination "01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\02_CustomAPI\01_Header, CleanUp"
+
+
 New-Item -ItemType directory -Name '01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\02_CustomAPI\02_StandardAPI'
 New-Item -ItemType File -Name '01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\02_CustomAPI\02_StandardAPI\dummy.sql'
+
 New-Item -ItemType directory -Name '01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\02_CustomAPI\03_API-Modifikationen'
 New-Item -ItemType File -Name '01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\02_CustomAPI\03_API-Modifikationen\dummy.sql'
+
 New-Item -ItemType directory -Name '01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\02_CustomAPI\04_Staging'
 New-Item -ItemType File -Name '01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\02_CustomAPI\04_Staging\dummy.sql'
+
 New-Item -ItemType directory -Name '01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\02_CustomAPI\05_Load'
 New-Item -ItemType File -Name '01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\02_CustomAPI\05_Load\dummy.sql'
+
 New-Item -ItemType directory -Name '01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\02_CustomAPI\06_Param'
 New-Item -ItemType File -Name '01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\02_CustomAPI\06_Param\dummy.sql'
+
 New-Item -ItemType directory -Name '01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\02_CustomAPI\07_Calc'
 New-Item -ItemType File -Name '01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\02_CustomAPI\07_Calc\dummy.sql'
+
 New-Item -ItemType directory -Name '01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\02_CustomAPI\08_Control'
 New-Item -ItemType File -Name '01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\02_CustomAPI\08_Control\dummy.sql'
+
 New-Item -ItemType directory -Name '01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\02_CustomAPI\09_Result'
 New-Item -ItemType File -Name '01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\02_CustomAPI\09_Result\dummy.sql'
+
 New-Item -ItemType directory -Name '01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\03_Templates und Struktur'
 New-Item -ItemType File -Name '01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\03_Templates und Struktur\dummy.sql'
+
 New-Item -ItemType directory -Name '01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\04_Kleine Helfer'
-New-Item -ItemType File -Name '01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\04_Kleine Helfer\dummy.sql'
+Copy-Item "..\..\..\\3c. DataFactory - Data Input and Database Configuration\Configuration for Database\InitialisiereDataFactory\DELETE_Factories.sql" -Destination "01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\04_Kleine Helfer"
+Copy-Item "..\..\..\\3c. DataFactory - Data Input and Database Configuration\Configuration for Database\InitialisiereDataFactory\control.spRolloutTemplate.sql" -Destination "01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\04_Kleine Helfer"
+
 
 ## Folder for all files related to reporting
 New-Item -ItemType directory -Name '01_Projektordner Muster\02_Projektumsetzung\02_Reporting'
