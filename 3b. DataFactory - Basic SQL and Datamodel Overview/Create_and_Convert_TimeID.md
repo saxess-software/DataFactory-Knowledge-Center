@@ -183,3 +183,8 @@ SELECT @fromdate = dateadd(day, datediff(day, 0, @FromDate)/7*7, 0),
 	WHERE type = 'P' and
 	@todate >= dateadd(d, number * 7, @fromdate)
 ````
+
+## Generate TimeID as running number (laufende Nummer)
+````SQL
+10000000 + ROW_NUMBER()OVER(PARTITION BY '[Partitionierungsmerkmal]' ORDER BY '[Sortiermerkmal]') *100 +1
+````
