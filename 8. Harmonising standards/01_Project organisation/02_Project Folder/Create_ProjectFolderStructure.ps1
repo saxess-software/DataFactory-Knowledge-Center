@@ -80,7 +80,6 @@ New-Item -ItemType directory -Name '01_Projektordner Muster\02_Projektumsetzung\
 New-Item -ItemType File -Name '01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\03_Templates und Struktur\dummy.sql'
 
 New-Item -ItemType directory -Name '01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\04_Kleine Helfer'
-Copy-Item "..\..\..\\3c. DataFactory - Data Input and Database Configuration\Configuration for Database\InitialisiereDataFactory\DELETE_Factories.sql" -Destination "01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\04_Kleine Helfer"
 Copy-Item "..\..\..\\3c. DataFactory - Data Input and Database Configuration\Configuration for Database\InitialisiereDataFactory\control.spRolloutTemplate.sql" -Destination "01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\04_Kleine Helfer"
 
 
