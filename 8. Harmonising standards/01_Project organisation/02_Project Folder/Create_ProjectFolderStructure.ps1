@@ -1,3 +1,5 @@
+# RELEASE VERSION: 1.0
+
 # Create the basic folder structure for a german project
 # unfortunately you can't publish empty folders in Github, thats why you see Dummy files in empty folders
 
