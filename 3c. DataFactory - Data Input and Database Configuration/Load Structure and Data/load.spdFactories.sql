@@ -53,11 +53,11 @@ BEGIN TRY
 				,'<#NV>'									AS ResponsiblePerson
 				,'<#NV>'									AS ImageName
 				,@Source									AS Source
-				,GETDATE()									AS SourceTimeStamp
+				,@TimestampCall								AS SourceTimeStamp
 		FROM [dbo].[sx_pf_fValues]		-- Beispieltabelle mit Beispielfiltern
 		WHERE	(@FactoryID = '' OR FactoryID = @FactoryID)
 		
-		SET @EffectedRows	= @@ROWCOUNT
+		SET @EffectedRows	= +@@ROWCOUNT
 		
 -------------------------------------------------------------------------------------------------------------------
 -- ##### COMMIT & API LOG ###########

@@ -88,13 +88,13 @@ BEGIN TRY
 				,'<#NV>'									AS GlobalAttribute24
 				,'<#NV>'									AS GlobalAttribute25
 				,@Source									AS Source
-				,GETDATE()									AS SourceTimeStamp
+				,@TimestampCall								AS SourceTimeStamp
 		FROM [dbo].[sx_pf_fValues]			-- Beispieltabelle mit Beispielfiltern
 		WHERE	(@FactoryID = '' OR FactoryID = @FactoryID)
 			AND	(@ProductLineID = '' OR ProductLineID = @ProductLineID)
 			AND	(@ProductID = '' OR ProductID = @ProductID)
 
-		SET @EffectedRows	= @@ROWCOUNT
+		SET @EffectedRows	= +@@ROWCOUNT
 			
 -------------------------------------------------------------------------------------------------------------------
 -- ##### COMMIT & API LOG ###########

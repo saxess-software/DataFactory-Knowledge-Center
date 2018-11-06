@@ -64,7 +64,7 @@ BEGIN TRY
 				,'<#NV>'						AS ValueText
 				,'<#NV>'						AS ValueComment
 				,@Source						AS Source
-				,GETDATE()						AS SourceTimeStamp
+				,@TimestampCall					AS SourceTimeStamp
 		FROM [dbo].[sx_pf_fValues]			-- Beispieltabelle mit Beispielfiltern
 		WHERE	(@FactoryID = '' OR FactoryID = @FactoryID)
 			AND	(@ProductLineID = '' OR ProductLineID = @ProductLineID)
@@ -73,7 +73,7 @@ BEGIN TRY
 			AND	(@TimeID = 0 OR TimeID = @TimeID)
 
 
-			SET @EffectedRows	= @@ROWCOUNT
+			SET @EffectedRows	= +@@ROWCOUNT
 
 	-- ValueSeries #2
 	INSERT INTO [load].[tfValues]	
@@ -87,7 +87,7 @@ BEGIN TRY
 				,'<#NV>'						AS ValueText
 				,'<#NV>'						AS ValueComment
 				,@Source						AS Source
-				,GETDATE()						AS SourceTimeStamp
+				,@TimestampCall					AS SourceTimeStamp
 		FROM [dbo].[sx_pf_fValues]			-- Beispieltabelle mit Beispielfiltern
 		WHERE	(@FactoryID = '' OR FactoryID = @FactoryID)
 			AND	(@ProductLineID = '' OR ProductLineID = @ProductLineID)
@@ -95,7 +95,7 @@ BEGIN TRY
 			AND	(@ValueSeriesID = '' OR ValueSeriesID = @ValueSeriesID)
 			AND	(@TimeID = 0 OR TimeID = @TimeID)
 
-		SET @EffectedRows	= @EffectedRows + @@ROWCOUNT
+		SET @EffectedRows	=  +@@ROWCOUNT
 
 -------------------------------------------------------------------------------------------------------------------
 -- ##### COMMIT & API LOG ###########
