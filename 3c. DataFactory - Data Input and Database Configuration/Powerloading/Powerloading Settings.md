@@ -7,17 +7,17 @@
 
 3. Configure a Microsoft Job
 
-![Pic](images/a_Aufgabe.PNG)
+![Pic](Images/a_Aufgabe.PNG)
 
-![Pic](images/b_Name.PNG)
+![Pic](Images/b_Name.PNG)
 
-![Pic](images/c_Trigger.PNG)
+![Pic](Images/c_Trigger.PNG)
 
-![Pic](images/d_Zeitplan.PNG)
+![Pic](Images/d_Zeitplan.PNG)
 
-![Pic](images/e_Aktion.PNG)
+![Pic](Images/e_Aktion.PNG)
 
-![Pic](images/f_Pfade.PNG)
+![Pic](Images/f_Pfade.PNG)
 
 path to the powershell.exe (z.B.: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe)
 
