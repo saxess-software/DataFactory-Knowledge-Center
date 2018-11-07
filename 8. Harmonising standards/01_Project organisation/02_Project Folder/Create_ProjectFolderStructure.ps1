@@ -66,7 +66,6 @@ New-Item -ItemType directory -Name '01_Projektordner Muster\02_Projektumsetzung\
 New-Item -ItemType File -Name '01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\02_CustomAPI\04_Staging\dummy.sql'
 
 New-Item -ItemType directory -Name '01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\02_CustomAPI\05_Load'
-Copy-Item "..\..\..\\3c. DataFactory - Data Input and Database Configuration\Load Structure and Data\control.spInitialisiereDataFactory.sql" -Destination "01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\02_CustomAPI\05_Load"
 Copy-Item "..\..\..\\3c. DataFactory - Data Input and Database Configuration\Load Structure and Data\load.spdFactories.sql" -Destination "01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\02_CustomAPI\05_Load"
 Copy-Item "..\..\..\\3c. DataFactory - Data Input and Database Configuration\Load Structure and Data\load.spdProductLines.sql" -Destination "01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\02_CustomAPI\05_Load"
 Copy-Item "..\..\..\\3c. DataFactory - Data Input and Database Configuration\Load Structure and Data\load.spdProducts.sql" -Destination "01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\02_CustomAPI\05_Load"
@@ -80,7 +79,7 @@ New-Item -ItemType directory -Name '01_Projektordner Muster\02_Projektumsetzung\
 New-Item -ItemType File -Name '01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\02_CustomAPI\07_Calc\dummy.sql'
 
 New-Item -ItemType directory -Name '01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\02_CustomAPI\08_Control'
-New-Item -ItemType File -Name '01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\02_CustomAPI\08_Control\dummy.sql'
+Copy-Item "..\..\..\\3c. DataFactory - Data Input and Database Configuration\Load Structure and Data\control.spInitialisiereDataFactory.sql" -Destination "01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\02_CustomAPI\08_Control"
 
 New-Item -ItemType directory -Name '01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\02_CustomAPI\09_Result'
 New-Item -ItemType File -Name '01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\02_CustomAPI\09_Result\dummy.sql'
