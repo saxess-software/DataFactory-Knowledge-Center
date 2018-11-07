@@ -25,6 +25,6 @@ path of the powershellscript file (z.B.: -file "C:\GitHub\AD01513_BFW_DataFactor
 
 folder where the powershell script is located (z.B.: C:\GitHub\AD01513_BFW_DataFactory\Projekt Unternehmensplanung\1c. Prozess 2018)
 
-![Pic](images/g_Timeout.PNG)
+![Pic](images/g_Timeout.png)
 
 
