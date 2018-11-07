@@ -1,4 +1,4 @@
-# RELEASE VERSION: 1.0
+# RELEASE VERSION: 1.1
 
 # Create the basic folder structure for a german project
 # unfortunately you can't publish empty folders in Github, thats why you see Dummy files in empty folders
@@ -36,6 +36,8 @@ New-Item -ItemType File -Name '01_Projektordner Muster\01_Kundenunterlagen\01_Ar
 New-Item -ItemType directory -Name '01_Projektordner Muster\02_Projektumsetzung'
 
 New-Item -ItemType directory -Name '01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI'
+Copy-Item "..\..\..\\3c. DataFactory - Data Input and Database Configuration\Configuration for Database\InitialisiereDataFactory\CREATE_API.ps1" -Destination "01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI"
+
 New-Item -ItemType directory -Name '01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\01_Permanente Erweiterungstabellen'
 New-Item -ItemType directory -Name '01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\01_Permanente Erweiterungstabellen\01_Staging'
 New-Item -ItemType File -Name '01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\01_Permanente Erweiterungstabellen\01_Staging\dummy.sql'
