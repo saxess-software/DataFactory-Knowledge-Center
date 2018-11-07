@@ -13,13 +13,16 @@ GO
 
 -------------------------------------------------------------------------------------------------------------------
 CREATE TABLE [dbo].[TableName]
-		(		 ColumnInt					INT
-				,ColumnText1				NVARCHAR(255)
-				,ColumnText2				NVARCHAR(MAX)
-				,ColumnDate					DATETIME
-				,ColumnMoney				MONEY						)
+		(		 ColumnInt					INT				NOT NULL
+				,ColumnText1				NVARCHAR(255)	NOT NULL
+				,ColumnText2				NVARCHAR(MAX)	NOT NULL
+				,ColumnDate					DATETIME		NOT NULL
+				,ColumnMoney				MONEY			NOT NULL	)
 
 -------------------------------------------------------------------------------------------------------------------
 GO
 
+GRANT SELECT ON OBJECT:: [dbo].[TableName] TO pf_PlanningFactoryUser;
+GRANT SELECT ON OBJECT:: [dbo].[TableName] TO pf_PlanningFactoryService;
 
+GO
