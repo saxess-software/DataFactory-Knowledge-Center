@@ -1,4 +1,4 @@
-﻿
+
 /*
 Author: 	Heathcliff Power
 Created: 	2018/01

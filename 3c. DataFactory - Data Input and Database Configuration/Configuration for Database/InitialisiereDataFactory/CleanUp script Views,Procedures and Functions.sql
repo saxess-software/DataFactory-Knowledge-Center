@@ -1,4 +1,4 @@
-﻿
+
 /*
 Author: 	Mandy Hauck
 Created: 	2018/10
