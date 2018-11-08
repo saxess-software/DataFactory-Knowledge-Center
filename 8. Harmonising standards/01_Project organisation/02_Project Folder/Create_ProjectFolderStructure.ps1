@@ -1,4 +1,4 @@
-# RELEASE VERSION: 1.1
+# RELEASE VERSION: 1.2
 
 # Create the basic folder structure for a german project
 # unfortunately you can't publish empty folders in Github, thats why you see Dummy files in empty folders
@@ -80,6 +80,12 @@ New-Item -ItemType File -Name '01_Projektordner Muster\02_Projektumsetzung\01_Pr
 
 New-Item -ItemType directory -Name '01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\02_CustomAPI\08_Control'
 Copy-Item "..\..\..\\3c. DataFactory - Data Input and Database Configuration\Load Structure and Data\control.spInitialisiereDataFactory.sql" -Destination "01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\02_CustomAPI\08_Control"
+New-Item -ItemType directory -Name '01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\02_CustomAPI\08_Control\User Failure Report'
+Copy-Item "..\..\..\\3c. DataFactory - Data Input and Database Configuration\Failure report\User failure report\01_Header.sql" -Destination "01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\02_CustomAPI\08_Control\User Failure Report"
+Copy-Item "..\..\..\\3c. DataFactory - Data Input and Database Configuration\Failure report\User failure report\02_Footer.sql" -Destination "01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\02_CustomAPI\08_Control\User Failure Report"
+Copy-Item "..\..\..\\3c. DataFactory - Data Input and Database Configuration\Failure report\User failure report\Build_UserFailureReport-Procedure.ps1" -Destination "01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\02_CustomAPI\08_Control\User Failure Report"
+New-Item -ItemType directory -Name '01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\02_CustomAPI\08_Control\User Failure Report\Snippets'
+Copy-Item "..\..\..\\3c. DataFactory - Data Input and Database Configuration\Failure report\User failure report\001_Sample UserFailureReport Snippet.sql" -Destination "01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\02_CustomAPI\08_Control\User Failure Report\Snippets"
 
 New-Item -ItemType directory -Name '01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\02_CustomAPI\09_Result'
 New-Item -ItemType File -Name '01_Projektordner Muster\02_Projektumsetzung\01_ProjektAPI\02_CustomAPI\09_Result\dummy.sql'
