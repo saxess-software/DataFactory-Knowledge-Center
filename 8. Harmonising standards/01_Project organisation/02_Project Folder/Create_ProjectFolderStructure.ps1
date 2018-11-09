@@ -22,7 +22,7 @@ If (Test-Path $folder) { Remove-Item $folder -Recurse; }
 # Project folder sample
 New-Item -ItemType directory -Name '01_Projektordner Muster'
 
-Copy-Item "..\\03_Project Documentation\ProjektMappe.xlsx" -Destination "01_Projektordner Muster\ProjektMappe.xlsx"
+Copy-Item "..\\03_Project Documentation\ProjektMappe.xlsm" -Destination "01_Projektordner Muster\ProjektMappe.xlsm"
 
 
 # Folder for customer files
