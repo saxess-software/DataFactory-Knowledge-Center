@@ -56,11 +56,11 @@ BEGIN TRY
 	-- tmp table to store something
 	IF OBJECT_ID('tempdb..#tmp') IS NOT NULL DROP TABLE #tmp
 	CREATE TABLE #tmp
-			(	 ColumnInt					INT
-				,ColumnText1				NVARCHAR(255)
-				,ColumnText2				NVARCHAR(MAX)
-				,ColumnDate					DATETIME
-				,ColumnMoney				MONEY			)			
+			(	 ColumnInt					INT											NOT NULL
+				,ColumnText1				NVARCHAR(255)	COLLATE DATABASE_DEFAULT	NOT NULL
+				,ColumnText2				NVARCHAR(MAX)	COLLATE DATABASE_DEFAULT	NOT NULL
+				,ColumnDate					DATETIME									NOT NULL
+				,ColumnMoney				MONEY										NOT NULL)
 		INSERT INTO #tmp
 			SELECT 	*
 			FROM 	dbo.sx_pf_dProducts
