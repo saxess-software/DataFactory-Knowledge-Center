@@ -7,6 +7,7 @@ In general, the elastic queries work like if you use linked servers
 You create an external table in your central database which than works as an link to the source table in the other database
 The external table is nothing more than a link, that's why you can get any information if you click on the table
 The external table can be queried like every other table
+An external table can be a view in the external database
 In order to connect the relevant databases you need:
 	- same user in both databases
 	- Master Key encryption by password on your central database (not quite sure what it is yet)
@@ -22,7 +23,7 @@ GO
 CREATE LOGIN ElasticQueryUser WITH PASSWORD = 'ElasticQuery123'
 GO
 
--- Create user on the external database/database you want to query
+-- Create user on the external database
 USE sxDataFactory
 GO
 
@@ -45,8 +46,8 @@ CREATE DATABASE SCOPED CREDENTIAL ElasticQueryCredential WITH IDENTITY  = 'Elast
 
 
 
--- Create an external datasource ElasticQuery_sxDF_vZeit pointing to the database sxDataFactory
-CREATE EXTERNAL DATA SOURCE ElasticQuery_sxDF_vZeit WITH
+-- Create an external datasource ElasticQuery_sxDF pointing to the external database
+CREATE EXTERNAL DATA SOURCE ElasticQuery_sxDF WITH
 	(	TYPE = RDBMS, 
 		LOCATION = 'DataFactory01-sqlserver.database.windows.net', 
 		DATABASE_NAME = 'sxDataFactory', 
@@ -54,7 +55,7 @@ CREATE EXTERNAL DATA SOURCE ElasticQuery_sxDF_vZeit WITH
 	) ;
 
 
--- If you want an exact copy of the table in the external database in your central database
+-- If you want table with the same name like in the external database in your central database
 -- Create scheme and a table which on central database which matches the on the external database
 CREATE SCHEMA [result]
 GO
@@ -80,7 +81,7 @@ CREATE EXTERNAL TABLE [result].[vZeit]
 		,TagIsGeschlossenFlag		INT NOT NULL
 		,MitarbeiterStatusCode		INT NOT NULL					) 
 WITH
-(DATA_SOURCE = ElasticQuery_sxDF_vZeit)
+(DATA_SOURCE = ElasticQuery_sxDF)
 
 
 
@@ -110,3 +111,7 @@ WITH
 (DATA_SOURCE = ElasticQuery_sxDF_vZeit,
 	SCHEMA_NAME = 'result',
 	OBJECT_NAME = 'vZeit'		)
+
+-- If you use an View as Source, you must cast column explicit to the correct type 
+-- e.g. if your View has an Column of (implicit) type NVARCHAR(29) it can not be stored in external table with definition NVARCHAR(255)
+-- so cast the view column explicit to NVARCHAR(255)
