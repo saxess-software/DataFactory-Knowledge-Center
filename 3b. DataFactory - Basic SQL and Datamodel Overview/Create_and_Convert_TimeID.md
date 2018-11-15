@@ -53,6 +53,12 @@ TimeID from XLS Datenumber
 SELECT CAST(47848 - 2 as Datetime)
 ````
 
+SQL string to XLS Datenumber
+````SQL
+-- Date as NVARCHAR(255) 
+SELECT DATEDIFF(DD,'1899-12-30',[Date])
+````
+
 Check if TimeID is weekday
 ````SQL
 IIF(Datepart(weekday,CONVERT(Datetime,CAST(TimeID AS NVARCHAR(10))))<=5,1,0)  AS Day_is_Weekday
