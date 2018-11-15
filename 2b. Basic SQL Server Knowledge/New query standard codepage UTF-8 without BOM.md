@@ -8,12 +8,6 @@
   
 * open the SQLFile.sql with Notepad and change the encoding to UTF-8 without BOM (admin rights needed)
 
-* in some cases it is also necessary to change the settings of SSMS (Extras --> Optionen --> Text-Editor --> Allgemein): remove check mark from "UTF-8-Codierung ohne Signatur automatisch erkennen"
-*(e.g. when a comment section in english is added to the template for new query, the automatic identification changed the coding back to ANSI when saving the script)*
-
-
-![Pic](pictures/UTF-8_ohne_BOM.png)
-
 
 
 
