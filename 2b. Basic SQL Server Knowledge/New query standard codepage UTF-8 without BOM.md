@@ -5,9 +5,9 @@
 
 - in some cases it is also necessary to change the settings of SSMS (Extras --> Optionen --> Text-Editor --> Allgemein): remove check mark from "UTF-8-Codierung ohne Signatur automatisch erkennen"
 
-![Pic](pictures/UTF-8_ohne_ BOM.png)
+![Pic](pictures/UTF-8_ohne_BOM.png)
 
-https://github.com/saxess-software/DataFactory-Knowledge-Center/blob/master/2b.%20Basic%20SQL%20Server%20Knowledge/pictures/UTF-8_ohne_%20BOM.png
+
 
 
 
