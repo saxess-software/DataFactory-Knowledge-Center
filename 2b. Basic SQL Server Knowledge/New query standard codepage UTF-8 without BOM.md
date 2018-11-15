@@ -7,4 +7,7 @@
 
 ![Pic](pictures/UTF-8_ohne_ BOM.png)
 
+https://github.com/saxess-software/DataFactory-Knowledge-Center/blob/master/2b.%20Basic%20SQL%20Server%20Knowledge/pictures/UTF-8_ohne_%20BOM.png
+
+
 
