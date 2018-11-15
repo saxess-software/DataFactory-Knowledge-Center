@@ -5,4 +5,6 @@
 
 - in some cases it is also necessary to change the settings of SSMS (Extras --> Optionen --> Text-Editor --> Allgemein): remove check mark from "UTF-8-Codierung ohne Signatur automatisch erkennen"
 
-![this] (pictures/UTF-8_ohne_BOM.png)
+![Pic](pictures/UTF-8_ohne_ BOM.png)
+
+
