@@ -13,9 +13,9 @@ DROP PROCEDURE [dbo].[spProcedureName]
 GO
 
 CREATE PROCEDURE [dbo].[spProcedureName]		
-					(		@Username			NVARCHAR(255),
-							@FactoryID			NVARCHAR(255),
-							@ProductLineID		NVARCHAR(255)		)
+					(		@Username			NVARCHAR(255) = '',
+							@FactoryID			NVARCHAR(255) = '',
+							@ProductLineID		NVARCHAR(255) = ''		)
 AS
 SET NOCOUNT ON
 
