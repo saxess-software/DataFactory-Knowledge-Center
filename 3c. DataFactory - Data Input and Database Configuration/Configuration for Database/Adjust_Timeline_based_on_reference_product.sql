@@ -16,17 +16,20 @@ DECLARE @ProductID		NVARCHAR(255) = ''
 DECLARE @ProductLineID	NVARCHAR(255) = ''
 DECLARE @FactoryID		NVARCHAR(255) = ''
 DECLARE @TimeID			BIGINT
+DECLARE @FormatID		NVARCHAR(255) = ''
 
 -- Collect the TimeIDs in the Source Product ###############################################
 IF OBJECT_ID('tempdb..#TargetTimeIDSet') IS NOT NULL DROP TABLE #TargetTimeIDSet
 CREATE TABLE #TargetTimeIDSet
 	(
-	 TimeID BIGINT NOT NULL
+	   TimeID	BIGINT			NOT NULL
+	  ,FormatID	NVARCHAR (255)	NOT NULL
 	)
 
-INSERT INTO #TargetTimeIDSet
+INSERT INTO #TargetTimeIDSet	
 	SELECT 
-		TimeID
+		 dT.TimeID
+		,dT.FormatID
 	
 	FROM dbo.sx_pf_dTime dT 
 
@@ -91,6 +94,7 @@ DECLARE MyCursor CURSOR FOR
 		 ,tp.ProductLineID  
 		 ,tp.ProductID
 		 ,tti.TimeID
+		 ,tti.FormatID
 	FROM 
 		#TargetTimeIDSet tti
 			JOIN #TargetProducts tp
@@ -101,13 +105,13 @@ DECLARE MyCursor CURSOR FOR
 	WHERE ntd.TimeID IS NULL
 
 OPEN MyCursor
-FETCH MyCursor INTO @FactoryID, @ProductLineID, @ProductID, @TimeID
+FETCH MyCursor INTO @FactoryID, @ProductLineID, @ProductID, @TimeID,@FormatID
 WHILE @@FETCH_STATUS = 0
 BEGIN
 
-	EXEC dbo.sx_pf_POST_TimeID 'SQL',@ProductID,@ProductLineID, @FactoryID,@TimeID
+	EXEC dbo.sx_pf_POST_TimeID 'SQL',@ProductID,@ProductLineID, @FactoryID,@TimeID,@FormatID
 
-	FETCH MyCursor INTO  @FactoryID, @ProductLineID, @ProductID, @TimeID
+	FETCH MyCursor INTO  @FactoryID, @ProductLineID, @ProductID, @TimeID,@FormatID
 END
 CLOSE MyCursor
 DEALLOCATE MyCursor

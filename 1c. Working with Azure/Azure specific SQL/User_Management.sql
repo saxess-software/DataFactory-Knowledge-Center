@@ -1,4 +1,4 @@
-
+-- Reading and changing Rights is difficult- primary delete user and create it new with new rights.
 
 -- Change user password ********************************************************
 ALTER LOGIN Testuser WITH PASSWORD = 'teste';  
@@ -17,3 +17,20 @@ SELECT DP1.name AS DatabaseRoleName,
    ON DRM.member_principal_id = DP2.principal_id  
 WHERE DP1.type = 'R'
 ORDER BY DP1.name;
+
+
+-- Permissions which are not role based - its not easy to read, primary look if somebody should be here or not
+
+SELECT pr.principal_id, pr.name, pr.type_desc,   
+    pr.authentication_type_desc, pe.state_desc, pe.permission_name,pe.class,pe.class_desc,o.type_desc
+	FROM sys.database_principals AS pr  
+	LEFT JOIN sys.database_permissions AS pe  
+		ON pe.grantee_principal_id = pr.principal_id
+	LEFT JOIN sys.objects AS o  
+    ON pe.major_id = o.object_id  
+	LEFT JOIN sys.schemas AS s  
+		ON o.schema_id = s.schema_id
+ORDER BY pr.principal_id DESC
+
+
+
