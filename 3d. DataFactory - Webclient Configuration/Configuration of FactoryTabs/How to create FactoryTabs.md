@@ -10,7 +10,8 @@ To create the Tabs you use the procedure "sx_POST_FactoryTab", you must POST thi
 * this type of Tab need a DataSource - this DataSource must be a Stored Procedure
 * the Procedure can be in any schema and can have any name
 * this StoredProcedure must ensure
-    * it has tree parameter @Username, @FactoryID, @ProductlineID
+    * it has three parameter @Username, @FactoryID, @ProductlineID
+	* the parameter FactoryID and ProductlineID must be optional (with default value = '')
     * it returns one Resultset
     * it has a GRANT EXECUTE to pf_PlanningFactoryUser
     * it has a GRANT EXECUTE to pf_PlanningFactoryService
