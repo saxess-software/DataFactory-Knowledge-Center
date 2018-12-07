@@ -7,14 +7,15 @@ Maybe you wan't also adjust the timeline for all Products an add a year ?
 
 --BEGIN TRAN
 
-UPDATE dT SET FormatID = 'sxTimeBorderNext' OUTPUT Deleted.*
+	UPDATE dT SET FormatID = 'TimeBorderNext' OUTPUT Deleted.*
 
-FROM dbo.sx_pf_dTime dT
-	LEFT JOIN dbo.sx_pf_dProducts dP
-		ON dT.ProductKey = dP.ProductKey
-WHERE 
-	dT.TimeID % 10000 / 100 = 12
-	AND dP.Template LIKE '%VM'
+	FROM dbo.sx_pf_dTime dT
+		LEFT JOIN dbo.sx_pf_dProducts dP
+			ON dT.ProductKey = dP.ProductKey
+	WHERE 
+			dT.TimeID % 10000 / 100 = 12
+		AND dP.Template LIKE '%VM'
+		AND dT.TimeID > 20000000
 	
 --ROLLBACK TRAN
 
