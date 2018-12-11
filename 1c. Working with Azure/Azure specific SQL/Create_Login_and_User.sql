@@ -3,52 +3,114 @@
   NO Use Database on Azure - you must switch the connection between the steps
   https://www.youtube.com/watch?v=SDBy9JjsZBw
 
-  You must create a User with Login only, if a User shall be able to access the 
-  database direct, e.g. over SQL Managmentstudio to execute SQL.
-  Give him usually the role 'pf_PlanningFactoryUser' then the right system is still 
-  on and he can excecute public procedures over SSMS.
-  For Access over DataFactory WebClient/Excel Client no User is nessecary, all
-  requests go over User FactoryService. Any registered User can be created in the 
-  DataFactory Right system to get access.
-*/
+  User Rights must be created only if the user must access its database directly - not for DataFactory use
 
-DECLARE  @LoginUser			NVARCHAR(255)	= 'service_vsb_sync';   -- give enduser the prefix "sxad" to signalize the this is a User from SX Active Directory B2C
-DECLARE  @Password			NVARCHAR(255)	= 'qruOhdfd3d';
+  Admin Rights are create inside Azure Portal
+	- there is always on SQL User as root admin
+	- You add B2C AD Member to the Security Group
+
+  There are three types of non-admin access you could grant
+  1. Login in the master Database, User in the master Database and user in the Target Database
+	 - can login on server level
+	 - sees all Database names (but can't access)
+	 - can access Databases where he has Userrights 
+
+  2. Login in the master Database, user in one or more Target Databases
+     - user can login into multiple Target Databases with the same user / pw
+	 - can't login on server level
+  3. User in the Target Database (Contained Database User without login)
+     - user can login only in the Target Database 
+	 - Access to multiple Database need multiple User / Password pairs
+
+-- CASE 1 only for saxess user and services - Excute first on master, than on target database
+-- ###########################################################################################
+
+	DECLARE  @LoginUser			NVARCHAR(255)	= 'service_x';   -- give enduser the prefix "sxad" to signalize the this is a User from SX Active Directory B2C
+	DECLARE  @Password			NVARCHAR(255)	= 'xx';
+	DECLARE  @SQL				NVARCHAR(MAX)	= '';
+
+	IF  DB_NAME() = 'master' 
+		BEGIN
+			-- 1. CREATE a LOGIN on the master Database
+			SET @SQL = 'CREATE LOGIN [' + @LoginUser + '] WITH password= ''' + @Password + '''';
+			EXEC (@SQL)
+
+			-- 2. CREATE a USER in the master Database 
+			SET @SQL = 'CREATE USER [' + @LoginUser + '] FROM LOGIN [' + @LoginUser + ']'
+			EXEC (@SQL)
+		END
+
+	-- User and database rights are created if you execute this script in the target database
+	IF  DB_NAME() != 'master'
+		BEGIN
+
+			-- 2. CREATE USER in the destination Database
+			SET  @SQL = 'CREATE USER [' + @LoginUser + '] FROM LOGIN [' +  @LoginUser +']'
+			EXEC (@SQL)
+
+			-- 3. Give a databbase role
+			EXEC sp_addrolemember 'pf_PlanningFactoryUser', @LoginUser;
+		END
+
+
+-- CASE 2 only for saxess customers with multiple Azure Databases- execute first on master, than on target database
+-- ##################################################################################################################
+
+	DECLARE  @LoginUser			NVARCHAR(255)	= 'sxad.x';   -- give enduser the prefix "sxad" to signalize the this is a User from SX Active Directory B2C
+	DECLARE  @Password			NVARCHAR(255)	= 'xx';
+	DECLARE  @SQL				NVARCHAR(MAX)	= '';
+
+	IF  DB_NAME() = 'master' 
+		BEGIN
+			-- 1. CREATE a LOGIN on the master Database
+			SET @SQL = 'CREATE LOGIN [' + @LoginUser + '] WITH password= ''' + @Password + '''';
+			EXEC (@SQL)
+
+		END
+
+	-- User and database rights are created if you execute this script in the target database
+	IF  DB_NAME() != 'master'
+		BEGIN
+
+			-- 2. CREATE USER in the destination Database
+			SET  @SQL = 'CREATE USER [' + @LoginUser + '] FROM LOGIN [' +  @LoginUser +']'
+			EXEC (@SQL)
+
+			-- 3. Give a databbase role
+			EXEC sp_addrolemember 'pf_PlanningFactoryUser', @LoginUser;
+		END
+
+-- CASE 3 for saxess customers with one Azure Database
+-- ##################################################################################################################
+
+	DECLARE  @LoginUser			NVARCHAR(255)	= 'sxad.x';   -- give enduser the prefix "sxad" to signalize the this is a User from SX Active Directory B2C
+	DECLARE  @Password			NVARCHAR(255)	= 'xx';
+	DECLARE  @SQL				NVARCHAR(MAX)	= '';
+
+	-- 2. CREATE USER in the destination Database
+	SET  @SQL = 'CREATE USER [' + @LoginUser + '] FROM LOGIN [' +  @LoginUser +']'
+	EXEC (@SQL)
+
+	-- 3. Give a databbase role
+	EXEC sp_addrolemember 'pf_PlanningFactoryUser', @LoginUser;
+
+
+
+-- Alter Password - exceute in master db (CASE 1+2) or in user db (CASE 3)
+-- ##################################################################################################################
+DECLARE  @LoginUser			NVARCHAR(255)	= 'service_x';  
+DECLARE  @Password			NVARCHAR(255)	= 'xx';
 DECLARE  @SQL				NVARCHAR(MAX)	= '';
-DECLARE  @ChangePassword	INT				= 0;						-- set this to 1 if you want to change the password of an existing user
 
--- Login and password are created / changed if you execute this script in master database
-IF  DB_NAME() = 'master' AND @ChangePassword = 0
-	BEGIN
-		-- 1. CREATE a LOGIN on the master Database
-		SET @SQL = 'CREATE LOGIN [' + @LoginUser + '] WITH password= ''' + @Password + '''';
-		EXEC (@SQL)
+-- 3. Alter Password for LOGIN in the master Database
+SET @SQL = 'ALTER LOGIN [' + @LoginUser + '] WITH password= ''' + @Password + '''';
+EXEC (@SQL)
 
-		-- 2. CREATE a USER in the master Database - Usually NOT - with this the user can start on server level and can see (not access) all other databases
-		-- SET @SQL = 'CREATE USER ' + @LoginUser + ' FROM LOGIN ' + @LoginUser
-		-- EXEC (@SQL)
-	END
 
-IF  DB_NAME() = 'master' AND @ChangePassword = 1
-	BEGIN
-		-- 3. Alter Password for LOGIN in the master Database
-		SET @SQL = 'ALTER LOGIN [' + @LoginUser + '] WITH password= ''' + @Password + '''';
-		EXEC (@SQL)
 
-	END
 
--- User and database rights are created if you execute this script in the target database
-IF  DB_NAME() != 'master'
-	BEGIN
-
-		-- 2. CREATE USER in the destination Database
-		SET  @SQL = 'CREATE USER [' + @LoginUser + '] FROM LOGIN [' +  @LoginUser +']'
-		EXEC (@SQL)
-
-		-- 3. Give a databbase role
-		EXEC sp_addrolemember 'pf_PlanningFactoryUser', @LoginUser;
-	END
-
+-- Other Samples
+-- ##################################################################################################################
 
 -- You can grant Access to groups or persons of Azure ActiveDirectory
 -- You don't need to create an User in the master database for them
@@ -98,3 +160,4 @@ SELECT pr.principal_id, pr.name, pr.type_desc,
 FROM sys.database_principals AS pr  
 LEFT JOIN sys.database_permissions AS pe  
     ON pe.grantee_principal_id = pr.principal_id;  
+*/
