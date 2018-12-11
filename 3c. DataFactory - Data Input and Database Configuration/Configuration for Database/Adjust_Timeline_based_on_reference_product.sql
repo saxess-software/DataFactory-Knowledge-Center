@@ -86,7 +86,7 @@ INSERT INTO #NotToDoListe
 
 
 -- POST all not existing TIME IDs ################################################
-DECLARE MyCursor CURSOR FOR
+--DECLARE MyCursor CURSOR FOR
 
 	-- The TimeIDs to create
 	SELECT 
@@ -104,14 +104,20 @@ DECLARE MyCursor CURSOR FOR
 				   tti.TimeID = ntd.TimeID
 	WHERE ntd.TimeID IS NULL
 
-OPEN MyCursor
-FETCH MyCursor INTO @FactoryID, @ProductLineID, @ProductID, @TimeID,@FormatID
-WHILE @@FETCH_STATUS = 0
-BEGIN
+	ORDER BY
+		 tp.FactoryID
+		,tp.ProductLineID
+		,tp.ProductID
+		,tti.TimeID
 
-	EXEC dbo.sx_pf_POST_TimeID 'SQL',@ProductID,@ProductLineID, @FactoryID,@TimeID,@FormatID
+--OPEN MyCursor
+--FETCH MyCursor INTO @FactoryID, @ProductLineID, @ProductID, @TimeID,@FormatID
+--WHILE @@FETCH_STATUS = 0
+--BEGIN
 
-	FETCH MyCursor INTO  @FactoryID, @ProductLineID, @ProductID, @TimeID,@FormatID
-END
-CLOSE MyCursor
-DEALLOCATE MyCursor
+--	EXEC dbo.sx_pf_POST_TimeID 'SQL',@ProductID,@ProductLineID, @FactoryID,@TimeID,@FormatID
+
+--	FETCH MyCursor INTO  @FactoryID, @ProductLineID, @ProductID, @TimeID,@FormatID
+--END
+--CLOSE MyCursor
+--DEALLOCATE MyCursor
