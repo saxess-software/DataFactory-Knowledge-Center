@@ -12,15 +12,9 @@
                                     Remove-Item $strScriptName
                                    }
 
-         #Permanente Erweiterungstabellen
-    cat '.\01_Permanente Erweiterungstabellen\01_Staging\*.sql',
-        '.\01_Permanente Erweiterungstabellen\02_Param\*.sql',
-        '.\01_Permanente Erweiterungstabellen\03_Calc\*.sql',
-        '.\01_Permanente Erweiterungstabellen\04_Control\*.sql',
-        '.\01_Permanente Erweiterungstabellen\05_Result\*.sql',
-
+								   
         #CustomAPI
-        '.\02_CustomAPI\01_Header, CleanUp\*.sql',
+    cat '.\02_CustomAPI\01_Header, CleanUp\*.sql',
         '.\02_CustomAPI\02_StandardAPI\*.sql',
         '.\02_CustomAPI\03_API-Modifikationen\*.sql',
         '.\02_CustomAPI\04_Staging\*.sql',
