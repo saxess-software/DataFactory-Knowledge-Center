@@ -66,6 +66,7 @@ IIF(Datepart(weekday,CONVERT(Datetime,CAST(TimeID AS NVARCHAR(10))))<=5,1,0)  AS
 
 
 ## List of Month based on Products of a given template
+````SQL
 -- MAX / MIN Jahre aller Investitionen ermitteln
 DECLARE @Jahr_Min	INT
 DECLARE @Jahr_Max	INT
