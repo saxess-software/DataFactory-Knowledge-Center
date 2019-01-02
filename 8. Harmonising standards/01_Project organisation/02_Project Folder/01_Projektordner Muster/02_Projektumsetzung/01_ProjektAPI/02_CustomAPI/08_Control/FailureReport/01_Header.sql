@@ -28,8 +28,10 @@ DECLARE @TestSource	NVARCHAR (255) 	= ''
 -------------------------------------------------------------------------------------------------------------------
 -- ## DELETE ####
 	-- self cleaning older than 14 Days
-	DELETE FROM [control].[tCustomFailureReport] WHERE Timestamp < DATEADD(day,-14,GETDATE());
-
+	BEGIN													    
+		DELETE FROM [control].[tCustomFailureReport] WHERE Timestamp < DATEADD(day,-14,GETDATE());
+	END
+										       
 -------------------------------------------------------------------------------------------------------------------
 -- ## SNIPPETS ####
 
