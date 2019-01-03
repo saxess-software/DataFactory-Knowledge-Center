@@ -154,22 +154,20 @@ CREATE TABLE #Days
 	TimeID BIGINT
 		)
 
-DECLARE @FromDate DATE 
-SELECT TOP 1 @FromDate = ImportDatum FROM staging.tMassnahmenwerte  -- den Tag des letzten Import als Starttag für den Zeitspreizer setzen 
-DECLARE @ToDate DATE  = '2018-12-31'    
+DECLARE @FromDate	DATE = '2019-01-01'
+DECLARE @ToDate		DATE = '2019-12-31'    
 
-SELECT @fromdate = dateadd(day, datediff(day, 0, @FromDate), 0), 
-@todate = dateadd(day, datediff(day, 0, @ToDate), 0)
+WHILE @ToDate>=@FromDate
 
-INSERT INTO #Days
-	SELECT
-		Format(dateadd(d, number, @fromdate),'yyyyMMdd') TimeID
-	FROM
-	master..spt_values
-	WHERE type = 'P' and
-	@todate >= dateadd(d, number , @fromdate)
-	
--- SELECT * FROM #Days	
+	BEGIN
+		INSERT INTO #Days
+			SELECT FORMAT(@fromdate,'yyyyMMdd') AS TimeID
+
+		SET @FromDate = dateadd(d, 1, @fromdate)
+			
+	END
+
+SELECT * FROM #Days	
 ````
 
 ## List of Weeks with startdate - enddate as TimeID
