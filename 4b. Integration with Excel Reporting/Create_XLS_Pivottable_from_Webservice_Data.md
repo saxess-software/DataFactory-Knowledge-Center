@@ -9,7 +9,7 @@ you must prepare:
 * the CSV Download URL for your cluster, it looks like https://factoryprovider.com/api/v4/csv/[Clustername]/[OutputType]/[FactoryID]/[ProductlineID]?separator=| 
 * e.g for one Productline https://factoryprovider.com/api/v4/csv/AD00487_Fleischfabrik/Neuinvestitionen/BK1/1?separator=|
 * e.g for one Factory https://factoryprovider.com/api/v4/csv/AD00487_Fleischfabrik/Neuinvestitionen/BK1?separator=|
-* e.g for the whole cluster https://factoryprovider.com/api/v4/csv/AD00487_Fleischfabrik/Neuinvestitionen/?separator=|
+* e.g for the whole cluster https://factoryprovider.com/api/v4/csv/AD00487_Fleischfabrik/Neuinvestitionen?separator=|
 * at the end of the URL you put the parameter "?separator=|" to tell the api which separator you like, the default is the pipe
 (you can choose a different one, but the choosen delimiter must not be contained in text fields)
 * The FactoyID / ProductlineID is optional, you can call also the whole cluster
