@@ -4,7 +4,7 @@ Author: 	Heathcliff Power
 Created: 	2018/01
 Summary:	This template provides the layout used in procedures
 
-	EXEC [dbo].[spProcedureName]
+	EXEC [dbo].[spProcedureName] 'SQL','',''
 	SELECT * FROM dbo.TableName
 */
 
@@ -78,6 +78,8 @@ BEGIN TRY
 	WHERE	fV.FactoryID <> 'ZT' 	
 		AND	(@FactoryID = '' OR tdPL.FactoryID = @FactoryID)
 		AND   	(@ProductLineID = '' OR tdPL.ProductLineID = @ProductLineID)
+													   
+	SET @EffectedRows	= +@@ROWCOUNT												   
 			
 -------------------------------------------------------------------------------------------------------------------
 -- ##### COMMIT & API LOG ###########
