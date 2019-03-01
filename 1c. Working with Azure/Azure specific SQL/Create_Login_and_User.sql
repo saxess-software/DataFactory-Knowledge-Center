@@ -18,7 +18,8 @@
   2. Login in the master Database, user in one or more Target Databases
      - user can login into multiple Target Databases with the same user / pw
 	 - can't login on server level
-  3. User in the Target Database (Contained Database User without login)
+
+  3. User in the Target Database (Contained Database User without login) - STANDARD
      - user can login only in the Target Database 
 	 - Access to multiple Database need multiple User / Password pairs
 
@@ -88,7 +89,7 @@
 	DECLARE  @SQL				NVARCHAR(MAX)	= '';
 
 	-- 2. CREATE USER in the destination Database
-	SET  @SQL = 'CREATE USER [' + @LoginUser + '] FROM LOGIN [' +  @LoginUser +']'
+	SET  @SQL = 'CREATE USER [' + @LoginUser + '] WITH Password = ''' + @Password + ''''
 	EXEC (@SQL)
 
 	-- 3. Give a databbase role
