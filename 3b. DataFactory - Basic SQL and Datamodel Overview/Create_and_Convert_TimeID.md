@@ -51,6 +51,8 @@ SELECT CONVERT(nvarchar(10),DATEADD(d,7,CONVERT(Datetime,CAST(TimeID AS NVARCHAR
 TimeID from XLS Datenumber
 ````SQL
 SELECT CAST(47848 - 2 as Datetime)
+
+TRY_CAST(CONVERT(nvarchar(10),COALESCE(CAST(47848 - 2 AS DATETIME),''),112) AS INT)
 ````
 
 SQL string to XLS Datenumber
