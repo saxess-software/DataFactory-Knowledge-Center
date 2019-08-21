@@ -18,3 +18,11 @@ RECONFIGURE
 
 xp_cmdshell 'whoami.exe'
 ````
+
+Beispielaufruf SXI bat Die bat Datei muss absolute Pfade enthalten. 
+
+```` SQL
+
+xp_cmdshell 'C:\Saxess\SXIntegrator\pentaho\Personalplanung.bat'
+
+````
