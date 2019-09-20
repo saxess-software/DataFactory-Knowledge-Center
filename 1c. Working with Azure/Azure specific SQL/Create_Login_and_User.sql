@@ -26,7 +26,7 @@
 -- CASE 1 only for saxess user and services - Excute first on master, than on target database
 -- ###########################################################################################
 
-	DECLARE  @LoginUser			NVARCHAR(255)	= 'service_x';   -- give enduser the prefix "sxad" to signalize the this is a User from SX Active Directory B2C
+	DECLARE  @LoginUser			NVARCHAR(255)	= 'service_sxRunbooks';   -- give enduser the prefix "sxad" to signalize the this is a User from SX Active Directory B2C
 	DECLARE  @Password			NVARCHAR(255)	= 'xx';
 	DECLARE  @SQL				NVARCHAR(MAX)	= '';
 
