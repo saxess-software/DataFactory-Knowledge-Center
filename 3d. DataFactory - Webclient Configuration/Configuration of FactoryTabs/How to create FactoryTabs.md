@@ -11,7 +11,7 @@ To create the Tabs you use the procedure "sx_POST_FactoryTab", you must POST thi
 * the Procedure can be in any schema and can have any name
 * this StoredProcedure must ensure
     * it has three parameter @Username, @FactoryID, @ProductlineID
-	* the parameter FactoryID and ProductlineID must be optional (with default value = '')
+	* the parameter FactoryID and ProductlineID must be optional  (the parameters have to be passed with default value (@FactoryID NVARCHAR(255) = '', @ProductlineID NVARCHAR(255) = '')
     * it returns one Resultset
     * it has a GRANT EXECUTE to pf_PlanningFactoryUser
     * it has a GRANT EXECUTE to pf_PlanningFactoryService
@@ -56,6 +56,7 @@ If you have the same Tab in many Factories, you must rollout the Layout String t
 * There are two columns with the same name
 * There is a column with a reserverd name e.g. "Right" or "Left"
 * The Procedure runs into an error on database, when executed for this Factory
+* The parameters FactoryID and/or ProductlineID are not optional / not passed with default value (@FactoryID NVARCHAR(255) = '', @ProductlineID NVARCHAR(255) = '')
 
 
 

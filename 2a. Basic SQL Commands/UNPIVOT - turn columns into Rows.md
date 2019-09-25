@@ -1,17 +1,19 @@
 -- Helpertable with Name of the Globalattributes in one Column
+-- [Wert] ist ein beliebiger Aliasname für den Wert
+-- [Globalattribute] ist ein beliebiger Aliasname für die neue Spalte mit den Namen der alten Spalten
 
 ````SQL
 SELECT
 	FactoryID
 	,ProductLineID
-	,Globalattribute
+	,Globalattribut
 	,COALESCE(TRY_CAST(Right(Globalattribute,2) AS INT), TRY_CAST(Right(Globalattribute,1) AS INT)) AS GlobalattributeNumber
-	,Aliasname
+	,Wert
 FROM sx_pf_dProductLines
 UNPIVOT
 (
-	Aliasname
-	for Globalattribute IN (
+	Wert
+	for Globalattribut IN (
 			 GlobalattributeAlias1, GlobalattributeAlias2, GlobalattributeAlias3, GlobalattributeAlias4, GlobalattributeAlias5
 			,GlobalattributeAlias6, GlobalattributeAlias7, GlobalattributeAlias8, GlobalattributeAlias9, GlobalattributeAlias10
 			,GlobalattributeAlias11, GlobalattributeAlias12, GlobalattributeAlias13, GlobalattributeAlias14, GlobalattributeAlias15
