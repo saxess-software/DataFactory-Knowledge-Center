@@ -3,3 +3,9 @@ https://factoryprovider.com/api/v4/csv/[Cluster]/[Prozedur]/[FID]/[PLID]
 FactoryID und ProductlineID sind optional, sofern die Prozedur dies erfordert
 
 Authorisierung: Basic mit gleichem Username / PW wie Azure AD
+
+
+
+Ab Version 5.0
+
+https://factoryprovider.com/api/v4/csv/[Server]/[Cluster]/[Prozedur]/[FID]/[PLID]
