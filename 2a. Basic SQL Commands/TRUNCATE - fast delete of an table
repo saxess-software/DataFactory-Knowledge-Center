@@ -1,5 +1,0 @@
-
-
-TRUNCATE TABLE result.tfBuchungsjournalPlan
-
-TRUNCATE can only be used from users with ALTER_TABLE Rights - so a stored Procedure which grants rights to pf_PlanningFactoryUser and pf_PlanningFactoryServer can't use this command.
